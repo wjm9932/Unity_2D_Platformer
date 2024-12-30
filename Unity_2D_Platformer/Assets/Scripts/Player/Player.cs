@@ -6,21 +6,18 @@ public class Player : MonoBehaviour
 {
     public Rigidbody2D rb { get; private set; }
     public Animator animator { get; private set; }
-    public SpriteRenderer spriteRenderer { get; private set; }
     public PlayerInput input { get; private set; }
 
 
     private float gravityScale;
     private PlayerMovementStateMachine movementStateMachine;
-    [SerializeField] private LayerMask whatIsGround; 
-
+    [SerializeField] private LayerMask whatIsGround;
     private void Awake()
     {
         movementStateMachine = new PlayerMovementStateMachine(this);
 
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         input = GetComponent<PlayerInput>();
 
         gravityScale = rb.gravityScale;
@@ -34,7 +31,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        rb.gravityScale = IsOnGround() ? 0 : gravityScale;
+        rb.gravityScale = GetGravity();
 
         movementStateMachine.Update();
     }
@@ -52,12 +49,51 @@ public class Player : MonoBehaviour
     {
         if (Physics2D.Raycast(transform.position, Vector2.down, 0.5f + 0.02f, whatIsGround) == true)
         {
-            //rb.velocity = new Vector2(rb.velocity.x, 0);
             return true;
         }
         else
         {
             return false;
+        }
+    }
+
+    public void FlipPlayer(bool isLeft)
+    {
+        if (isLeft == true)
+        {
+            transform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
+    public bool IsPlayerFalling()
+    {
+        if(rb.velocity.y < 0.5f)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public float GetGravity()
+    {
+        if (IsPlayerFalling() == true)
+        {
+            return 2f * gravityScale;
+        }
+        else if (IsOnGround() == false)
+        {
+            return gravityScale;
+        }
+        else
+        {
+            return 0f;
         }
     }
 }

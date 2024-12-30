@@ -9,13 +9,15 @@ public class JumpState : IState
     public JumpState(PlayerMovementStateMachine playerMovementStateMachine)
     {
         sm = playerMovementStateMachine;
-        jumpAmount = 10f;
+        jumpAmount = 7f;
     }
     public void Enter()
     {
         sm.owner.animator.SetTrigger("IsJump");
 
-        sm.owner.rb.AddForce(Vector2.up * jumpAmount, ForceMode2D.Impulse);
+
+        //sm.owner.rb.AddForce(Vector2.up * jumpAmount, ForceMode2D.Impulse);
+        sm.owner.rb.velocity = new Vector2(sm.owner.rb.velocity.x, jumpAmount);
 
         sm.ChangeState(sm.idleState);
     }

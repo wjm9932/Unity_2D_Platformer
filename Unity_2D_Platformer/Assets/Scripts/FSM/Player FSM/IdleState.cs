@@ -29,7 +29,7 @@ public class IdleState : IState
             sm.ChangeState(sm.runState);
         }
 
-        if(sm.owner.input.isPressingJump == true)
+        if(sm.owner.input.isJump == true && sm.owner.IsOnGround() == true)
         {
             sm.ChangeState(sm.jumpState);
         }

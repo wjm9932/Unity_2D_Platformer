@@ -15,7 +15,7 @@ public class RunState : IState
     {
         sm.owner.animator.SetBool("IsRun", true);
 
-        sm.owner.spriteRenderer.flipX = sm.owner.input.moveInput < 0;
+        sm.owner.FlipPlayer(sm.owner.input.moveInput < 0);
     }
     public void Update()
     {
@@ -24,7 +24,7 @@ public class RunState : IState
             sm.ChangeState(sm.idleState);
         }
 
-        if (sm.owner.input.isPressingJump == true)
+        if (sm.owner.input.isJump == true && sm.owner.IsOnGround() == true)
         {
             sm.ChangeState(sm.jumpState);
         }
