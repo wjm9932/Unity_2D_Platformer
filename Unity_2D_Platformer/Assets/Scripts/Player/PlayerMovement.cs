@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private MovementTypeSO movementType;
 
     public Rigidbody2D rb { get; private set; }
-    public Animator animator { get; private set; }
+    [SerializeField] private Animator animator;
     public PlayerInput input { get; private set; }
 
     private bool isFacingRight;
@@ -36,7 +36,6 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         input = GetComponent<PlayerInput>();
 
     }
@@ -74,6 +73,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Physics2D.OverlapBox(groundCheckPosition.position, groundCheckSize, 0, whatIsGround) == true) //checks if set box overlaps with ground
             {
+                if (lastOnGroundTime < -0.1f)
+                {
+                    animator.SetTrigger("Land");
+                }
+
                 lastOnGroundTime = movementType.coyoteTime; //if so sets the lastGrounded to coyoteTime
             }
         }
@@ -100,6 +104,8 @@ public class PlayerMovement : MonoBehaviour
             isJumpFalling = false;
 
             Jump();
+
+            animator.SetTrigger("Jump");
         }
 
         #endregion
@@ -110,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
             SetGravityScale(movementType.gravityScale * movementType.jumpCutGravityMult);
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -movementType.maxFallSpeed));
         }
-        else if((isJumping || isJumpFalling) && Mathf.Abs(rb.velocity.y) < movementType.jumpHangTimeThreshold)
+        else if((isJumping || isJumpFalling) && Mathf.Abs(rb.velocity.y) < movementType.jumpHangVelocityThreshold)
         {
             SetGravityScale(movementType.gravityScale * movementType.jumpHangGravityMult);
         }
@@ -131,7 +137,12 @@ public class PlayerMovement : MonoBehaviour
         Run(1f);
     }
 
+    private void LateUpdate()
+    {
+        animator.SetBool("IsRun", input.movementInput != Vector2.zero);
+        animator.SetFloat("VelocityY", rb.velocity.y);
 
+    }
     private void Run(float lerpAmount)
     {
         float targetSpeed = input.movementInput.x * movementType.runMaxSpeed;
