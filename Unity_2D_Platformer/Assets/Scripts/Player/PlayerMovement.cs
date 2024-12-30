@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
 
     [Header("Collision Check")]
-    [SerializeField] private Transform groundCheckPosition;
+    [SerializeField] private Transform groundChecker;
     [SerializeField] private Vector2 groundCheckSize = new Vector2(0.49f,0.03f);
     #endregion
 
@@ -71,13 +71,8 @@ public class PlayerMovement : MonoBehaviour
         #region Collision Check
         if (!isJumping)
         {
-            if (Physics2D.OverlapBox(groundCheckPosition.position, groundCheckSize, 0, whatIsGround) == true) //checks if set box overlaps with ground
+            if (Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, whatIsGround) == true) //checks if set box overlaps with ground
             {
-                if (lastOnGroundTime < -0.1f)
-                {
-                    animator.SetTrigger("Land");
-                }
-
                 lastOnGroundTime = movementType.coyoteTime; //if so sets the lastGrounded to coyoteTime
             }
         }
@@ -139,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        animator.SetBool("IsRun", input.movementInput != Vector2.zero);
+        animator.SetBool("IsRun", input.movementInput.x != 0);
         animator.SetFloat("VelocityY", rb.velocity.y);
 
     }
@@ -253,7 +248,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(groundCheckPosition.position, groundCheckSize);
+        Gizmos.DrawWireCube(groundChecker.position, groundCheckSize);
         //Gizmos.color = Color.blue;
         //Gizmos.DrawWireCube(_frontWallCheckPoint.position, _wallCheckSize);
         //Gizmos.DrawWireCube(_backWallCheckPoint.position, _wallCheckSize);
