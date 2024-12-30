@@ -12,15 +12,17 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator { get; private set; }
     public PlayerInput input { get; private set; }
 
+    private bool isFacingRight;
+
     #region Jump Parameters
     private bool isJumping;
     private bool isJumpCut;
     private bool isJumpFalling;
-    private float jumpBufferTime;
     #endregion
 
     #region Timer
     private float lastOnGroundTime;
+    private float lastPressJumpTime;
     #endregion
 
     #region Collision Check Parameteres
@@ -36,10 +38,12 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         input = GetComponent<PlayerInput>();
+
     }
     // Start is called before the first frame update
     void Start()
     {
+        isFacingRight = true;
         SetGravityScale(movementType.gravityScale);
     }
 
@@ -47,25 +51,26 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         lastOnGroundTime -= Time.deltaTime;
-
+        lastPressJumpTime -= Time.deltaTime;
 
         if (input.movementInput.x != 0)
         {
-            FlipPlayer(input.movementInput.x < 0);
+            FlipPlayer(input.movementInput.x > 0);
         }
-
-        if(input.isJump == true)
+        
+        if (input.isJump == true)
         {
             OnJumpInput();
         }
 
-        if(input.isJumpCut == true)
+        if (input.isJumpCut == true)
         {
-
+            OnJumpCutInput();
         }
 
+
         #region Collision Check
-        if(!isJumping)
+        if (!isJumping)
         {
             if (Physics2D.OverlapBox(groundCheckPosition.position, groundCheckSize, 0, whatIsGround) == true) //checks if set box overlaps with ground
             {
@@ -73,17 +78,52 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         #endregion
-        if (rb.velocity.y < 0)
+
+        #region Jump Check
+
+        if(isJumping == true && rb.velocity.y < 0f)
         {
-            //Higher gravity if falling
+            isJumping = false;
+            isJumpFalling = true;
+        }
+
+        if(lastOnGroundTime > 0f)
+        {
+            isJumpCut = false;
+            isJumpFalling = false;
+        }
+
+        if(CanJump() && lastPressJumpTime > 0f)
+        {
+            isJumping = true;
+            isJumpCut = false;
+            isJumpFalling = false;
+
+            Jump();
+        }
+
+        #endregion
+
+        #region Setting Gravity
+        if (isJumpCut == true)
+        {
+            SetGravityScale(movementType.gravityScale * movementType.jumpCutGravityMult);
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -movementType.maxFallSpeed));
+        }
+        else if((isJumping || isJumpFalling) && Mathf.Abs(rb.velocity.y) < movementType.jumpHangTimeThreshold)
+        {
+            SetGravityScale(movementType.gravityScale * movementType.jumpHangGravityMult);
+        }
+        else if (rb.velocity.y < 0)
+        {
             SetGravityScale(movementType.gravityScale * movementType.fallGravityMult);
-            //Caps maximum fall speed, so when falling over large distances we don't accelerate to insanely high speeds
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -movementType.maxFallSpeed));
         }
         else
         {
             SetGravityScale(movementType.gravityScale);
         }
+        #endregion
     }
 
     private void FixedUpdate()
@@ -121,20 +161,75 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
     }
 
-    private void OnJumpInput()
+    private void Jump()
     {
-        jumpBufferTime = movementType.jumpInputBufferTime;
+        //Ensures we can't call Jump multiple times from one press
+        lastPressJumpTime = 0;
+        lastOnGroundTime = 0;
+
+        #region Perform Jump
+        //We increase the force applied if we are falling
+        //This means we'll always feel like we jump the same amount 
+        //(setting the player's Y velocity to 0 beforehand will likely work the same, but I find this more elegant :D)
+        float force = movementType.jumpForce;
+        if (rb.velocity.y < 0)
+            force -= rb.velocity.y;
+
+        rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
+        #endregion
     }
 
-    private void FlipPlayer(bool isLeft)
+    private void OnJumpInput()
     {
-        if (isLeft == true)
+        lastPressJumpTime = movementType.jumpInputBufferTime;
+    }
+
+    private void OnJumpCutInput()
+    {
+        if(CanJumpCut() == true)
         {
-            transform.localRotation = Quaternion.Euler(0, 180, 0);
+            isJumpCut = true;
+        }
+    }
+
+    private bool CanJumpCut()
+    {
+        if(isJumping == true && rb.velocity.y > 0f)
+        {
+            return true;
         }
         else
         {
-            transform.localRotation = Quaternion.Euler(0, 0, 0);
+            return false;
+        }
+    }
+
+    private bool CanJump()
+    {
+        if(lastOnGroundTime > 0f && !isJumping)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private void FlipPlayer(bool isMovingRight)
+    {
+        if(isMovingRight != this.isFacingRight)
+        {
+            if (isMovingRight == false)
+            {
+                transform.localRotation = Quaternion.Euler(0, 180, 0);
+                isFacingRight = false;
+            }
+            else
+            {
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
+                isFacingRight = true;
+            }
         }
     }
     private void SetGravityScale(float scale)

@@ -96,6 +96,9 @@ public class MovementTypeSO : ScriptableObject
         #region Variable Ranges
         runAcceleration = Mathf.Clamp(runAcceleration, 0.01f, runMaxSpeed);
         runDecceleration = Mathf.Clamp(runDecceleration, 0.01f, runMaxSpeed);
+
+        jumpHangAccelerationMult = Mathf.Max(jumpHangAccelerationMult, 1f, jumpHangAccelerationMult);
+        jumpHangMaxSpeedMult = Mathf.Max(jumpHangMaxSpeedMult, 1f, jumpHangMaxSpeedMult);
         #endregion
     }
 }
