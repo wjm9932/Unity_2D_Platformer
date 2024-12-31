@@ -18,11 +18,13 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping;
     private bool isJumpCut;
     private bool isJumpFalling;
+    private bool isWallJumping;
     #endregion
 
     #region Timer
     private float lastOnGroundTime;
     private float lastPressJumpTime;
+    private float lastOnWallTime;
     #endregion
 
     #region Collision Check Parameteres
@@ -30,7 +32,9 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Collision Check")]
     [SerializeField] private Transform groundChecker;
-    [SerializeField] private Vector2 groundCheckSize = new Vector2(0.49f,0.03f);
+    [SerializeField] private Vector2 groundCheckSize = new Vector2();
+    [SerializeField] private Transform wallCollisionChecker;
+    [SerializeField] private Vector2 wallCollisionCheckerSize = new Vector2();
     #endregion
 
     private void Awake()
@@ -51,12 +55,13 @@ public class PlayerMovement : MonoBehaviour
     {
         lastOnGroundTime -= Time.deltaTime;
         lastPressJumpTime -= Time.deltaTime;
+        lastPressJumpTime -= Time.deltaTime;
 
         if (input.moveInput.x != 0)
         {
             FlipPlayer(input.moveInput.x > 0);
         }
-        
+
         if (input.isJump == true)
         {
             OnJumpInput();
@@ -75,24 +80,30 @@ public class PlayerMovement : MonoBehaviour
             {
                 lastOnGroundTime = movementType.coyoteTime; //if so sets the lastGrounded to coyoteTime
             }
+
+            if (Physics2D.OverlapBox(wallCollisionChecker.position, wallCollisionCheckerSize, 0, whatIsGround) && !isWallJumping)
+            {
+                lastOnWallTime = movementType.coyoteTime;
+            }
         }
         #endregion
 
+
         #region Jump Check
 
-        if(isJumping == true && rb.velocity.y < 0f)
+        if (isJumping == true && rb.velocity.y < 0f)
         {
             isJumping = false;
             isJumpFalling = true;
         }
 
-        if(lastOnGroundTime > 0f)
+        if (lastOnGroundTime > 0f)
         {
             isJumpCut = false;
             isJumpFalling = false;
         }
 
-        if(CanJump() && lastPressJumpTime > 0f)
+        if (CanJump() && lastPressJumpTime > 0f)
         {
             isJumping = true;
             isJumpCut = false;
@@ -116,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
             SetGravityScale(movementType.gravityScale * movementType.jumpCutGravityMult);
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -movementType.maxFallSpeed));
         }
-        else if((isJumping || isJumpFalling) && Mathf.Abs(rb.velocity.y) < movementType.jumpHangVelocityThreshold)
+        else if ((isJumping || isJumpFalling) && Mathf.Abs(rb.velocity.y) < movementType.jumpHangVelocityThreshold)
         {
             SetGravityScale(movementType.gravityScale * movementType.jumpHangGravityMult);
         }
@@ -150,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
 
         float accelAmount;
 
-        if(lastOnGroundTime > 0f)
+        if (lastOnGroundTime > 0f)
         {
             accelAmount = (Mathf.Abs(targetSpeed) > 0.01f) ? movementType.runAccelAmount : movementType.runDeccelAmount;
         }
@@ -197,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJumpCutInput()
     {
-        if(CanJumpCut() == true)
+        if (CanJumpCut() == true)
         {
             isJumpCut = true;
         }
@@ -205,7 +216,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CanJumpCut()
     {
-        if(isJumping == true && rb.velocity.y > 0f)
+        if (isJumping == true && rb.velocity.y > 0f)
         {
             return true;
         }
@@ -217,7 +228,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CanJump()
     {
-        if(lastOnGroundTime > 0f && !isJumping)
+        if (lastOnGroundTime > 0f && !isJumping)
         {
             return true;
         }
@@ -229,7 +240,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FlipPlayer(bool isMovingRight)
     {
-        if(isMovingRight != this.isFacingRight)
+        if (isMovingRight != this.isFacingRight)
         {
             if (isMovingRight == false)
             {
@@ -254,9 +265,9 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(groundChecker.position, groundCheckSize);
-        //Gizmos.color = Color.blue;
-        //Gizmos.DrawWireCube(_frontWallCheckPoint.position, _wallCheckSize);
-        //Gizmos.DrawWireCube(_backWallCheckPoint.position, _wallCheckSize);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(wallCollisionChecker.position, wallCollisionCheckerSize);
     }
 #endif
     #endregion
