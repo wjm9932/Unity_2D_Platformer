@@ -114,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
             isJumpFalling = false;
         }
 
-        if (CanJump() && lastPressJumpTime > 0f)
+        if (CanJump() == true)
         {
             isJumping = true;
             isJumpCut = false;
@@ -124,19 +124,30 @@ public class PlayerMovement : MonoBehaviour
 
             animator.SetTrigger("Jump");
         }
+        else if(CanWallJump() == true)
+        {
+            isJumping = true;
+            isJumpCut = false;
+            isJumpFalling = false;
+
+            WallJump(slideDir ? -1 : 1);
+
+            animator.SetTrigger("Jump");
+
+        }
         #endregion
 
-        if(CanSlide() == true)
+        if (CanSlide() == true)
         {
             isSlide = true;
         }
-        else 
+        else
         {
             isSlide = false;
         }
 
         #region Setting Gravity
-        if(isSlide == true)
+        if (isSlide == true)
         {
             SetGravityScale(0f);
         }
@@ -170,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Run(1f);
 
-        if(isSlide == true)
+        if (isSlide == true)
         {
             Slide();
         }
@@ -229,6 +240,25 @@ public class PlayerMovement : MonoBehaviour
         #endregion
     }
 
+    private void WallJump(int dir)
+    {
+        lastPressJumpTime = 0;
+        lastOnGroundTime = 0;
+
+        Vector2 force = new Vector2(movementType.wallJumpForce.x, movementType.wallJumpForce.y);
+        force.x *= dir; //apply force in opposite direction of wall
+
+        if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(force.x))
+            force.x -= rb.velocity.x;
+
+        if (rb.velocity.y < 0) //checks whether player is falling, if so we subtract the velocity.y (counteracting force of gravity). This ensures the player always reaches our desired jump force or greater
+            force.y -= rb.velocity.y;
+
+        //Unlike in the run we want to use the Impulse mode.
+        //The default mode will apply are force instantly ignoring masss
+        rb.AddForce(force, ForceMode2D.Impulse);
+
+    }
     private void Slide()
     {
         float speedDif = movementType.slideSpeed - rb.velocity.y;
@@ -267,7 +297,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CanJump()
     {
-        if (lastOnGroundTime > 0f && !isJumping)
+        if (lastOnGroundTime > 0f && !isJumping && lastPressJumpTime > 0f)
         {
             return true;
         }
@@ -277,9 +307,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private bool CanWallJump()
+    {
+        if (lastPressJumpTime > 0f && lastOnWallTime > 0f && lastOnGroundTime <= 0f && !isJumping)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     private bool CanSlide()
     {
-        if(lastOnWallTime > 0f && !isJumping && lastOnGroundTime <= 0f && slideDir == isFacingRight && input.moveInput.x != 0)
+        if (lastOnWallTime > 0f && !isJumping && lastOnGroundTime <= 0f && slideDir == isFacingRight && input.moveInput.x != 0)
         {
             return true;
         }

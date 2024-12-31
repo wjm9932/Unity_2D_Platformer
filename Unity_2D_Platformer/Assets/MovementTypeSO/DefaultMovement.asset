@@ -33,9 +33,7 @@ MonoBehaviour:
   jumpHangVelocityThreshold: 1
   jumpHangAccelerationMult: 1.1
   jumpHangMaxSpeedMult: 1.3
-  wallJumpForce: {x: 15, y: 20}
-  wallJumpRunLerp: 0.5
-  wallJumpCoolTime: 0
+  wallJumpForce: {x: 15, y: 30}
   slideSpeed: -3
   slideAccel: 1
   slideAccelAmount: 16.666668
