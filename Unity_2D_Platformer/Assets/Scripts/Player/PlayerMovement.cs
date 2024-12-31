@@ -189,6 +189,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void LateUpdate()
     {
+        animator.SetBool("IsSlide", isSlide);
         animator.SetBool("IsRun", input.moveInput.x != 0);
         animator.SetFloat("VelocityY", rb.velocity.y);
 

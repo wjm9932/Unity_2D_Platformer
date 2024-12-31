@@ -87,7 +87,7 @@ public class MovementTypeSO : ScriptableObject
         gravityScale = gravityStrength / Physics2D.gravity.y;
 
         //Calculate are run acceleration & deceleration forces using formula: amount = ((1 / Time.fixedDeltaTime) * acceleration) / runMaxSpeed
-        runAccelAmount = ((1/Time.fixedDeltaTime) * runAcceleration) / runMaxSpeed;
+        runAccelAmount = ((1 / Time.fixedDeltaTime) * runAcceleration) / runMaxSpeed;
         runDeccelAmount = ((1 / Time.fixedDeltaTime) * runDecceleration) / runMaxSpeed;
 
         //Calculate jumpForce using the formula (initialJumpVelocity = gravity * timeToJumpApex)
@@ -100,9 +100,16 @@ public class MovementTypeSO : ScriptableObject
         //jumpHangAccelerationMult = Mathf.Max(jumpHangAccelerationMult, 1f, jumpHangAccelerationMult);
         //jumpHangMaxSpeedMult = Mathf.Max(jumpHangMaxSpeedMult, 1f, jumpHangMaxSpeedMult);
 
-        slideAccel = Mathf.Max(1f, slideAccel);
+        slideAccel = Mathf.Clamp(slideAccel, 1f, Mathf.Abs(slideSpeed));
 
-        slideAccelAmount = ((1 / Time.fixedDeltaTime) * slideAccel) / Mathf.Max(1f, Mathf.Abs(slideSpeed));
+        if (slideSpeed == 0f)
+        {
+            slideAccelAmount = 1 / Time.fixedDeltaTime;
+        }
+        else
+        {
+            slideAccelAmount = ((1 / Time.fixedDeltaTime) * slideAccel) / Mathf.Abs(slideSpeed);
+        }
         #endregion
     }
 }
