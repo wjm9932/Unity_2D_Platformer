@@ -21,10 +21,16 @@ public class PlayerMovement : MonoBehaviour
     private bool isWallJumping;
     #endregion
 
+    #region Slide
+    private bool isSlide;
+    private bool slideDir;
+    #endregion
+
     #region Timer
     private float lastOnGroundTime;
     private float lastPressJumpTime;
     private float lastOnWallTime;
+    private float wallJumpStartTime;
     #endregion
 
     #region Collision Check Parameteres
@@ -54,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         lastOnGroundTime -= Time.deltaTime;
-        lastPressJumpTime -= Time.deltaTime;
+        lastOnWallTime -= Time.deltaTime;
         lastPressJumpTime -= Time.deltaTime;
 
         if (input.moveInput.x != 0)
@@ -81,13 +87,13 @@ public class PlayerMovement : MonoBehaviour
                 lastOnGroundTime = movementType.coyoteTime; //if so sets the lastGrounded to coyoteTime
             }
 
-            if (Physics2D.OverlapBox(wallCollisionChecker.position, wallCollisionCheckerSize, 0, whatIsGround) && !isWallJumping)
+            if (Physics2D.OverlapBox(wallCollisionChecker.position, wallCollisionCheckerSize, 0, whatIsGround))
             {
                 lastOnWallTime = movementType.coyoteTime;
+                slideDir = isFacingRight;
             }
         }
         #endregion
-
 
         #region Jump Check
 
@@ -96,6 +102,11 @@ public class PlayerMovement : MonoBehaviour
             isJumping = false;
             isJumpFalling = true;
         }
+
+        //if(isWallJumping == true && Time.time - wallJumpStartTime >= movementType.wallJumpCoolTime)
+        //{
+        //    isWallJumping = false;
+        //}
 
         if (lastOnGroundTime > 0f)
         {
@@ -113,11 +124,23 @@ public class PlayerMovement : MonoBehaviour
 
             animator.SetTrigger("Jump");
         }
-
         #endregion
 
+        if(CanSlide() == true)
+        {
+            isSlide = true;
+        }
+        else 
+        {
+            isSlide = false;
+        }
+
         #region Setting Gravity
-        if (rb.velocity.y < 0 && input.moveInput.y < 0)
+        if(isSlide == true)
+        {
+            SetGravityScale(0f);
+        }
+        else if (rb.velocity.y < 0 && input.moveInput.y < 0)
         {
             SetGravityScale(movementType.gravityScale * movementType.fastFallGravityMult);
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -movementType.maxFastFallSpeed));
@@ -146,6 +169,11 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Run(1f);
+
+        if(isSlide == true)
+        {
+            Slide();
+        }
     }
 
     private void LateUpdate()
@@ -201,6 +229,17 @@ public class PlayerMovement : MonoBehaviour
         #endregion
     }
 
+    private void Slide()
+    {
+        float speedDif = movementType.slideSpeed - rb.velocity.y;
+
+        float movement = speedDif * movementType.slideAccelAmount;
+        //So, we clamp the movement here to prevent any over corrections (these aren't noticeable in the Run)
+        //The force applied can't be greater than the (negative) speedDifference * by how many times a second FixedUpdate() is called. For more info research how force are applied to rigidbodies.
+        //movement = Mathf.Clamp(movement, -Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime), Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime));
+        rb.AddForce(movement * Vector2.up);
+    }
+
     private void OnJumpInput()
     {
         lastPressJumpTime = movementType.jumpInputBufferTime;
@@ -238,9 +277,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private bool CanSlide()
+    {
+        if(lastOnWallTime > 0f && !isJumping && lastOnGroundTime <= 0f && slideDir == isFacingRight && input.moveInput.x != 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     private void FlipPlayer(bool isMovingRight)
     {
-        if (isMovingRight != this.isFacingRight)
+        if (isMovingRight != isFacingRight)
         {
             if (isMovingRight == false)
             {

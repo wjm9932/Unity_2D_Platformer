@@ -42,17 +42,18 @@ public class MovementTypeSO : ScriptableObject
     public float jumpHangAccelerationMult;
     public float jumpHangMaxSpeedMult;
 
-    //[Header("Wall Jump")]
-    //public Vector2 wallJumpForce; //The actual force (this time set by us) applied to the player when wall jumping.
-    //[Space(5)]
-    //[Range(0f, 1f)] public float wallJumpRunLerp; //Reduces the effect of player's movement while wall jumping.
-    //[Range(0f, 1.5f)] public float wallJumpTime; //Time after wall jumping the player's movement is slowed for.
+    [Header("Wall Jump")]
+    public Vector2 wallJumpForce; //The actual force (this time set by us) applied to the player when wall jumping.
+    [Space(5)]
+    [Range(0f, 1f)] public float wallJumpRunLerp; //Reduces the effect of player's movement while wall jumping.
+    [Range(0f, 1.5f)] public float wallJumpCoolTime; //Time after wall jumping the player's movement is slowed for.
 
-    //[Space(20)]
+    [Space(20)]
 
     [Header("Slide")]
     public float slideSpeed;
     public float slideAccel;
+    [HideInInspector] public float slideAccelAmount;
 
     [Header("Jump Assists")]
     [Range(0.01f, 0.5f)] public float coyoteTime; //Grace period after falling off a platform, where you can still jump
@@ -86,8 +87,8 @@ public class MovementTypeSO : ScriptableObject
         gravityScale = gravityStrength / Physics2D.gravity.y;
 
         //Calculate are run acceleration & deceleration forces using formula: amount = ((1 / Time.fixedDeltaTime) * acceleration) / runMaxSpeed
-        runAccelAmount = (50 * runAcceleration) / runMaxSpeed;
-        runDeccelAmount = (50 * runDecceleration) / runMaxSpeed;
+        runAccelAmount = ((1/Time.fixedDeltaTime) * runAcceleration) / runMaxSpeed;
+        runDeccelAmount = ((1 / Time.fixedDeltaTime) * runDecceleration) / runMaxSpeed;
 
         //Calculate jumpForce using the formula (initialJumpVelocity = gravity * timeToJumpApex)
         jumpForce = Mathf.Abs(gravityStrength) * jumpTimeToApex;
@@ -99,7 +100,9 @@ public class MovementTypeSO : ScriptableObject
         //jumpHangAccelerationMult = Mathf.Max(jumpHangAccelerationMult, 1f, jumpHangAccelerationMult);
         //jumpHangMaxSpeedMult = Mathf.Max(jumpHangMaxSpeedMult, 1f, jumpHangMaxSpeedMult);
 
-        slideAccel = Mathf.Max(1f, slideSpeed);
+        slideAccel = Mathf.Max(1f, slideAccel);
+
+        slideAccelAmount = ((1 / Time.fixedDeltaTime) * slideAccel) / Mathf.Max(1f, Mathf.Abs(slideSpeed));
         #endregion
     }
 }
