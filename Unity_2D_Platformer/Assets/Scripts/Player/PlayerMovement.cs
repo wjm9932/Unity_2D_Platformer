@@ -52,9 +52,9 @@ public class PlayerMovement : MonoBehaviour
         lastOnGroundTime -= Time.deltaTime;
         lastPressJumpTime -= Time.deltaTime;
 
-        if (input.movementInput.x != 0)
+        if (input.moveInput.x != 0)
         {
-            FlipPlayer(input.movementInput.x > 0);
+            FlipPlayer(input.moveInput.x > 0);
         }
         
         if (input.isJump == true)
@@ -106,7 +106,12 @@ public class PlayerMovement : MonoBehaviour
         #endregion
 
         #region Setting Gravity
-        if (isJumpCut == true)
+        if (rb.velocity.y < 0 && input.moveInput.y < 0)
+        {
+            SetGravityScale(movementType.gravityScale * movementType.fastFallGravityMult);
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -movementType.maxFastFallSpeed));
+        }
+        else if (isJumpCut == true)
         {
             SetGravityScale(movementType.gravityScale * movementType.jumpCutGravityMult);
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -movementType.maxFallSpeed));
@@ -134,13 +139,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        animator.SetBool("IsRun", input.movementInput.x != 0);
+        animator.SetBool("IsRun", input.moveInput.x != 0);
         animator.SetFloat("VelocityY", rb.velocity.y);
 
     }
     private void Run(float lerpAmount)
     {
-        float targetSpeed = input.movementInput.x * movementType.runMaxSpeed;
+        float targetSpeed = input.moveInput.x * movementType.runMaxSpeed;
         targetSpeed = Mathf.Lerp(rb.velocity.x, targetSpeed, lerpAmount);
 
         float accelAmount;
@@ -154,12 +159,12 @@ public class PlayerMovement : MonoBehaviour
             accelAmount = (Mathf.Abs(targetSpeed) > 0.01f) ? movementType.runAccelAmount * movementType.accelInAir : movementType.runDeccelAmount * movementType.deccelInAir;
         }
 
-        ////Increase are acceleration and maxSpeed when at the apex of their jump, makes the jump feel a bit more bouncy, responsive and natural
-        //if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(RB.velocity.y) < Data.jumpHangTimeThreshold)
-        //{
-        //    accelRate *= Data.jumpHangAccelerationMult;
-        //    targetSpeed *= Data.jumpHangMaxSpeedMult;
-        //}
+        //Increase are acceleration and maxSpeed when at the apex of their jump, makes the jump feel a bit more bouncy, responsive and natural
+        if ((isJumping || isJumpFalling) && Mathf.Abs(rb.velocity.y) < movementType.jumpHangVelocityThreshold)
+        {
+            accelAmount *= movementType.jumpHangAccelerationMult;
+            targetSpeed *= movementType.jumpHangMaxSpeedMult;
+        }
 
         float speedDif = targetSpeed - rb.velocity.x;
         float movement = speedDif * accelAmount;

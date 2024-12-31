@@ -47,13 +47,12 @@ public class MovementTypeSO : ScriptableObject
     //[Space(5)]
     //[Range(0f, 1f)] public float wallJumpRunLerp; //Reduces the effect of player's movement while wall jumping.
     //[Range(0f, 1.5f)] public float wallJumpTime; //Time after wall jumping the player's movement is slowed for.
-    //public bool doTurnOnWallJump; //Player will rotate to face wall jumping direction
 
     //[Space(20)]
 
-    //[Header("Slide")]
-    //public float slideSpeed;
-    //public float slideAccel;
+    [Header("Slide")]
+    public float slideSpeed;
+    public float slideAccel;
 
     [Header("Jump Assists")]
     [Range(0.01f, 0.5f)] public float coyoteTime; //Grace period after falling off a platform, where you can still jump
@@ -99,6 +98,8 @@ public class MovementTypeSO : ScriptableObject
 
         //jumpHangAccelerationMult = Mathf.Max(jumpHangAccelerationMult, 1f, jumpHangAccelerationMult);
         //jumpHangMaxSpeedMult = Mathf.Max(jumpHangMaxSpeedMult, 1f, jumpHangMaxSpeedMult);
+
+        slideAccel = Mathf.Max(1f, slideSpeed);
         #endregion
     }
 }

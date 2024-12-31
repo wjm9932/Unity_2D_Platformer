@@ -15,11 +15,11 @@ public class RunState : IState
     {
         sm.owner.animator.SetBool("IsRun", true);
 
-        sm.owner.FlipPlayer(sm.owner.input.moveInput < 0);
+        sm.owner.FlipPlayer(sm.owner.input.tempmoveInput < 0);
     }
     public void Update()
     {
-        if (Mathf.Abs(sm.owner.input.moveInput) <= Mathf.Epsilon)
+        if (Mathf.Abs(sm.owner.input.tempmoveInput) <= Mathf.Epsilon)
         {
             sm.ChangeState(sm.idleState);
         }
@@ -31,7 +31,7 @@ public class RunState : IState
     }
     public void FixedUpdate()
     {
-        sm.owner.rb.velocity = new Vector2(sm.owner.input.moveInput * moveSpeed, sm.owner.rb.velocity.y);
+        sm.owner.rb.velocity = new Vector2(sm.owner.input.tempmoveInput * moveSpeed, sm.owner.rb.velocity.y);
     }
     public void LateUpdate()
     {

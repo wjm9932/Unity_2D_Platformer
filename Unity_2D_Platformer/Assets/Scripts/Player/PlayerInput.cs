@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public float moveInput { get; private set; }
+    public float tempmoveInput { get; private set; }
 
-    public Vector2 movementInput { get; private set; }
+    public Vector2 moveInput { get; private set; }
     public bool isJump { get; private set; }
     public bool isJumpCut { get; private set; }
     // Start is called before the first frame update
@@ -19,9 +19,9 @@ public class PlayerInput : MonoBehaviour
     void Update()
     {
 
-        movementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        moveInput = Input.GetAxisRaw("Horizontal");
+        tempmoveInput = Input.GetAxisRaw("Horizontal");
 
 
         isJump = Input.GetKeyDown(KeyCode.Space);

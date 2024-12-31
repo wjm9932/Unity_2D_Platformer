@@ -24,7 +24,7 @@ public class IdleState : IState
     }
     public void Update()
     {
-        if (Mathf.Abs(sm.owner.input.moveInput) > Mathf.Epsilon)
+        if (Mathf.Abs(sm.owner.input.tempmoveInput) > Mathf.Epsilon)
         {
             sm.ChangeState(sm.runState);
         }
