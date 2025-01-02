@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpFallingState : IState, IGravityModifier
+public class FallingState : IState, IGravityModifier
 {
     private PlayerJumpStateMachine sm;
-    public JumpFallingState(PlayerJumpStateMachine playerJumpStateMachine) 
+    public FallingState(PlayerJumpStateMachine playerJumpStateMachine)
     {
         sm = playerJumpStateMachine;
     }
     public void Enter()
     {
-        //SetGravityScale();
     }
     public void Update()
     {
@@ -24,29 +23,28 @@ public class JumpFallingState : IState, IGravityModifier
         if (Physics2D.OverlapBox(sm.owner.wallCollisionChecker.position, sm.owner.wallCollisionCheckerSize, 0, sm.owner.whatIsGround))
         {
             sm.owner.lastOnWallTime = sm.owner.movementType.wallJumpCoyoteTime;
-            if(sm.owner.input.moveInput.x != 0)
+            if (sm.owner.input.moveInput.x != 0)
             {
                 sm.facingDir = sm.owner.input.moveInput.x;
             }
         }
         #endregion
 
-        if (sm.owner.lastOnGroundTime > 0f)
-        {
-            sm.ChangeState(sm.idleState);
-            return;
-        }
-        else if (sm.owner.lastOnWallTime > 0f && sm.owner.lastPressJumpTime > 0f)
+        if (sm.owner.lastOnWallTime > 0f && sm.owner.lastPressJumpTime > 0f)
         {
             sm.ChangeState(sm.wallJumpState);
             return;
         }
-        else if(sm.facingDir == sm.owner.input.moveInput.x && sm.owner.lastOnWallTime > 0f)
+        else if (sm.facingDir == sm.owner.input.moveInput.x && sm.owner.lastOnWallTime > 0f)
         {
             sm.ChangeState(sm.slideState);
             return;
         }
-        
+        else if (sm.owner.lastOnGroundTime > 0f)
+        {
+            sm.ChangeState(sm.idleState);
+            return;
+        }
 
         SetGravityScale();
     }
@@ -83,16 +81,7 @@ public class JumpFallingState : IState, IGravityModifier
             sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.fastFallGravityMult);
             sm.owner.rb.velocity = new Vector2(sm.owner.rb.velocity.x, Mathf.Max(sm.owner.rb.velocity.y, -sm.owner.movementType.maxFastFallSpeed));
         }
-        else if (sm.isJumpCut == true)
-        {
-            sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.jumpCutGravityMult);
-            sm.owner.rb.velocity = new Vector2(sm.owner.rb.velocity.x, Mathf.Max(sm.owner.rb.velocity.y, -sm.owner.movementType.maxFallSpeed));
-        }
-        else if (Mathf.Abs(sm.owner.rb.velocity.y) < sm.owner.movementType.jumpHangVelocityThreshold)
-        {
-            sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.jumpHangGravityMult);
-        }
-        else if (sm.owner.rb.velocity.y < 0 && sm.owner.lastOnGroundTime <= 0f)
+        else
         {
             sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.fallGravityMult);
             sm.owner.rb.velocity = new Vector2(sm.owner.rb.velocity.x, Mathf.Max(sm.owner.rb.velocity.y, -sm.owner.movementType.maxFallSpeed));

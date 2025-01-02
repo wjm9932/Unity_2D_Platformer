@@ -10,6 +10,7 @@ public class AnimationHandler : MonoBehaviour
     private Animator animator;
 
     public bool isJumpStarted { private get; set; }
+    public bool isSlide { private get; set; }
 
     private void Awake()
     {
@@ -26,7 +27,7 @@ public class AnimationHandler : MonoBehaviour
             isJumpStarted = false;
         }
 
-        //animator.SetBool("IsSlide", playerMovement.isSlide);
+        animator.SetBool("IsSlide", isSlide);
         animator.SetBool("IsRun", playerMovement.input.moveInput.x != 0);
         animator.SetFloat("VelocityY", playerMovement.rb.velocity.y);
     }

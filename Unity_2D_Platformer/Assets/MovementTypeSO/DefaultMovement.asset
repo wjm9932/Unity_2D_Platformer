@@ -30,7 +30,7 @@ MonoBehaviour:
   jumpForce: 33.333332
   jumpCutGravityMult: 2
   jumpHangGravityMult: 0.5
-  jumpHangVelocityThreshold: 5
+  jumpHangVelocityThreshold: 1
   jumpHangAccelerationMult: 1.1
   jumpHangMaxSpeedMult: 1.3
   wallJumpForce: {x: 15, y: 30}
@@ -38,5 +38,5 @@ MonoBehaviour:
   slideAccel: 1
   slideAccelAmount: 16.666668
   coyoteTime: 0.1
-  wallJumpCoyoteTime: 0.2
+  wallJumpCoyoteTime: 0.5
   jumpInputBufferTime: 0.1

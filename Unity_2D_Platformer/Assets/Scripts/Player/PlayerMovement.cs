@@ -226,11 +226,15 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
         #endregion
     }
-
     private void WallJump(int dir)
     {
+        isJumping = true;
+        isJumpCut = false;
+        isJumpFalling = false;
+
         lastPressJumpTime = 0;
-        lastOnGroundTime = 0;
+        lastOnWallTime = 0;
+        lastOnGroundTime = 0f;
 
         Vector2 force = new Vector2(movementType.wallJumpForce.x, movementType.wallJumpForce.y);
         force.x *= dir; //apply force in opposite direction of wall

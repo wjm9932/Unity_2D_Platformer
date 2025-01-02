@@ -18,6 +18,8 @@ public class RunState : IState
     }
     public void Update()
     {
+        //Debug.Log(sm.owner.lastOnWallTime);
+
         if (sm.owner.input.moveInput.x != 0)
         {
             FlipPlayer(sm.owner.input.moveInput.x > 0);
@@ -26,20 +28,11 @@ public class RunState : IState
         #region Collision Check
         if (sm.jsm.currentState != sm.jsm.jumpState)
         {
-            if (Physics2D.OverlapBox(sm.owner.groundChecker.position, sm.owner.groundCheckSize, 0, sm.owner.whatIsGround) == true) //checks if set box overlaps with ground
-            {
-                sm.owner.lastOnGroundTime = sm.owner.movementType.coyoteTime; //if so sets the lastGrounded to coyoteTime
-            }
 
-            if (Physics2D.OverlapBox(sm.owner.wallCollisionChecker.position, sm.owner.wallCollisionCheckerSize, 0, sm.owner.whatIsGround))
-            {
-                sm.owner.lastOnWallTime = sm.owner.movementType.wallJumpCoyoteTime;
-                //slideDir = isFacingRight;
-            }
         }
         #endregion
 
-        if(sm.owner.input.isJump == true)
+        if (sm.owner.input.isJump == true)
         {
             sm.owner.lastPressJumpTime = sm.owner.movementType.jumpInputBufferTime;
         }
@@ -47,6 +40,10 @@ public class RunState : IState
     }
     public void FixedUpdate()
     {
+        if (sm.jsm.currentState != sm.jsm.slideState)
+        {
+        }
+
         Run(1f);
     }
     public void LateUpdate()
@@ -55,7 +52,7 @@ public class RunState : IState
     }
     public void Exit()
     {
-        
+
     }
     public void OnAnimatorIK()
     {

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4569358755192303826}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallCollisionCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4569358755192303825}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.625, y: 0.93, z: 0}
+  m_LocalPosition: {x: 0.485, y: 0.93, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 4569358755302778814}
   - component: {fileID: 4569358755302778813}
   - component: {fileID: 4569358755224315405}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4569358755302778811}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1af1681ed3af2440a194734e672d808, type: 3}
   m_Name: 
@@ -158,7 +158,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5852806613653717616}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundCollisionCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,10 +194,10 @@ GameObject:
   - component: {fileID: 5852806615148106103}
   - component: {fileID: 5852806615148106102}
   - component: {fileID: 5852806615148106097}
-  - component: {fileID: 5852806615148106096}
-  m_Layer: 0
+  - component: {fileID: 434663498}
+  m_Layer: 6
   m_Name: PlayerUsingFSM
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -209,7 +209,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5852806615148106099}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.55, y: -7.1, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
@@ -304,7 +304,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 0c9c995dd1a5e3f44a4af1f0f36268dc, type: 2}
   m_IsTrigger: 0
-  m_UsedByEffector: 1
+  m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.1, y: 0.3}
   m_SpriteTilingProperty:
@@ -326,7 +326,7 @@ PlatformEffector2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5852806615148106099}
-  m_Enabled: 1
+  m_Enabled: 0
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
@@ -350,7 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c8fe86f1864126418bc9e3b5c709824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5852806615148106096
+--- !u!114 &434663498
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -359,18 +359,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 5852806615148106099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ec4de593ade0584ebb7fc8fe4547e78, type: 3}
+  m_Script: {fileID: 11500000, guid: d0158c15836d81a4cbe015d363b8813d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movementType: {fileID: 11400000, guid: 94a47a3563bb6bd48b7f6d918c00a74b, type: 2}
-  animHandler: {fileID: 4569358755224315405}
+  _animHandler: {fileID: 4569358755224315405}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
   groundChecker: {fileID: 5852806613653717616}
   groundCheckSize: {x: 1, y: 0.03}
   wallCollisionChecker: {fileID: 4569358755192303826}
-  wallCollisionCheckerSize: {x: 0.5, y: 0.5}
+  wallCollisionCheckerSize: {x: 0.1, y: 0.5}
+  lastOnGroundTime: 0
+  lastPressJumpTime: 0
+  lastOnWallTime: 0
 --- !u!1 &5852806615158255338
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +441,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5852806615582060069}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CollisionCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
