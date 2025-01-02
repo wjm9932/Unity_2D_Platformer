@@ -1,99 +1,104 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Movement  Type")]
+    public MovementTypeSO movementType;
+
+    [Header ("Animation Handler")]
+    [SerializeField] private AnimationHandler animHandler;
+
     public Rigidbody2D rb { get; private set; }
-    public Animator animator { get; private set; }
     public PlayerInput input { get; private set; }
 
+    #region Collision Check Parameteres
+    public LayerMask whatIsGround;
 
-    private float gravityScale;
-    private PlayerMovementStateMachine movementStateMachine;
-    [SerializeField] private LayerMask whatIsGround;
+    [Header("Collision Check")]
+    public Transform groundChecker;
+    public Vector2 groundCheckSize = new Vector2();
+    public Transform wallCollisionChecker;
+    public Vector2 wallCollisionCheckerSize = new Vector2();
+    #endregion
+
+    #region State Machine
+    public PlayerMovementStateMachine movementStateMachine { get; private set; }
+    #endregion
+
+    #region Timer
+    [HideInInspector] public float lastOnGroundTime;
+    [HideInInspector] public float lastPressJumpTime;
+    [HideInInspector] public float lastOnWallTime;
+    #endregion
     private void Awake()
     {
-        movementStateMachine = new PlayerMovementStateMachine(this);
-
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         input = GetComponent<PlayerInput>();
-
-        gravityScale = rb.gravityScale;
+        movementStateMachine = new PlayerMovementStateMachine(this);
     }
-
 
     void Start()
     {
-        movementStateMachine.ChangeState(movementStateMachine.idleState);
+        movementStateMachine.ChangeState(movementStateMachine.runState);
+        movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.idleState);
     }
 
     void Update()
     {
-        rb.gravityScale = GetGravity();
+        #region Timer
+        lastOnGroundTime -= Time.deltaTime;
+        lastOnWallTime -= Time.deltaTime;
+        lastPressJumpTime -= Time.deltaTime;
+        #endregion
+
+        //#region Collision Check
+        //if (movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpState)
+        //{
+        //    if (Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, whatIsGround) == true) //checks if set box overlaps with ground
+        //    {
+        //        lastOnGroundTime = movementType.coyoteTime; //if so sets the lastGrounded to coyoteTime
+        //    }
+
+        //    if (Physics2D.OverlapBox(wallCollisionChecker.position, wallCollisionCheckerSize, 0, whatIsGround))
+        //    {
+        //        lastOnWallTime = movementType.wallJumpCoyoteTime;
+        //        //slideDir = isFacingRight;
+        //    }
+        //}
+        //#endregion
 
         movementStateMachine.Update();
+        movementStateMachine.jsm.Update();
     }
+
     private void FixedUpdate()
     {
         movementStateMachine.FixedUpdate();
+        movementStateMachine.jsm.FixedUpdate();
     }
 
     private void LateUpdate()
     {
         movementStateMachine.LateUpdate();
+        movementStateMachine.jsm.LateUpdate();
     }
-
-    public bool IsOnGround()
+    public void SetGravityScale(float scale)
     {
-        if (Physics2D.Raycast(transform.position, Vector2.down, 0.5f + 0.02f, whatIsGround) == true)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        rb.gravityScale = scale;
     }
-
-    public void FlipPlayer(bool isLeft)
+    #region EDITOR METHODS
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
     {
-        if (isLeft == true)
-        {
-            transform.localRotation = Quaternion.Euler(0, 180, 0);
-        }
-        else
-        {
-            transform.localRotation = Quaternion.Euler(0, 0, 0);
-        }
-    }
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(groundChecker.position, groundCheckSize);
 
-    public bool IsPlayerFalling()
-    {
-        if(rb.velocity.y < 0.5f)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(wallCollisionChecker.position, wallCollisionCheckerSize);
     }
-
-    public float GetGravity()
-    {
-        if (IsPlayerFalling() == true)
-        {
-            return 2f * gravityScale;
-        }
-        else if (IsOnGround() == false)
-        {
-            return gravityScale;
-        }
-        else
-        {
-            return 0f;
-        }
-    }
+#endif
+    #endregion
 }

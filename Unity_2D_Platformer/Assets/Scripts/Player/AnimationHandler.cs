@@ -19,14 +19,14 @@ public class AnimationHandler : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(isJumpStarted == true)
-        {
-            animator.SetTrigger("Jump");
-            isJumpStarted = false;
-        }
+        //if(isJumpStarted == true)
+        //{
+        //    animator.SetTrigger("Jump");
+        //    isJumpStarted = false;
+        //}
 
-        animator.SetBool("IsSlide", playerMovement.isSlide);
-        animator.SetBool("IsRun", playerMovement.input.moveInput.x != 0);
-        animator.SetFloat("VelocityY", playerMovement.rb.velocity.y);
+        //animator.SetBool("IsSlide", playerMovement.isSlide);
+        //animator.SetBool("IsRun", playerMovement.input.moveInput.x != 0);
+        //animator.SetFloat("VelocityY", playerMovement.rb.velocity.y);
     }
 }
