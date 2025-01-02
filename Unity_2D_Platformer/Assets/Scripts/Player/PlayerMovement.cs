@@ -47,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         input = GetComponent<PlayerInput>();
-
     }
     // Start is called before the first frame update
     void Start()
@@ -78,7 +77,6 @@ public class PlayerMovement : MonoBehaviour
             OnJumpCutInput();
         }
 
-
         #region Collision Check
         if (!isJumping)
         {
@@ -96,18 +94,12 @@ public class PlayerMovement : MonoBehaviour
         #endregion
 
         #region Jump Check
-
         if (isJumping == true && rb.velocity.y < 0f)
         {
             isJumping = false;
             isJumpFalling = true;
         }
-
-        //if(isWallJumping == true && Time.time - wallJumpStartTime >= movementType.wallJumpCoolTime)
-        //{
-        //    isWallJumping = false;
-        //}
-
+     
         if (lastOnGroundTime > 0f)
         {
             isJumpCut = false;
@@ -137,6 +129,7 @@ public class PlayerMovement : MonoBehaviour
         }
         #endregion
 
+        #region Slide Check
         if (CanSlide() == true)
         {
             isSlide = true;
@@ -145,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isSlide = false;
         }
+        #endregion
 
         #region Setting Gravity
         if (isSlide == true)
@@ -179,11 +173,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Run(1f);
-
         if (isSlide == true)
         {
             Slide();
+        }
+        else
+        {
+            Run(1f);
         }
     }
 
@@ -192,7 +188,6 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("IsSlide", isSlide);
         animator.SetBool("IsRun", input.moveInput.x != 0);
         animator.SetFloat("VelocityY", rb.velocity.y);
-
     }
     private void Run(float lerpAmount)
     {
@@ -269,6 +264,11 @@ public class PlayerMovement : MonoBehaviour
         //The force applied can't be greater than the (negative) speedDifference * by how many times a second FixedUpdate() is called. For more info research how force are applied to rigidbodies.
         //movement = Mathf.Clamp(movement, -Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime), Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime));
         rb.AddForce(movement * Vector2.up);
+    }
+
+    private void Attack()
+    {
+
     }
 
     private void OnJumpInput()
