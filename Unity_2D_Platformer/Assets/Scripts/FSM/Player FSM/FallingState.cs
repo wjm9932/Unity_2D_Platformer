@@ -14,28 +14,12 @@ public class FallingState : IState, IGravityModifier
     }
     public void Update()
     {
-        #region Collision Check
-        if (Physics2D.OverlapBox(sm.owner.groundChecker.position, sm.owner.groundCheckSize, 0, sm.owner.whatIsGround) == true) //checks if set box overlaps with ground
-        {
-            sm.owner.lastOnGroundTime = sm.owner.movementType.coyoteTime; //if so sets the lastGrounded to coyoteTime
-        }
-
-        if (Physics2D.OverlapBox(sm.owner.wallCollisionChecker.position, sm.owner.wallCollisionCheckerSize, 0, sm.owner.whatIsGround))
-        {
-            sm.owner.lastOnWallTime = sm.owner.movementType.wallJumpCoyoteTime;
-            if (sm.owner.input.moveInput.x != 0)
-            {
-                sm.facingDir = sm.owner.input.moveInput.x;
-            }
-        }
-        #endregion
-
         if (sm.owner.lastOnWallTime > 0f && sm.owner.lastPressJumpTime > 0f)
         {
             sm.ChangeState(sm.wallJumpState);
             return;
         }
-        else if (sm.facingDir == sm.owner.input.moveInput.x && sm.owner.lastOnWallTime > 0f)
+        else if (sm.owner.facingDir == sm.owner.input.moveInput.x && sm.owner.lastOnWallTime > 0f)
         {
             sm.ChangeState(sm.slideState);
             return;

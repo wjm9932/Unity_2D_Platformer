@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public float lastPressJumpTime;
     [HideInInspector] public float lastOnWallTime;
     #endregion
+
+    public float facingDir { get; private set; }
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -53,6 +55,22 @@ public class Player : MonoBehaviour
         lastOnGroundTime -= Time.deltaTime;
         lastOnWallTime -= Time.deltaTime;
         lastPressJumpTime -= Time.deltaTime;
+        #endregion
+
+        #region Collision Check
+        if(movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.wallJumpState)
+        {
+            if (Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, whatIsGround) == true) //checks if set box overlaps with ground
+            {
+                lastOnGroundTime = movementType.coyoteTime; //if so sets the lastGrounded to coyoteTime
+            }
+
+            if (Physics2D.OverlapBox(wallCollisionChecker.position, wallCollisionCheckerSize, 0, whatIsGround))
+            {
+                lastOnWallTime = movementType.wallJumpCoyoteTime;
+                facingDir = transform.localRotation.y < 0 ? -1f : 1f;
+            }
+        }
         #endregion
 
         movementStateMachine.Update();

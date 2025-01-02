@@ -14,7 +14,6 @@ public class PlayerJumpStateMachine : StateMachine
     public FallingState fallingState { get; private set; }
 
     public bool isJumpCut;
-    public float facingDir;
     public PlayerJumpStateMachine(Player owner)
     {
         this.owner = owner;

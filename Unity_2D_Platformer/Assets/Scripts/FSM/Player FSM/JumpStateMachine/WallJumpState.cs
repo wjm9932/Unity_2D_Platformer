@@ -12,7 +12,7 @@ public class WallJumpState : IState, IGravityModifier
     }
     public void Enter()
     {
-        WallJump(-sm.facingDir);
+        WallJump(sm.owner.facingDir < 0 ? 1 : -1);
         sm.isJumpCut = false;
         sm.owner.animHandler.isJumpStarted = true;
     }

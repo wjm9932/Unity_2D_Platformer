@@ -18,11 +18,6 @@ public class IdleState : IState, IGravityModifier
     }
     public void Update()
     {
-        if (Physics2D.OverlapBox(sm.owner.groundChecker.position, sm.owner.groundCheckSize, 0, sm.owner.whatIsGround) == true) //checks if set box overlaps with ground
-        {
-            sm.owner.lastOnGroundTime = sm.owner.movementType.coyoteTime; //if so sets the lastGrounded to coyoteTime
-        }
-
         if (sm.owner.lastPressJumpTime > 0f && sm.owner.lastOnGroundTime > 0f)
         {
             sm.ChangeState(sm.jumpState);
