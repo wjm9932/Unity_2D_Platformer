@@ -18,8 +18,6 @@ public class RunState : IState
     }
     public void Update()
     {
-        //Debug.Log(sm.owner.lastOnWallTime);
-
         if (sm.owner.input.moveInput.x != 0)
         {
             FlipPlayer(sm.owner.input.moveInput.x > 0);

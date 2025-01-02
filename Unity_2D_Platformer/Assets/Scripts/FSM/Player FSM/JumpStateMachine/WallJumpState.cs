@@ -23,6 +23,7 @@ public class WallJumpState : IState, IGravityModifier
             sm.ChangeState(sm.jumpFallingState);
             return;
         }
+        
         if (sm.owner.input.isJumpCut == true)
         {
             sm.isJumpCut = true;

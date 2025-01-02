@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.ScrollRect;
 
 public class JumpState : IState, IGravityModifier
 {
@@ -20,13 +19,13 @@ public class JumpState : IState, IGravityModifier
     }
     public void Update()
     {
-        if(sm.owner.rb.velocity.y < 0f)
+        if (sm.owner.rb.velocity.y < 0f)
         {
             sm.ChangeState(sm.jumpFallingState);
             return;
         }
 
-        if(sm.owner.input.isJumpCut == true)
+        if (sm.owner.input.isJumpCut == true)
         {
             sm.isJumpCut = true;
         }
