@@ -18,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping;
     private bool isJumpCut;
     private bool isJumpFalling;
-    private bool isWallJumping;
     #endregion
 
     #region Slide
@@ -30,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
     private float lastOnGroundTime;
     private float lastPressJumpTime;
     private float lastOnWallTime;
-    private float wallJumpStartTime;
     #endregion
 
     #region Collision Check Parameteres
@@ -125,7 +123,6 @@ public class PlayerMovement : MonoBehaviour
             WallJump(slideDir ? -1 : 1);
 
             animHandler.isJumpStarted = true;
-
         }
         #endregion
 
@@ -258,11 +255,6 @@ public class PlayerMovement : MonoBehaviour
         //The force applied can't be greater than the (negative) speedDifference * by how many times a second FixedUpdate() is called. For more info research how force are applied to rigidbodies.
         //movement = Mathf.Clamp(movement, -Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime), Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime));
         rb.AddForce(movement * Vector2.up);
-    }
-
-    private void Attack()
-    {
-
     }
 
     private void OnJumpInput()
