@@ -57,6 +57,7 @@ public class MovementTypeSO : ScriptableObject
 
     [Header("Jump Assists")]
     [Range(0.01f, 0.5f)] public float coyoteTime; //Grace period after falling off a platform, where you can still jump
+    [Range(0.01f, 0.5f)] public float wallJumpCoyoteTime; //Grace period after falling off a platform, where you can still jump
     [Range(0.01f, 0.5f)] public float jumpInputBufferTime; //Grace period after pressing jump where a jump will be automatically performed once the requirements (eg. being grounded) are met.
 
     //[Space(20)]

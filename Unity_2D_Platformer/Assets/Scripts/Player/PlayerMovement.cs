@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private MovementTypeSO movementType;
 
     public Rigidbody2D rb { get; private set; }
-    [SerializeField] private Animator animator;
+    [SerializeField] private AnimationHandler animHandler;
     public PlayerInput input { get; private set; }
 
     private bool isFacingRight;
@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Slide
-    private bool isSlide;
+    public bool isSlide { get; private set; }
     private bool slideDir;
     #endregion
 
@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Physics2D.OverlapBox(wallCollisionChecker.position, wallCollisionCheckerSize, 0, whatIsGround))
             {
-                lastOnWallTime = movementType.coyoteTime;
+                lastOnWallTime = movementType.wallJumpCoyoteTime;
                 slideDir = isFacingRight;
             }
         }
@@ -114,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
 
             Jump();
 
-            animator.SetTrigger("Jump");
+            animHandler.isJumpStarted = true;
         }
         else if(CanWallJump() == true)
         {
@@ -124,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
 
             WallJump(slideDir ? -1 : 1);
 
-            animator.SetTrigger("Jump");
+            animHandler.isJumpStarted = true;
 
         }
         #endregion
@@ -183,12 +183,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        animator.SetBool("IsSlide", isSlide);
-        animator.SetBool("IsRun", input.moveInput.x != 0);
-        animator.SetFloat("VelocityY", rb.velocity.y);
-    }
     private void Run(float lerpAmount)
     {
         float targetSpeed = input.moveInput.x * movementType.runMaxSpeed;
