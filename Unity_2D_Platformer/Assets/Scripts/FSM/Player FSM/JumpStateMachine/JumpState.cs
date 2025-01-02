@@ -13,7 +13,9 @@ public class JumpState : IState, IGravityModifier
     public void Enter()
     {
         Jump();
-        SetGravityScale();
+        sm.owner.animHandler.isJumpStarted = true;
+
+        //SetGravityScale();
     }
     public void Update()
     {
@@ -21,6 +23,11 @@ public class JumpState : IState, IGravityModifier
         {
             sm.ChangeState(sm.jumpFallingState);
             return;
+        }
+
+        if(sm.owner.input.isJumpCut == true)
+        {
+            sm.isJumpCut = true;
         }
 
         SetGravityScale();
@@ -75,6 +82,15 @@ public class JumpState : IState, IGravityModifier
         {
             sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.fastFallGravityMult);
             sm.owner.rb.velocity = new Vector2(sm.owner.rb.velocity.x, Mathf.Max(sm.owner.rb.velocity.y, -sm.owner.movementType.maxFastFallSpeed));
+        }
+        else if(sm.isJumpCut == true)
+        {
+            sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.jumpCutGravityMult);
+            sm.owner.rb.velocity = new Vector2(sm.owner.rb.velocity.x, Mathf.Max(sm.owner.rb.velocity.y, -sm.owner.movementType.maxFallSpeed));
+        }
+        else if (Mathf.Abs(sm.owner.rb.velocity.y) < sm.owner.movementType.jumpHangVelocityThreshold)
+        {
+            sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.jumpHangGravityMult);
         }
         else if (sm.owner.rb.velocity.y < 0 && sm.owner.lastOnGroundTime <= 0f)
         {

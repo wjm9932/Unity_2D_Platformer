@@ -9,7 +9,8 @@ public class Player : MonoBehaviour
     public MovementTypeSO movementType;
 
     [Header ("Animation Handler")]
-    [SerializeField] private AnimationHandler animHandler;
+    [SerializeField] private AnimationHandler _animHandler;
+    public AnimationHandler animHandler { get { return _animHandler; } }
 
     public Rigidbody2D rb { get; private set; }
     public PlayerInput input { get; private set; }
@@ -53,22 +54,6 @@ public class Player : MonoBehaviour
         lastOnWallTime -= Time.deltaTime;
         lastPressJumpTime -= Time.deltaTime;
         #endregion
-
-        //#region Collision Check
-        //if (movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpState)
-        //{
-        //    if (Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, whatIsGround) == true) //checks if set box overlaps with ground
-        //    {
-        //        lastOnGroundTime = movementType.coyoteTime; //if so sets the lastGrounded to coyoteTime
-        //    }
-
-        //    if (Physics2D.OverlapBox(wallCollisionChecker.position, wallCollisionCheckerSize, 0, whatIsGround))
-        //    {
-        //        lastOnWallTime = movementType.wallJumpCoyoteTime;
-        //        //slideDir = isFacingRight;
-        //    }
-        //}
-        //#endregion
 
         movementStateMachine.Update();
         movementStateMachine.jsm.Update();

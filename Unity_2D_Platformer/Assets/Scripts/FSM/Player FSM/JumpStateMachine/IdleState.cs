@@ -13,7 +13,8 @@ public class IdleState : IState, IGravityModifier
     }
     public void Enter()
     {
-        SetGravityScale();
+        //SetGravityScale();
+        sm.isJumpCut = false;
     }
     public void Update()
     {

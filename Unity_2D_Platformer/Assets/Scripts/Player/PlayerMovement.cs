@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         isFacingRight = true;
-        //SetGravityScale(movementType.gravityScale);
+        SetGravityScale(movementType.gravityScale);
     }
 
     // Update is called once per frame
@@ -147,15 +147,15 @@ public class PlayerMovement : MonoBehaviour
             SetGravityScale(movementType.gravityScale * movementType.fastFallGravityMult);
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -movementType.maxFastFallSpeed));
         }
-        //else if (isJumpCut == true)
-        //{
-        //    SetGravityScale(movementType.gravityScale * movementType.jumpCutGravityMult);
-        //    rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -movementType.maxFallSpeed));
-        //}
-        //else if ((isJumping || isJumpFalling) && Mathf.Abs(rb.velocity.y) < movementType.jumpHangVelocityThreshold)
-        //{
-        //    SetGravityScale(movementType.gravityScale * movementType.jumpHangGravityMult);
-        //}
+        else if (isJumpCut == true)
+        {
+            SetGravityScale(movementType.gravityScale * movementType.jumpCutGravityMult);
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -movementType.maxFallSpeed));
+        }
+        else if ((isJumping || isJumpFalling) && Mathf.Abs(rb.velocity.y) < movementType.jumpHangVelocityThreshold)
+        {
+            SetGravityScale(movementType.gravityScale * movementType.jumpHangGravityMult);
+        }
         else if (rb.velocity.y < 0 && lastOnGroundTime <= 0f)
         {
             SetGravityScale(movementType.gravityScale * movementType.fallGravityMult);

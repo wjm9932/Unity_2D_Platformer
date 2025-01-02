@@ -9,6 +9,8 @@ public class PlayerJumpStateMachine : StateMachine
     public IdleState idleState { get; private set; }
     public JumpState jumpState { get; private set; }
     public JumpFallingState jumpFallingState { get; private set; }
+
+    public bool isJumpCut;
     public PlayerJumpStateMachine(Player owner)
     {
         this.owner = owner;

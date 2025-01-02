@@ -1297,7 +1297,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 222626858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.55, y: -7.1000004, z: -10}
+  m_LocalPosition: {x: -12.55, y: 3.1099994, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1371,7 +1371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementType: {fileID: 11400000, guid: 94a47a3563bb6bd48b7f6d918c00a74b, type: 2}
-  animHandler: {fileID: 1276991305}
+  _animHandler: {fileID: 1276991305}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -1548,7 +1548,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.55, y: -7.1000004, z: -10}
+  m_LocalPosition: {x: -12.55, y: 3.1099994, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1628,7 +1628,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1513292265}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1af1681ed3af2440a194734e672d808, type: 3}
   m_Name: 
@@ -1716,7 +1716,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569358755224315405, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4569358755302778811, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_Layer
@@ -1736,7 +1736,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5852806615148106059, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.1
+      value: 3.11
       objectReference: {fileID: 0}
     - target: {fileID: 5852806615148106059, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1972,6 +1972,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4569358755224315405, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5852806615148106059, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1982,7 +1986,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5852806615148106059, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.1
+      value: 3.1100001
       objectReference: {fileID: 0}
     - target: {fileID: 5852806615148106059, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_LocalPosition.z

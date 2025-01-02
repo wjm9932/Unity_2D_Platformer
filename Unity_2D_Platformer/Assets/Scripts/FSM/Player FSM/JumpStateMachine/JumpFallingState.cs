@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.ScrollRect;
 
 public class JumpFallingState : IState, IGravityModifier
 {
@@ -11,7 +12,7 @@ public class JumpFallingState : IState, IGravityModifier
     }
     public void Enter()
     {
-        SetGravityScale();
+        //SetGravityScale();
     }
     public void Update()
     {
@@ -55,6 +56,15 @@ public class JumpFallingState : IState, IGravityModifier
         {
             sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.fastFallGravityMult);
             sm.owner.rb.velocity = new Vector2(sm.owner.rb.velocity.x, Mathf.Max(sm.owner.rb.velocity.y, -sm.owner.movementType.maxFastFallSpeed));
+        }
+        else if (sm.isJumpCut == true)
+        {
+            sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.jumpCutGravityMult);
+            sm.owner.rb.velocity = new Vector2(sm.owner.rb.velocity.x, Mathf.Max(sm.owner.rb.velocity.y, -sm.owner.movementType.maxFallSpeed));
+        }
+        else if (Mathf.Abs(sm.owner.rb.velocity.y) < sm.owner.movementType.jumpHangVelocityThreshold)
+        {
+            sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.jumpHangGravityMult);
         }
         else if (sm.owner.rb.velocity.y < 0 && sm.owner.lastOnGroundTime <= 0f)
         {
