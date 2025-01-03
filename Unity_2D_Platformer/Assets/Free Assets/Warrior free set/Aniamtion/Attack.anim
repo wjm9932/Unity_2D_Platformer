@@ -106,28 +106,28 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.7
+  - time: 0.6
     functionName: OnAnimationTransitionEvent
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.9
+  - time: 0.8
     functionName: OnAnimationEnterEvent
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.1
+  - time: 0.9
     functionName: OnAnimationTransitionEvent
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.2
+  - time: 1.1
     functionName: OnAnimationExitEvent
     data: 
     objectReferenceParameter: {fileID: 0}

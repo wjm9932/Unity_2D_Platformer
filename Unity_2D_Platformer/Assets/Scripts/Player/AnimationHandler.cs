@@ -11,6 +11,7 @@ public class AnimationHandler : MonoBehaviour
 
     public bool isJumpTriggered { private get; set; } = false;
     public bool comboAttack_1 { private get; set; } = false;   
+    public bool comboAttack_2 { private get; set; } = false;   
     public bool resetCombo { private get; set; } = false;
     public bool isSlide { private get; set; } = false;
 
@@ -33,8 +34,13 @@ public class AnimationHandler : MonoBehaviour
             animator.SetTrigger("Combo_1");
             comboAttack_1 = false;
         }
+        if (comboAttack_2 == true)
+        {
+            animator.SetTrigger("Combo_2");
+            comboAttack_2 = false;
+        }
 
-        if(resetCombo == true)
+        if (resetCombo == true)
         {
             animator.SetTrigger("ResetCombo");
             resetCombo = false;
