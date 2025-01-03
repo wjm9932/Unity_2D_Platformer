@@ -21,7 +21,7 @@ public class SlideState : IState, IGravityModifier
             sm.ChangeState(sm.wallJumpState);
             return;
         }
-        else if (sm.owner.facingDir != sm.owner.input.moveInput.x)
+        else if ((sm.owner.facingDir != sm.owner.input.moveInput.x) || (sm.owner.lastOnWallTime <= 0f))
         {
             sm.ChangeState(sm.fallingState);
             return;

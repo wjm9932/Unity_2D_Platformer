@@ -9,8 +9,9 @@ public class AnimationHandler : MonoBehaviour
     private Player playerMovement;
     private Animator animator;
 
-    public bool isJumpStarted { private get; set; }
-    public bool isSlide { private get; set; }
+    public bool isJumpTriggered { private get; set; } = false;
+    public bool isAttackTriggered { private get; set; } = false;   
+    public bool isSlide { private get; set; } = false;
 
     private void Awake()
     {
@@ -21,14 +22,26 @@ public class AnimationHandler : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(isJumpStarted == true)
+        if (isJumpTriggered == true)
         {
             animator.SetTrigger("Jump");
-            isJumpStarted = false;
+            isJumpTriggered = false;
+        }
+
+        if(isAttackTriggered == true)
+        {
+            animator.SetTrigger("Attack");
+            isAttackTriggered = false;
         }
 
         animator.SetBool("IsSlide", isSlide);
         animator.SetBool("IsRun", playerMovement.input.moveInput.x != 0);
         animator.SetFloat("VelocityY", playerMovement.rb.velocity.y);
+    }
+
+    public bool IsAnimationFinished()
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        return stateInfo.normalizedTime >= 0.95f && !animator.IsInTransition(0); 
     }
 }

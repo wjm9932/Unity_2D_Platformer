@@ -25,6 +25,12 @@ public class Player : MonoBehaviour
     public Vector2 wallCollisionCheckerSize = new Vector2();
     #endregion
 
+    #region Attack Root
+    [Header ("Attack Root")]
+    public Transform attackRoot;
+    public float attackRange;
+    #endregion
+
     #region State Machine
     public PlayerMovementStateMachine movementStateMachine { get; private set; }
     #endregion
@@ -51,6 +57,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log(lastOnWallTime);
+
         #region Timer
         lastOnGroundTime -= Time.deltaTime;
         lastOnWallTime -= Time.deltaTime;
@@ -101,6 +109,9 @@ public class Player : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(wallCollisionChecker.position, wallCollisionCheckerSize);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackRoot.position, attackRange);
     }
 #endif
     #endregion

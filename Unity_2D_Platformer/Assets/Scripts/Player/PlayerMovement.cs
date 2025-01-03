@@ -112,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
 
             Jump();
 
-            animHandler.isJumpStarted = true;
+            animHandler.isJumpTriggered = true;
         }
         else if(CanWallJump() == true)
         {
@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
 
             WallJump(slideDir ? -1 : 1);
 
-            animHandler.isJumpStarted = true;
+            animHandler.isJumpTriggered = true;
         }
         #endregion
 

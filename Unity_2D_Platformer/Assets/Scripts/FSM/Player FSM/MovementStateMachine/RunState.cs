@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
-using static UnityEngine.UI.ScrollRect;
 
 public class RunState : IState
 {
@@ -14,8 +12,9 @@ public class RunState : IState
     }
     public void Enter()
     {
-        isFacingRight = sm.owner.transform.localRotation.y < 180f;
+        isFacingRight = sm.owner.transform.localRotation.y >= 0f;
     }
+
     public void Update()
     {
         if (sm.owner.input.moveInput.x != 0)
@@ -27,9 +26,19 @@ public class RunState : IState
         {
             sm.owner.lastPressJumpTime = sm.owner.movementType.jumpInputBufferTime;
         }
+
+        if(sm.owner.input.isAttack == true && sm.jsm.currentState == sm.jsm.idleState)
+        {
+            sm.ChangeState(sm.attackState);
+        }
     }
     public void FixedUpdate()
     {
+        if(sm.currentState != this)
+        {
+            return;
+        }
+
         if (sm.jsm.currentState != sm.jsm.slideState)
         {
             Run(1f);
