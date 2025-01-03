@@ -8,16 +8,20 @@ public class Player : MonoBehaviour
     [Header("Movement  Type")]
     public MovementTypeSO movementType;
 
-    [Header ("Animation Handler")]
+    [Header("Animation Handler")]
     [SerializeField] private AnimationHandler _animHandler;
     public AnimationHandler animHandler { get { return _animHandler; } }
 
     public Rigidbody2D rb { get; private set; }
     public PlayerInput input { get; private set; }
 
-    #region Collision Check Parameteres
+    #region LayerMask
+    [Header("Layer")]
+    public LayerMask enemyLayer;
     public LayerMask whatIsGround;
+    #endregion
 
+    #region Collision Check Parameteres
     [Header("Collision Check")]
     public Transform groundChecker;
     public Vector2 groundCheckSize = new Vector2();
@@ -26,7 +30,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Attack Root
-    [Header ("Attack Root")]
+    [Header("Attack Root")]
     public Transform attackRoot;
     public float attackRange;
     #endregion
@@ -57,7 +61,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(lastOnWallTime);
+        //Debug.Log(movementStateMachine.currentState);
 
         #region Timer
         lastOnGroundTime -= Time.deltaTime;
@@ -66,7 +70,7 @@ public class Player : MonoBehaviour
         #endregion
 
         #region Collision Check
-        if(movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.wallJumpState)
+        if (movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.wallJumpState)
         {
             if (Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, whatIsGround) == true) //checks if set box overlaps with ground
             {
@@ -95,6 +99,19 @@ public class Player : MonoBehaviour
     {
         movementStateMachine.LateUpdate();
         movementStateMachine.jsm.LateUpdate();
+    }
+
+    public void OnAnimationEnterEvent()
+    {
+        movementStateMachine.OnAnimationEnterEvent();
+    }
+    public void OnAnimationTransitionEvent()
+    {
+        movementStateMachine.OnAnimationTransitionEvent();
+    }
+    public void OnAnimationExitEvent()
+    {
+        movementStateMachine.OnAnimationExitEvent();
     }
     public void SetGravityScale(float scale)
     {

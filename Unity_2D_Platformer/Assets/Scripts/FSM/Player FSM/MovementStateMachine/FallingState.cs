@@ -43,9 +43,6 @@ public class FallingState : IState, IGravityModifier
     public void Exit()
     {
     }
-    public void OnAnimatorIK()
-    {
-    }
 
     public virtual void OnAnimationEnterEvent()
     {

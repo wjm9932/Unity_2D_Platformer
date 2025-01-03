@@ -41,9 +41,6 @@ public class JumpState : IState, IGravityModifier
     public void Exit()
     {
     }
-    public void OnAnimatorIK()
-    {
-    }
 
     public virtual void OnAnimationEnterEvent()
     {

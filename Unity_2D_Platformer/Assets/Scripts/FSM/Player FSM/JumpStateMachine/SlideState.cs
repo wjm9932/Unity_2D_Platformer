@@ -50,9 +50,6 @@ public class SlideState : IState, IGravityModifier
         sm.owner.animHandler.isSlide = false;
 
     }
-    public void OnAnimatorIK()
-    {
-    }
 
     public virtual void OnAnimationEnterEvent()
     {

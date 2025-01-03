@@ -43,9 +43,6 @@ public class IdleState : IState, IGravityModifier
     {
 
     }
-    public void OnAnimatorIK()
-    {
-    }
 
     public virtual void OnAnimationEnterEvent()
     {

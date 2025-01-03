@@ -43,9 +43,6 @@ public class WallJumpState : IState, IGravityModifier
     {
 
     }
-    public void OnAnimatorIK()
-    {
-    }
 
     public virtual void OnAnimationEnterEvent()
     {

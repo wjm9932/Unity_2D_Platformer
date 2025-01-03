@@ -6,20 +6,29 @@ public class RunState : IState
 {
     private PlayerMovementStateMachine sm;
     private bool isFacingRight;
+    private float attackBufferTime;
     public RunState(PlayerMovementStateMachine playerMovementStateMachine)
     {
         sm = playerMovementStateMachine;
     }
     public void Enter()
     {
+        attackBufferTime = 0f;
         isFacingRight = sm.owner.transform.localRotation.y >= 0f;
     }
 
     public void Update()
     {
+        attackBufferTime -= Time.deltaTime;
+
         if (sm.owner.input.moveInput.x != 0)
         {
             FlipPlayer(sm.owner.input.moveInput.x > 0);
+        }
+
+        if(sm.owner.input.isAttack == true)
+        {
+            attackBufferTime = sm.owner.movementType.attackBufferTime;
         }
 
         if (sm.owner.input.isJump == true)
@@ -27,9 +36,9 @@ public class RunState : IState
             sm.owner.lastPressJumpTime = sm.owner.movementType.jumpInputBufferTime;
         }
 
-        if(sm.owner.input.isAttack == true && sm.jsm.currentState == sm.jsm.idleState)
+        if(attackBufferTime > 0f && sm.jsm.currentState == sm.jsm.idleState)
         {
-            sm.ChangeState(sm.attackState);
+            sm.ChangeState(sm.combo_1AttackState);
         }
     }
     public void FixedUpdate()
@@ -51,9 +60,6 @@ public class RunState : IState
     public void Exit()
     {
 
-    }
-    public void OnAnimatorIK()
-    {
     }
 
     public virtual void OnAnimationEnterEvent()
