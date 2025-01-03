@@ -23,26 +23,17 @@ public class RunState : IState
             FlipPlayer(sm.owner.input.moveInput.x > 0);
         }
 
-        #region Collision Check
-        if (sm.jsm.currentState != sm.jsm.jumpState)
-        {
-
-        }
-        #endregion
-
         if (sm.owner.input.isJump == true)
         {
             sm.owner.lastPressJumpTime = sm.owner.movementType.jumpInputBufferTime;
         }
-
     }
     public void FixedUpdate()
     {
         if (sm.jsm.currentState != sm.jsm.slideState)
         {
+            Run(1f);
         }
-
-        Run(1f);
     }
     public void LateUpdate()
     {

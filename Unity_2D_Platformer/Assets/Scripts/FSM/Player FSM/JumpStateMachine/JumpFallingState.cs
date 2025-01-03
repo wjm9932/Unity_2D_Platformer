@@ -61,7 +61,7 @@ public class JumpFallingState : IState, IGravityModifier
 
     public void SetGravityScale()
     {
-        if (sm.owner.rb.velocity.y < 0 && sm.owner.input.moveInput.y < 0)
+        if (sm.owner.input.moveInput.y < 0)
         {
             sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.fastFallGravityMult);
             sm.owner.rb.velocity = new Vector2(sm.owner.rb.velocity.x, Mathf.Max(sm.owner.rb.velocity.y, -sm.owner.movementType.maxFastFallSpeed));
@@ -75,7 +75,7 @@ public class JumpFallingState : IState, IGravityModifier
         {
             sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.jumpHangGravityMult);
         }
-        else if (sm.owner.rb.velocity.y < 0 && sm.owner.lastOnGroundTime <= 0f)
+        else
         {
             sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.fallGravityMult);
             sm.owner.rb.velocity = new Vector2(sm.owner.rb.velocity.x, Mathf.Max(sm.owner.rb.velocity.y, -sm.owner.movementType.maxFallSpeed));
