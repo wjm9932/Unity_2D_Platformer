@@ -10,6 +10,7 @@ public class Combo_2AttackState : AttackState
     public override void Enter()
     {
         base.Enter();
+        sm.owner.rb.AddForce(sm.owner.transform.right * 50f, ForceMode2D.Impulse);
         sm.owner.animHandler.comboAttack_2 = true;
     }
     public override void Update()
