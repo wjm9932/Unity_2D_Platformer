@@ -13,7 +13,7 @@ public class JumpState : IState, IGravityModifier
     {
         Jump();
         sm.isJumpCut = false;
-        sm.owner.animHandler.isJumpTriggered = true;
+        sm.owner.animHandler.animator.SetTrigger("Jump");
     }
     public void Update()
     {

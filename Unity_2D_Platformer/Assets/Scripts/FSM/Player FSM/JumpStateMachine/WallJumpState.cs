@@ -14,7 +14,7 @@ public class WallJumpState : IState, IGravityModifier
     {
         WallJump(sm.owner.facingDir < 0 ? 1 : -1);
         sm.isJumpCut = false;
-        sm.owner.animHandler.isJumpTriggered = true;
+        sm.owner.animHandler.animator.SetTrigger("Jump");
     }
     public void Update()
     {

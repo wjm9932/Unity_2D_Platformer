@@ -9,10 +9,6 @@ public class AnimationHandler : MonoBehaviour
     private Player player;
     public Animator animator;
 
-    public bool isJumpTriggered { private get; set; } = false;
-    public bool comboAttack_1 { private get; set; } = false;   
-    public bool comboAttack_2 { private get; set; } = false;   
-    public bool resetCombo { private get; set; } = false;
     public bool isSlide { private get; set; } = false;
 
     private void Awake()
@@ -22,30 +18,7 @@ public class AnimationHandler : MonoBehaviour
     }
 
     private void LateUpdate()
-    {
-        if (isJumpTriggered == true)
-        {
-            animator.SetTrigger("Jump");
-            isJumpTriggered = false;
-        }
-
-        if(comboAttack_1 == true)
-        {
-            animator.SetTrigger("Combo_1");
-            comboAttack_1 = false;
-        }
-        if (comboAttack_2 == true)
-        {
-            animator.SetTrigger("Combo_2");
-            comboAttack_2 = false;
-        }
-
-        if (resetCombo == true)
-        {
-            animator.SetTrigger("ResetCombo");
-            resetCombo = false;
-        }
-
+    {   
         animator.SetBool("IsSlide", isSlide);
         animator.SetBool("IsRun", player.input.moveInput.x != 0);
         animator.SetFloat("VelocityY", player.rb.velocity.y);

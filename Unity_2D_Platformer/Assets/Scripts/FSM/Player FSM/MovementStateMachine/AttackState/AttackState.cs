@@ -21,7 +21,7 @@ public abstract class AttackState : IState
     {
         if (sm.owner.animHandler.IsAnimationFinished() == true)
         {
-            sm.owner.animHandler.resetCombo = true;
+            sm.owner.animHandler.animator.SetTrigger("ResetCombo");
             sm.ChangeState(sm.runState);
         }
     }

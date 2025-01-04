@@ -4,14 +4,30 @@ using UnityEngine;
 
 public class Combo_2AttackState : AttackState
 {
+    private float decelerationFactor = 0.2f;
+    private float dashForce;
     public Combo_2AttackState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
     {
+        
     }
     public override void Enter()
     {
         base.Enter();
-        sm.owner.rb.AddForce(sm.owner.transform.right * 50f, ForceMode2D.Impulse);
-        sm.owner.animHandler.comboAttack_2 = true;
+        dashForce = 50f;
+
+        if (sm.owner.input.moveInput.x != 0)
+        {
+            FlipPlayer(sm.owner.input.moveInput.x > 0);
+        }
+
+        RaycastHit2D hit = Physics2D.Raycast(sm.owner.rb.position, sm.owner.transform.right, CalculateDashDistance(dashForce), sm.owner.enemyLayer | sm.owner.whatIsGround);
+        if (hit.collider != null) 
+        {
+            dashForce = CalculateRequiredImpulse(hit.distance - 1f);
+        }
+        sm.owner.rb.AddForce(sm.owner.transform.right * dashForce, ForceMode2D.Impulse);
+
+        sm.owner.animHandler.animator.SetTrigger("Combo_2");
     }
     public override void Update()
     {
@@ -67,8 +83,76 @@ public class Combo_2AttackState : AttackState
     private void DeaccelPlayerVelocity()
     {
         float speedDiff = 0f - sm.owner.rb.velocity.x;
-        float movement = speedDiff * ((1 / Time.fixedDeltaTime) * 0.2f);
+        float movement = speedDiff * ((1 / Time.fixedDeltaTime) * decelerationFactor);
 
         sm.owner.rb.AddForce(movement * Vector2.right);
+    }
+
+    private void FlipPlayer(bool isRight)
+    {
+        if (isRight == false)
+        {
+            sm.owner.transform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            sm.owner.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
+    private float CalculateDashDistance(float dashForce)
+    {
+        float impulseForce = dashForce;
+
+        float initialVelocity = impulseForce; 
+        float velocity = initialVelocity;
+        float totalDistance = 0f;
+
+        while (velocity > 0.001f)
+        {
+            float decelerationForce = velocity * (1 / Time.fixedDeltaTime) * decelerationFactor;
+            float accelerationDecel = decelerationForce; 
+            velocity -= accelerationDecel * Time.fixedDeltaTime; 
+
+
+            float distanceThisFrame = velocity * Time.fixedDeltaTime;
+            totalDistance += distanceThisFrame;
+        }
+
+        return totalDistance;
+    }
+
+    private float CalculateRequiredImpulse(float distance)
+    {
+        float obstacleDistance = distance;
+
+        float velocity = 0f;
+        float totalDistance = 0f;
+        float requiredImpulse = 0f; 
+        float step = 0.1f; 
+
+        while (totalDistance < obstacleDistance)
+        {
+            totalDistance = 0f;
+            velocity = requiredImpulse;
+
+            while (velocity > 0.1f)
+            {
+                
+                float decelerationForce = velocity * (1 / Time.fixedDeltaTime) * decelerationFactor;
+                float accelerationDecel = decelerationForce;
+                velocity -= accelerationDecel * Time.fixedDeltaTime;
+
+                float distanceThisFrame = velocity * Time.fixedDeltaTime;
+                totalDistance += distanceThisFrame;
+            }
+
+            if (totalDistance >= obstacleDistance)
+            {
+                break;
+            }
+            requiredImpulse += step;
+        }
+        return requiredImpulse;
     }
 }

@@ -12,7 +12,8 @@ public class Combo_1AttackState : AttackState
     {
         base.Enter();
         comboAttackBufferTime = 0f;
-        sm.owner.animHandler.comboAttack_1 = true;
+        sm.owner.animHandler.animator.SetTrigger("Combo_1");
+
     }
     public override void Update()
     {
