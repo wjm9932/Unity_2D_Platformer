@@ -39,7 +39,7 @@ public class Player : LivinEntity
     #endregion
 
     #region State Machine
-    public PlayerMovementStateMachine movementStateMachine { get; private set; }
+    private PlayerMovementStateMachine movementStateMachine;
     #endregion
 
     #region Timer

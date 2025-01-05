@@ -13,7 +13,7 @@ public class PlayerMovementStateMachine : StateMachine
     public PlayerMovementStateMachine(Player player)
     {
         this.owner = player;
-        this.jsm = new PlayerJumpStateMachine(player);
+        this.jsm = new PlayerJumpStateMachine(player, this);
 
         runState = new RunState(this);
         combo_1AttackState = new Combo_1AttackState(this);

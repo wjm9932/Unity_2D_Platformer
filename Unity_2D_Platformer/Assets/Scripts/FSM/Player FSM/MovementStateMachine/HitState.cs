@@ -19,6 +19,11 @@ public class HitState : IState
         ApplyKnockbackForce(sm.owner.movementType.knockbackForce);
         timer = duration;
 
+        if (sm.jsm.currentState == sm.jsm.slideState)
+        {
+            sm.jsm.ChangeState(sm.jsm.fallingState);
+        }
+
         sm.owner.animHandler.animator.SetBool("IsHit", true);
     }
     public void Update()
