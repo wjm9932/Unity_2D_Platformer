@@ -62,6 +62,10 @@ public class MovementTypeSO : ScriptableObject
 
     [Header("Attack Assit")]
     [Range(0.01f, 0.5f)] public float attackBufferTime;
+
+    [Header("Knockback")]
+    public Vector2 knockbackForce;
+
     //[Space(20)]
 
     //[Header("Dash")]

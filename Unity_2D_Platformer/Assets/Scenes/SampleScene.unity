@@ -179,86 +179,30 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 42909123}
     m_ColliderPaths:
-    - - X: -190937447
-        Y: -10000085
+    - - X: -190000000
+        Y: -9062500
       - X: -190000000
-        Y: -9062642
-      - X: -190000000
-        Y: -10000000
-      - X: -80000100
-        Y: -10000000
-      - X: -80000100
-        Y: -10000041
-      - X: -80000041
-        Y: -10000100
-      - X: -69999959
-        Y: -10000100
-      - X: -69999900
-        Y: -10000041
-      - X: -69999900
         Y: -10000000
       - X: 30000000
         Y: -10000000
       - X: 30000000
-        Y: -100
-      - X: 30000041
-        Y: -100
-      - X: 30000100
-        Y: -41
-      - X: 30000100
-        Y: 40000041
-      - X: 30000041
-        Y: 40000100
-      - X: 19999959
-        Y: 40000100
-      - X: 19999900
-        Y: 40000041
-      - X: 19999900
-        Y: 0
-      - X: -69999900
-        Y: 0
-      - X: -69999900
-        Y: 41
-      - X: -69999959
-        Y: 100
-      - X: -80000041
-        Y: 100
-      - X: -80000100
-        Y: 41
-      - X: -80000100
-        Y: 0
-      - X: -189999900
-        Y: 0
-      - X: -189999900
-        Y: 100000041
-      - X: -189999959
-        Y: 100000100
-      - X: -200000041
-        Y: 100000100
-      - X: -200000100
-        Y: 100000041
-      - X: -200000100
-        Y: -8750012
-      - X: -200000095
-        Y: -8750034
-      - X: -199375085
-        Y: -10000070
-      - X: -199375036
-        Y: -10000100
-      - X: -190937484
-        Y: -10000100
-    - - X: 250000000
-        Y: 10625000
-      - X: 250000000
         Y: 40000000
-      - X: 220000000
+      - X: 20000000
         Y: 40000000
-      - X: 220000000
-        Y: 11562500
-      - X: 221562496
-        Y: 10000000
-      - X: 249375008
-        Y: 10000000
+      - X: 20000000
+        Y: 0
+      - X: -190000000
+        Y: 0
+      - X: -190000000
+        Y: 100000000
+      - X: -200000000
+        Y: 100000000
+      - X: -200000000
+        Y: -8750000
+      - X: -199375008
+        Y: -10000000
+      - X: -190937504
+        Y: -10000000
     - - X: 190000000
         Y: 10625000
       - X: 190000000
@@ -270,6 +214,18 @@ CompositeCollider2D:
       - X: 161562496
         Y: 10000000
       - X: 189375008
+        Y: 10000000
+    - - X: 250000000
+        Y: 10625000
+      - X: 250000000
+        Y: 40000000
+      - X: 220000000
+        Y: 40000000
+      - X: 220000000
+        Y: 11562500
+      - X: 221562496
+        Y: 10000000
+      - X: 249375008
         Y: 10000000
     - - X: 150000000
         Y: 625000
@@ -297,18 +253,18 @@ CompositeCollider2D:
         Y: -10000000
   m_CompositePaths:
     m_Paths:
-    - - {x: -19.09376, y: -1.00001}
-      - {x: -19, y: -0.9063516}
+    - - {x: -19.093761, y: -1}
+      - {x: -19, y: -0.90633744}
       - {x: -18.999971, y: -1}
       - {x: 3, y: -0.99997073}
-      - {x: 2.9999747, y: 4.00001}
-      - {x: 1.99999, y: 3.9999747}
-      - {x: 1.9999607, y: 0}
-      - {x: -18.99999, y: 0.0000294}
-      - {x: -19.000027, y: 10.00001}
-      - {x: -20.00001, y: 9.999974}
-      - {x: -20.000006, y: -0.8750089}
-      - {x: -19.937487, y: -1.00001}
+      - {x: 2.999971, y: 4}
+      - {x: 2, y: 3.999971}
+      - {x: 1.9999707, y: 0}
+      - {x: -19, y: 0.0000294}
+      - {x: -19.000029, y: 10}
+      - {x: -20, y: 9.99997}
+      - {x: -19.999996, y: -0.8750055}
+      - {x: -19.937485, y: -1}
     - - {x: 24.93749, y: 1}
       - {x: 25, y: 1.0625108}
       - {x: 24.999971, y: 4}
@@ -1295,71 +1251,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1001 &93395847
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7681903456019720960, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7681903456019720960, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 4.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7681903456019720960, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7681903456019720960, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 54.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7681903456019720960, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7681903456019720960, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7681903456019720960, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7681903456019720960, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7681903456019720960, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7681903456019720960, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7681903456019720960, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7681903456019720960, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7681903456019720960, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7681903456019720961, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
-      propertyPath: m_Name
-      value: BackGround (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}
 --- !u!1 &171652490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,7 +1360,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &222626858
 GameObject:
@@ -1651,7 +1542,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &434663497 stripped
 Transform:
@@ -1943,12 +1834,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800795104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.92, y: -11.28, z: 0}
+  m_LocalPosition: {x: -24.75, y: -11.37, z: 0}
   m_LocalScale: {x: 10.9, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &800795107
 BoxCollider2D:
@@ -2149,7 +2040,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1379874972
 PrefabInstance:
@@ -2273,7 +2164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5852806615148106059, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5852806615148106059, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_LocalScale.x
@@ -2502,7 +2393,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2106075442
 BoxCollider2D:

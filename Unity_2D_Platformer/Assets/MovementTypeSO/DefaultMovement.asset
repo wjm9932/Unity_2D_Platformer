@@ -41,3 +41,4 @@ MonoBehaviour:
   wallJumpCoyoteTime: 0.2
   jumpInputBufferTime: 0.1
   attackBufferTime: 0.2
+  knockbackForce: {x: 15, y: 10}

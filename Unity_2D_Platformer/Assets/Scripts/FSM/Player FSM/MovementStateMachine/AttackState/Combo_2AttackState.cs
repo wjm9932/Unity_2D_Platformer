@@ -19,10 +19,10 @@ public class Combo_2AttackState : AttackState
             FlipPlayer(sm.owner.input.moveInput.x > 0);
         }
 
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(sm.owner.rb.position.x + (sm.owner.transform.right.x * (0.525f + 0.5f)), sm.owner.rb.position.y), sm.owner.transform.right, CalculateDashDistance(dashForce), sm.owner.enemyLayer | sm.owner.whatIsGround);
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(sm.owner.rb.position.x + (sm.owner.transform.right.x * 0.525f), sm.owner.rb.position.y), sm.owner.transform.right, CalculateDashDistanceByDashForce(dashForce) + 0.5f, sm.owner.enemyLayer | sm.owner.whatIsGround);
         if (hit.collider != null) 
         {
-            dashForce = CalculateRequiredImpulse(hit.distance);
+            dashForce = CalculateRequiredImpulseForDistance(hit.distance - 0.5f);
         }
         sm.owner.rb.AddForce(sm.owner.transform.right * dashForce, ForceMode2D.Impulse);
 
@@ -92,15 +92,17 @@ public class Combo_2AttackState : AttackState
         }
     }
 
-    private float CalculateDashDistance(float dashForce)
+    private float CalculateDashDistanceByDashForce(float dashForce, bool debugTime = false)
     {
         float impulseForce = dashForce;
+
+        float time = 0f;
 
         float initialVelocity = impulseForce; 
         float velocity = initialVelocity;
         float totalDistance = 0f;
 
-        while (velocity > 0.001f)
+        while (velocity > 0.1f)
         {
             float decelerationForce = velocity * (1 / Time.fixedDeltaTime) * decelerationFactor;
             float accelerationDecel = decelerationForce; 
@@ -109,14 +111,23 @@ public class Combo_2AttackState : AttackState
 
             float distanceThisFrame = velocity * Time.fixedDeltaTime;
             totalDistance += distanceThisFrame;
+
+            time += Time.fixedDeltaTime;
+        }
+
+        if(debugTime == true)
+        {
+            Debug.Log(time);
         }
 
         return totalDistance;
     }
 
-    private float CalculateRequiredImpulse(float distance)
+    private float CalculateRequiredImpulseForDistance(float distance, bool debugTime = false)
     {
         float obstacleDistance = distance;
+
+        float time = 0f;
 
         float velocity = 0f;
         float totalDistance = 0f;
@@ -125,6 +136,7 @@ public class Combo_2AttackState : AttackState
 
         while (totalDistance < obstacleDistance)
         {
+            time = 0f;
             totalDistance = 0f;
             velocity = requiredImpulse;
 
@@ -137,14 +149,23 @@ public class Combo_2AttackState : AttackState
 
                 float distanceThisFrame = velocity * Time.fixedDeltaTime;
                 totalDistance += distanceThisFrame;
+
+                time += Time.fixedDeltaTime;
             }
 
             if (totalDistance >= obstacleDistance)
             {
                 break;
             }
+
             requiredImpulse += step;
         }
+
+        if(debugTime == true)
+        {
+            Debug.Log(time);
+        }
+
         return requiredImpulse;
     }
 }

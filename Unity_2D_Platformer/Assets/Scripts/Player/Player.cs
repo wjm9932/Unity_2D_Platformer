@@ -63,6 +63,11 @@ public class Player : MonoBehaviour
     {
         //Debug.Log(movementStateMachine.currentState);
 
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            movementStateMachine.ChangeState(movementStateMachine.hitState);
+        }
+
         #region Timer
         lastOnGroundTime -= Time.deltaTime;
         lastOnWallTime -= Time.deltaTime;

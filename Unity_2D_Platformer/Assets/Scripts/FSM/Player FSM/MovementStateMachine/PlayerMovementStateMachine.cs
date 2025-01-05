@@ -9,6 +9,7 @@ public class PlayerMovementStateMachine : StateMachine
     public RunState runState { get; private set; }
     public Combo_1AttackState combo_1AttackState { get; private set; }
     public Combo_2AttackState combo_2AttackState { get; private set; }
+    public HitState hitState { get; private set; }
     public PlayerMovementStateMachine(Player player)
     {
         this.owner = player;
@@ -17,5 +18,6 @@ public class PlayerMovementStateMachine : StateMachine
         runState = new RunState(this);
         combo_1AttackState = new Combo_1AttackState(this);
         combo_2AttackState = new Combo_2AttackState(this);
+        hitState = new HitState(this);
     }
 }
