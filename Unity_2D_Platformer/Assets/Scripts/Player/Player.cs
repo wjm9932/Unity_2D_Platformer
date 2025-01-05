@@ -65,7 +65,10 @@ public class Player : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.K))
         {
-            movementStateMachine.ChangeState(movementStateMachine.hitState);
+            if(!(movementStateMachine.currentState is AttackState) && movementStateMachine.currentState != movementStateMachine.hitState)
+            {
+                movementStateMachine.ChangeState(movementStateMachine.hitState);
+            }
         }
 
         #region Timer
@@ -123,7 +126,7 @@ public class Player : MonoBehaviour
         rb.gravityScale = scale;
     }
 
-
+    #region Time Calculator
     public float CalculateTimeByDashForce(float dashForce, float decelerationFactor)
     {
         if(decelerationFactor <= 0f)
@@ -144,7 +147,6 @@ public class Player : MonoBehaviour
             float decelerationForce = velocity * (1 / Time.fixedDeltaTime) * decelerationFactor;
             float accelerationDecel = decelerationForce;
             velocity -= accelerationDecel * Time.fixedDeltaTime;
-
 
             float distanceThisFrame = velocity * Time.fixedDeltaTime;
             totalDistance += distanceThisFrame;
@@ -201,6 +203,7 @@ public class Player : MonoBehaviour
 
         return time;
     }
+    #endregion
 
     #region EDITOR METHODS
 #if UNITY_EDITOR

@@ -16,8 +16,9 @@ public class HitState : IState
     }
     public void Enter()
     {
-        timer = duration;
         ApplyKnockbackForce(sm.owner.movementType.knockbackForce);
+        timer = duration;
+
         sm.owner.animHandler.animator.SetBool("IsHit", true);
     }
     public void Update()
@@ -34,6 +35,7 @@ public class HitState : IState
         {
             return;
         }
+
         DeaccelPlayerVelocity();
     }
     public void LateUpdate()
@@ -72,7 +74,6 @@ public class HitState : IState
         }
         force.x += additionalForce;
         force.x *= -sm.owner.transform.right.x;
-
 
         if (sm.jsm.currentState != sm.jsm.idleState)
         {
