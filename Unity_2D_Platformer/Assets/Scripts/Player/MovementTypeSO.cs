@@ -44,9 +44,6 @@ public class MovementTypeSO : ScriptableObject
 
     [Header("Wall Jump")]
     public Vector2 wallJumpForce; //The actual force (this time set by us) applied to the player when wall jumping.
-    //[Space(5)]
-    //[Range(0f, 1f)] public float wallJumpRunLerp; //Reduces the effect of player's movement while wall jumping.
-    //[Range(0f, 1.5f)] public float wallJumpCoolTime; //Time after wall jumping the player's movement is slowed for.
 
     [Space(20)]
 
@@ -57,8 +54,8 @@ public class MovementTypeSO : ScriptableObject
 
     [Header("Jump Assists")]
     [Range(0.01f, 0.5f)] public float coyoteTime; //Grace period after falling off a platform, where you can still jump
-    [Range(0.01f, 0.5f)] public float wallJumpCoyoteTime; //Grace period after falling off a platform, where you can still jump
     [Range(0.01f, 0.5f)] public float jumpInputBufferTime; //Grace period after pressing jump where a jump will be automatically performed once the requirements (eg. being grounded) are met.
+    [Range(0.01f, 0.5f)] public float wallJumpCoyoteTime;
 
     [Header("Attack Assit")]
     [Range(0.01f, 0.5f)] public float attackBufferTime;
@@ -103,9 +100,6 @@ public class MovementTypeSO : ScriptableObject
         #region Variable Ranges
         runAcceleration = Mathf.Clamp(runAcceleration, 0.01f, runMaxSpeed);
         runDecceleration = Mathf.Clamp(runDecceleration, 0.01f, runMaxSpeed);
-
-        //jumpHangAccelerationMult = Mathf.Max(jumpHangAccelerationMult, 1f, jumpHangAccelerationMult);
-        //jumpHangMaxSpeedMult = Mathf.Max(jumpHangMaxSpeedMult, 1f, jumpHangMaxSpeedMult);
 
         slideAccel = Mathf.Clamp(slideAccel, 1f, Mathf.Abs(slideSpeed));
 

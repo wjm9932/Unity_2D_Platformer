@@ -36,7 +36,7 @@ public class Combo_2AttackState : AttackState
 
             for (int i = 0; i < enemies.Length; i++)
             {
-                Debug.Log(enemies[i].name);
+                enemies[i].GetComponent<LivinEntity>().ApplyDamage(sm.owner.dmg);
             }
         }
 

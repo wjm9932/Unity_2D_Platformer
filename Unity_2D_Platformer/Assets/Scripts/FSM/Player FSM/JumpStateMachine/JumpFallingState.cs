@@ -5,7 +5,7 @@ using UnityEngine;
 public class JumpFallingState : IState, IGravityModifier
 {
     private PlayerJumpStateMachine sm;
-    public JumpFallingState(PlayerJumpStateMachine playerJumpStateMachine) 
+    public JumpFallingState(PlayerJumpStateMachine playerJumpStateMachine)
     {
         sm = playerJumpStateMachine;
     }
@@ -25,12 +25,12 @@ public class JumpFallingState : IState, IGravityModifier
             sm.ChangeState(sm.wallJumpState);
             return;
         }
-        else if(sm.owner.facingDir == sm.owner.input.moveInput.x && sm.owner.lastOnWallTime > 0f)
+        else if (sm.owner.facingDir == sm.owner.input.moveInput.x && sm.owner.lastOnWallTime - sm.owner.movementType.wallJumpCoyoteTime >= 0f)
         {
             sm.ChangeState(sm.slideState);
             return;
         }
-        
+
         SetGravityScale();
     }
     public void FixedUpdate()

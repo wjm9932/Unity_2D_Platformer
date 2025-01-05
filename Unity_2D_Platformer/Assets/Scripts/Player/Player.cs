@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : LivinEntity
 {
+    [Space(20)]
+    [Header("Player Components")]
+
     [Header("Movement  Type")]
     public MovementTypeSO movementType;
 
@@ -63,12 +66,10 @@ public class Player : MonoBehaviour
     {
         //Debug.Log(movementStateMachine.currentState);
 
-        if(Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K))
         {
-            if(!(movementStateMachine.currentState is AttackState) && movementStateMachine.currentState != movementStateMachine.hitState)
-            {
-                movementStateMachine.ChangeState(movementStateMachine.hitState);
-            }
+            ApplyDamage(10);
+            //rb.AddForce(2f * transform.right, ForceMode2D.Impulse);
         }
 
         #region Timer
@@ -126,13 +127,29 @@ public class Player : MonoBehaviour
         rb.gravityScale = scale;
     }
 
+    public override bool ApplyDamage(float dmg)
+    {
+        if (base.ApplyDamage(dmg) == false)
+        {
+            return false;
+        }
+        else
+        {
+            if (!(movementStateMachine.currentState is AttackState) && movementStateMachine.currentState != movementStateMachine.hitState)
+            {
+                movementStateMachine.ChangeState(movementStateMachine.hitState);
+            }
+
+            return true;
+        }
+    }
     #region Time Calculator
     public float CalculateTimeByDashForce(float dashForce, float decelerationFactor)
     {
-        if(decelerationFactor <= 0f)
+        if (decelerationFactor <= 0f)
         {
             Debug.LogError("acceleration value is less than 0");
-            return - 1f;
+            return -1f;
         }
 
         float impulseForce = dashForce;
