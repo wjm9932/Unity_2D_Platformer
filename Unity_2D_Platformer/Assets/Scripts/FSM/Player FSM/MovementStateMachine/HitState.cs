@@ -5,26 +5,32 @@ using UnityEngine;
 public class HitState : IState
 {
     private PlayerMovementStateMachine sm;
-    private float decelerationFactor = 0.2f;
+    private readonly float duration;
+    private readonly float decelerationFactor;
+    private float timer;
     public HitState(PlayerMovementStateMachine playerMovementStateMachine)
     {
         sm = playerMovementStateMachine;
+        decelerationFactor = 0.2f;
+        duration = sm.owner.CalculateTimeByDashForce(sm.owner.movementType.knockbackForce.x, decelerationFactor);
     }
     public void Enter()
     {
+        timer = duration;
         ApplyKnockbackForce(sm.owner.movementType.knockbackForce);
         sm.owner.animHandler.animator.SetBool("IsHit", true);
     }
     public void Update()
     {
-        if(Mathf.Abs(sm.owner.rb.velocity.x) < 0.1f)
+        timer -= Time.deltaTime;
+        if (timer < 0f)
         {
             sm.ChangeState(sm.runState);
         }
     }
     public void FixedUpdate()
     {
-        if(sm.currentState != this)
+        if (sm.currentState != this)
         {
             return;
         }
@@ -67,8 +73,8 @@ public class HitState : IState
         force.x += additionalForce;
         force.x *= -sm.owner.transform.right.x;
 
-        
-        if(sm.jsm.currentState != sm.jsm.idleState)
+
+        if (sm.jsm.currentState != sm.jsm.idleState)
         {
             force.y = 0f;
         }

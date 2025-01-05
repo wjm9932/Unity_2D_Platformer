@@ -92,14 +92,13 @@ public class Combo_2AttackState : AttackState
         }
     }
 
-    private float CalculateDashDistanceByDashForce(float dashForce, bool debugTime = false)
+    private float CalculateDashDistanceByDashForce(float dashForce)
     {
         float impulseForce = dashForce;
 
         float time = 0f;
 
-        float initialVelocity = impulseForce; 
-        float velocity = initialVelocity;
+        float velocity = impulseForce;
         float totalDistance = 0f;
 
         while (velocity > 0.1f)
@@ -114,16 +113,10 @@ public class Combo_2AttackState : AttackState
 
             time += Time.fixedDeltaTime;
         }
-
-        if(debugTime == true)
-        {
-            Debug.Log(time);
-        }
-
         return totalDistance;
     }
 
-    private float CalculateRequiredImpulseForDistance(float distance, bool debugTime = false)
+    private float CalculateRequiredImpulseForDistance(float distance)
     {
         float obstacleDistance = distance;
 
@@ -159,11 +152,6 @@ public class Combo_2AttackState : AttackState
             }
 
             requiredImpulse += step;
-        }
-
-        if(debugTime == true)
-        {
-            Debug.Log(time);
         }
 
         return requiredImpulse;

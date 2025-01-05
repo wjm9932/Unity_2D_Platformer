@@ -122,6 +122,86 @@ public class Player : MonoBehaviour
     {
         rb.gravityScale = scale;
     }
+
+
+    public float CalculateTimeByDashForce(float dashForce, float decelerationFactor)
+    {
+        if(decelerationFactor <= 0f)
+        {
+            Debug.LogError("acceleration value is less than 0");
+            return - 1f;
+        }
+
+        float impulseForce = dashForce;
+
+        float time = 0f;
+
+        float velocity = impulseForce;
+        float totalDistance = 0f;
+
+        while (velocity > 0.1f)
+        {
+            float decelerationForce = velocity * (1 / Time.fixedDeltaTime) * decelerationFactor;
+            float accelerationDecel = decelerationForce;
+            velocity -= accelerationDecel * Time.fixedDeltaTime;
+
+
+            float distanceThisFrame = velocity * Time.fixedDeltaTime;
+            totalDistance += distanceThisFrame;
+
+            time += Time.fixedDeltaTime;
+        }
+
+        return time;
+    }
+
+    public float CalculateTimeForDistance(float distance, float decelerationFactor)
+    {
+        if (decelerationFactor <= 0f)
+        {
+            Debug.LogError("acceleration value is less than 0");
+            return -1f;
+        }
+
+        float obstacleDistance = distance;
+
+        float time = 0f;
+
+        float velocity = 0f;
+        float totalDistance = 0f;
+        float requiredImpulse = 0f;
+        float step = 0.1f;
+
+        while (totalDistance < obstacleDistance)
+        {
+            time = 0f;
+            totalDistance = 0f;
+            velocity = requiredImpulse;
+
+            while (velocity > 0.1f)
+            {
+
+                float decelerationForce = velocity * (1 / Time.fixedDeltaTime) * decelerationFactor;
+                float accelerationDecel = decelerationForce;
+                velocity -= accelerationDecel * Time.fixedDeltaTime;
+
+                float distanceThisFrame = velocity * Time.fixedDeltaTime;
+                totalDistance += distanceThisFrame;
+
+                time += Time.fixedDeltaTime;
+            }
+
+            if (totalDistance >= obstacleDistance)
+            {
+                break;
+            }
+
+            requiredImpulse += step;
+        }
+
+        return time;
+    }
+
     #region EDITOR METHODS
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
