@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Combo_2AttackState : AttackState
 {
-    private float decelerationFactor = 0.2f;
     private float dashForce;
     public Combo_2AttackState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
     {
@@ -20,10 +19,10 @@ public class Combo_2AttackState : AttackState
             FlipPlayer(sm.owner.input.moveInput.x > 0);
         }
 
-        RaycastHit2D hit = Physics2D.Raycast(sm.owner.rb.position, sm.owner.transform.right, CalculateDashDistance(dashForce), sm.owner.enemyLayer | sm.owner.whatIsGround);
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(sm.owner.rb.position.x + (sm.owner.transform.right.x * (0.525f + 0.5f)), sm.owner.rb.position.y), sm.owner.transform.right, CalculateDashDistance(dashForce), sm.owner.enemyLayer | sm.owner.whatIsGround);
         if (hit.collider != null) 
         {
-            dashForce = CalculateRequiredImpulse(hit.distance - 1f);
+            dashForce = CalculateRequiredImpulse(hit.distance);
         }
         sm.owner.rb.AddForce(sm.owner.transform.right * dashForce, ForceMode2D.Impulse);
 
@@ -80,13 +79,6 @@ public class Combo_2AttackState : AttackState
         canAttack = false;
     }
 
-    private void DeaccelPlayerVelocity()
-    {
-        float speedDiff = 0f - sm.owner.rb.velocity.x;
-        float movement = speedDiff * ((1 / Time.fixedDeltaTime) * decelerationFactor);
-
-        sm.owner.rb.AddForce(movement * Vector2.right);
-    }
 
     private void FlipPlayer(bool isRight)
     {

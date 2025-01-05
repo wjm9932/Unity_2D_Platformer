@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.ScrollRect;
 
 public class WallJumpState : IState, IGravityModifier
 {
@@ -83,16 +82,14 @@ public class WallJumpState : IState, IGravityModifier
         sm.owner.lastOnGroundTime = 0f;
 
         Vector2 force = new Vector2(sm.owner.movementType.wallJumpForce.x, sm.owner.movementType.wallJumpForce.y);
-        force.x *= dir; //apply force in opposite direction of wall
+        force.x *= dir;
 
         if (Mathf.Sign(sm.owner.rb.velocity.x) != Mathf.Sign(force.x))
             force.x -= sm.owner.rb.velocity.x;
 
-        if (sm.owner.rb.velocity.y < 0) //checks whether player is falling, if so we subtract the velocity.y (counteracting force of gravity). This ensures the player always reaches our desired jump force or greater
+        if (sm.owner.rb.velocity.y < 0)
             force.y -= sm.owner.rb.velocity.y;
 
-        //Unlike in the run we want to use the Impulse mode.
-        //The default mode will apply are force instantly ignoring masss
         sm.owner.rb.AddForce(force, ForceMode2D.Impulse);
     }
 }

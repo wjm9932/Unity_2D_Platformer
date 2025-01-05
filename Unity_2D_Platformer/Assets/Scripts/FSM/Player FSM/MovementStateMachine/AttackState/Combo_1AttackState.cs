@@ -13,7 +13,6 @@ public class Combo_1AttackState : AttackState
         base.Enter();
         comboAttackBufferTime = 0f;
         sm.owner.animHandler.animator.SetTrigger("Combo_1");
-
     }
     public override void Update()
     {
@@ -75,13 +74,5 @@ public class Combo_1AttackState : AttackState
     public override void OnAnimationTransitionEvent()
     {
         canAttack = false;
-    }
-
-    private void DeaccelPlayerVelocity()
-    {
-        float speedDiff = 0f - sm.owner.rb.velocity.x;
-        float movement = speedDiff * ((1 / Time.fixedDeltaTime) * 0.2f);
-
-        sm.owner.rb.AddForce(movement * Vector2.right);
     }
 }

@@ -7,10 +7,13 @@ public abstract class AttackState : IState
     protected PlayerMovementStateMachine sm;
     protected bool canAttack;
     protected bool canComboAttack;
+    protected float decelerationFactor;
     public AttackState(PlayerMovementStateMachine playerMovementStateMachine)
     {
         sm = playerMovementStateMachine;
+        canAttack = false;
         canComboAttack = false;
+        decelerationFactor = 0.2f;
     }
     public virtual void Enter()
     {
@@ -48,5 +51,12 @@ public abstract class AttackState : IState
     public virtual void OnAnimationTransitionEvent()
     {
 
+    }
+    protected void DeaccelPlayerVelocity()
+    {
+        float speedDiff = 0f - sm.owner.rb.velocity.x;
+        float movement = speedDiff * ((1 / Time.fixedDeltaTime) * decelerationFactor);
+
+        sm.owner.rb.AddForce(movement * Vector2.right);
     }
 }
