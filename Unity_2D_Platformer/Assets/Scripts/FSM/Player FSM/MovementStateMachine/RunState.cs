@@ -54,7 +54,7 @@ public class RunState : IState
             sm.ChangeState(sm.combo_1AttackState);
         }
 
-        if(dashBufferTime > 0f/* && ((sm.jsm.currentState == sm.jsm.jumpFallingState) || (sm.jsm.currentState == sm.jsm.jumpState))*/)
+        if(dashBufferTime > 0f && sm.jsm.currentState != sm.jsm.slideState)
         {
             dashBufferTime = 0f;
             sm.ChangeState(sm.dashState);
