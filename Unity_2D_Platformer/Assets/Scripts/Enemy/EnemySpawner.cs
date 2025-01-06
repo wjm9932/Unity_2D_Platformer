@@ -38,6 +38,9 @@ public class EnemySpawner : MonoBehaviour
         Vector2 spawnPosition = GetSpawnPosition();
 
         Enemy enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity).GetComponent<Enemy>();
+        enemy.SetPatrolPoints(wayPoints[0].position.x, wayPoints[1].position.x);
+
+
         //enemy.SetNavMeshArea(areaMask);
         //enemies.Add(enemy);
 

@@ -64,14 +64,6 @@ public class Player : LivinEntity
 
     void Update()
     {
-        //Debug.Log(movementStateMachine.currentState);
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            ApplyDamage(10);
-            //rb.AddForce(2f * transform.right, ForceMode2D.Impulse);
-        }
-
         #region Timer
         lastOnGroundTime -= Time.deltaTime;
         lastOnWallTime -= Time.deltaTime;
@@ -127,9 +119,9 @@ public class Player : LivinEntity
         rb.gravityScale = scale;
     }
 
-    public override bool ApplyDamage(float dmg)
+    public override bool ApplyDamage(float dmg, GameObject damager)
     {
-        if (base.ApplyDamage(dmg) == false)
+        if (base.ApplyDamage(dmg, damager) == false)
         {
             return false;
         }

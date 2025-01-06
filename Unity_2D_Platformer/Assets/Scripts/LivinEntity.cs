@@ -17,6 +17,8 @@ public class LivinEntity : MonoBehaviour
     [Header("Sprite Renderer")]
     [SerializeField] private SpriteRenderer spriteRenderer;
 
+    public int hitDir {get; private set;}
+
     protected float lastTimeDamaged;
     protected bool canBeDamage
     {
@@ -35,7 +37,7 @@ public class LivinEntity : MonoBehaviour
         
     }
 
-    public virtual bool ApplyDamage(float dmg)
+    public virtual bool ApplyDamage(float dmg, GameObject damager)
     {
         if(canBeDamage == false)
         {
@@ -43,6 +45,11 @@ public class LivinEntity : MonoBehaviour
         }
         else
         {
+            Vector2 damagerPos = new Vector2(damager.transform.position.x, damager.transform.position.y).normalized;
+            Vector2 pos = new Vector2(transform.position.x, transform.position.y).normalized;
+
+            hitDir = Vector2.Dot(damagerPos - pos, transform.right) < 0f ? -1 : 1;
+
             lastTimeDamaged = Time.time;
             hp -= dmg;
 

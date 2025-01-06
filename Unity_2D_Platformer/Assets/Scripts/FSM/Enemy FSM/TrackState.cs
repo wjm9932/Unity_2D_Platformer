@@ -2,17 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrackState : MonoBehaviour
+public class TrackState : IState
 {
-    // Start is called before the first frame update
-    void Start()
+    private EnemyStateMachine sm;
+    public TrackState(EnemyStateMachine enemyStateMachine)
     {
-        
+        sm = enemyStateMachine;
+    }
+    public void Enter()
+    {
+
+    }
+    public void Update()
+    {
+
+    }
+    public void FixedUpdate()
+    {
+
+    }
+    public void LateUpdate()
+    {
+
+    }
+    public void Exit()
+    {
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void OnAnimationEnterEvent()
     {
-        
+
+    }
+    public virtual void OnAnimationExitEvent()
+    {
+    }
+    public virtual void OnAnimationTransitionEvent()
+    {
     }
 }
