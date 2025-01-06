@@ -5,9 +5,10 @@ using UnityEngine;
 public class Combo_2AttackState : AttackState
 {
     private float dashForce;
+    private float stopDistance;
     public Combo_2AttackState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
     {
-        
+        stopDistance = 1f;
     }
     public override void Enter()
     {
@@ -19,10 +20,10 @@ public class Combo_2AttackState : AttackState
             FlipPlayer(sm.owner.input.moveInput.x > 0);
         }
 
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(sm.owner.rb.position.x + (sm.owner.transform.right.x * 0.525f), sm.owner.rb.position.y), sm.owner.transform.right, CalculateDashDistanceByDashForce(dashForce) + 0.5f, sm.owner.enemyLayer | sm.owner.whatIsGround);
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(sm.owner.rb.position.x + (sm.owner.transform.right.x * 0.525f), sm.owner.rb.position.y), sm.owner.transform.right, CalculateDashDistanceByDashForce(dashForce) + stopDistance, sm.owner.enemyLayer | sm.owner.whatIsGround);
         if (hit.collider != null) 
         {
-            dashForce = CalculateRequiredImpulseForDistance(hit.distance - 0.5f);
+            dashForce = CalculateRequiredImpulseForDistance(hit.distance - stopDistance);
         }
         sm.owner.rb.AddForce(sm.owner.transform.right * dashForce, ForceMode2D.Impulse);
 

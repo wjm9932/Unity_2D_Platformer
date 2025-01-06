@@ -10,7 +10,7 @@ public class PlayerInput : MonoBehaviour
     public bool isJump { get; private set; }
     public bool isJumpCut { get; private set; }
     public bool isAttack { get; private set; }
-
+    public bool isDash { get; private set; }
     void Start()
     {
         
@@ -26,5 +26,6 @@ public class PlayerInput : MonoBehaviour
         isJump = Input.GetKeyDown(KeyCode.Space);
         isJumpCut = Input.GetKeyUp(KeyCode.Space);
         isAttack = Input.GetKeyDown(KeyCode.LeftControl);
+        isDash = Input.GetKeyDown(KeyCode.X);
     }
 }

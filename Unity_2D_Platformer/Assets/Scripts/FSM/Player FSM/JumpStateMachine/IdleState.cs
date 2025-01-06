@@ -13,7 +13,6 @@ public class IdleState : IState, IGravityModifier
     }
     public void Enter()
     {
-        SetGravityScale();
 
         sm.isJumpCut = false;
     }
@@ -29,6 +28,8 @@ public class IdleState : IState, IGravityModifier
             sm.ChangeState(sm.fallingState);
             return;
         }
+
+        SetGravityScale();
 
     }
     public void FixedUpdate()
@@ -56,6 +57,13 @@ public class IdleState : IState, IGravityModifier
     }
     public void SetGravityScale()
     {
-        sm.owner.SetGravityScale(sm.owner.movementType.gravityScale);
+        if (sm.msm.currentState == sm.msm.dashState)
+        {
+            sm.owner.SetGravityScale(0f);
+        }
+        else
+        {
+            sm.owner.SetGravityScale(sm.owner.movementType.gravityScale);
+        }
     }
 }

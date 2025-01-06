@@ -42,3 +42,5 @@ MonoBehaviour:
   wallJumpCoyoteTime: 0.2
   attackBufferTime: 0.2
   knockbackForce: {x: 20, y: 10}
+  dashForce: 100
+  dashInputBufferTime: 0.2

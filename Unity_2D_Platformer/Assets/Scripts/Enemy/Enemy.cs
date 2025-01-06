@@ -16,9 +16,9 @@ public class Enemy : LivinEntity
         
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        var player = collision.gameObject.GetComponent<Player>();
+         var player = collision.gameObject.GetComponent<Player>();
 
         if(player != null)
         {
