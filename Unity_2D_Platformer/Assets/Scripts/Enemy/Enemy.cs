@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy : LivinEntity
 {
+    public float patrolPoint_1 { get; private set; }
+    public float patrolPoint_2 { get; private set; }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +20,7 @@ public class Enemy : LivinEntity
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
          var player = collision.gameObject.GetComponent<Player>();
 
@@ -24,5 +28,11 @@ public class Enemy : LivinEntity
         {
             player.ApplyDamage(dmg);
         }
+    }
+
+    public void SetPatrolPoints(float x1, float x2)
+    {
+        patrolPoint_1 = x1;
+        patrolPoint_2 = x2;
     }
 }
