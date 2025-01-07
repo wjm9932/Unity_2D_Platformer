@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: DefaultEnemyType
   m_EditorClassIdentifier: 
   patrolMaxSpeed: 2
-  patrolAcceleration: 0.5
-  patrolAccelAmount: 12.5
+  patrolAcceleration: 0.3
+  patrolAccelAmount: 7.5000005
   patrolDecceleration: 1
   patrolDeccelAmount: 25
   trackMaxSpeed: 4
-  trackAcceleration: 1
-  trackAccelAmount: 12.5
+  trackAcceleration: 0.5
+  trackAccelAmount: 6.25
   trackDecceleration: 2
   trackDeccelAmount: 25
   idleTime: 2

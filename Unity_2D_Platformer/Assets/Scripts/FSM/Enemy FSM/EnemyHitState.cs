@@ -17,7 +17,9 @@ public class EnemyHitState : IState
     public void Enter()
     {
         ApplyKnockbackForce(sm.owner.movementType.knockbackForce);
-        timer = duration + 0.2f;
+        timer = duration + 0.3f;
+
+        sm.owner.spriteRenderer.color = sm.owner.rageColor;
         sm.owner.animHandler.animator.SetBool("IsHit", true);
     }
     public void Update()

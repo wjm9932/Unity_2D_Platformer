@@ -21,7 +21,7 @@ public class TrackState : IState
     }
     public void Update()
     {
-        if (!IsTargetOnWayPoints())
+        if (!IsTargetOnWayPoints() || sm.owner.target.isDead == true)
         {
             sm.ChangeState(sm.patrolState);
             return;

@@ -10,7 +10,13 @@ public class Enemy : LivingEntity
     [Header("Movement  Type")]
     public EnemyMovementTypeSO movementType;
 
-    public GameObject target { get; set; }
+    [Header("Collision Box")]
+    [SerializeField] private BoxCollider2D collisionBox;
+
+    [Header("Track Color")]
+    [SerializeField] public Color rageColor;
+
+    public LivingEntity target { get; set; }
     public float patrolPoint_1 { get; private set; }
     public float patrolPoint_2 { get; private set; }
 
@@ -41,7 +47,7 @@ public class Enemy : LivingEntity
         enemyStateMachine.FixedUpdate();
     }
 
-    public override bool ApplyDamage(float dmg, GameObject damager)
+    public override bool ApplyDamage(float dmg, LivingEntity damager)
     {
         if (base.ApplyDamage(dmg, damager) == false)
         {
@@ -51,7 +57,7 @@ public class Enemy : LivingEntity
         {
             target = damager;
 
-            if (enemyStateMachine.currentState != enemyStateMachine.enemyHitState)
+            if (enemyStateMachine.currentState != enemyStateMachine.enemyHitState && enemyStateMachine.currentState != enemyStateMachine.enemyDieState) 
             {
                 enemyStateMachine.ChangeState(enemyStateMachine.enemyHitState);
             }
@@ -72,6 +78,39 @@ public class Enemy : LivingEntity
     {
         enemyStateMachine.OnAnimationExitEvent();
     }
+    public override void Die()
+    {
+        base.Die();
+
+        GetComponent<Collider2D>().enabled = false;
+        collisionBox.enabled = false;
+        rb.isKinematic = true;
+        rb.velocity = Vector3.zero;
+
+        StartCoroutine(FadeAndDestroy(1.5f));
+
+        enemyStateMachine.ChangeState(enemyStateMachine.enemyDieState);
+    }
+
+    private IEnumerator FadeAndDestroy(float duration)
+    {
+        float elapsedTime = 0f;
+
+        Color originalColor = spriteRenderer.color;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / duration);
+            spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+
+            yield return null; 
+        }
+
+        spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+
+        Destroy(gameObject);
+    }
 
     public void SetPatrolPoints(float x1, float x2)
     {
@@ -86,7 +125,7 @@ public class Enemy : LivingEntity
         if (player != null)
         {
 
-            player.ApplyDamage(dmg, this.gameObject);
+            player.ApplyDamage(dmg, this);
         }
     }
 
@@ -97,7 +136,7 @@ public class Enemy : LivingEntity
         if (player != null)
         {
 
-            player.ApplyDamage(dmg, this.gameObject);
+            player.ApplyDamage(dmg, this);
         }
     }
 }

@@ -39,17 +39,18 @@ public class EnemySpawner : MonoBehaviour
 
         Enemy enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity).GetComponent<Enemy>();
         enemy.SetPatrolPoints(wayPoints[0].position.x, wayPoints[1].position.x);
-
-
-        //enemy.SetNavMeshArea(areaMask);
-        //enemies.Add(enemy);
-
-        //enemy.onDeath += () => { enemies.Remove(enemy); };
-        //enemy.onDeath += () => { StartCoroutine(SpawnEnemyAfterDelay(enemyPrefab, 5f)); };
+        enemy.onDeath += () => { StartCoroutine(SpawnEnemyAfterDelay(enemyPrefab, 3f)); };
     }
 
     private Vector2 GetSpawnPosition()
     {
         return new Vector2(Random.Range(wayPoints[0].position.x, wayPoints[1].position.x), transform.position.y);
+    }
+
+
+    private IEnumerator SpawnEnemyAfterDelay(GameObject enemyPrefab, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SpawnEnemy(enemyPrefab);
     }
 }

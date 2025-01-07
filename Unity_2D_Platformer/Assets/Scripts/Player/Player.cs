@@ -119,20 +119,23 @@ public class Player : LivingEntity
         rb.gravityScale = scale;
     }
 
-    public override bool ApplyDamage(float dmg, GameObject damager)
+    public override bool ApplyDamage(float dmg, LivingEntity damager)
     {
-        if (base.ApplyDamage(dmg, damager) == false)
+        if(!(movementStateMachine.currentState is AttackState) && movementStateMachine.currentState != movementStateMachine.hitState)
         {
-            return false;
+            if(base.ApplyDamage(dmg, damager) == true)
+            {
+                movementStateMachine.ChangeState(movementStateMachine.hitState);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
-            if (!(movementStateMachine.currentState is AttackState) && movementStateMachine.currentState != movementStateMachine.hitState)
-            {
-                movementStateMachine.ChangeState(movementStateMachine.hitState);
-            }
-
-            return true;
+            return false;
         }
     }
     

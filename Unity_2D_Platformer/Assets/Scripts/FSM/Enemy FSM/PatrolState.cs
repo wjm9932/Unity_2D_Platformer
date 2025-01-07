@@ -18,6 +18,7 @@ public class PatrolState : IState
         targetPositionX = Random.Range(sm.owner.patrolPoint_1, sm.owner.patrolPoint_2);
         Flip(targetPositionX > sm.owner.transform.position.x);
 
+        sm.owner.spriteRenderer.color = Color.white;
         sm.owner.animHandler.animator.SetBool("IsPatrol", true);
     }
     public void Update()

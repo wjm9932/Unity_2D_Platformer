@@ -96,11 +96,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetDamaged: 0.5
-  hp: 100
+  hp: 30
   dmg: 10
   spriteRenderer: {fileID: 3809375461776395216}
   _animHandler: {fileID: 5703536396070363531}
   movementType: {fileID: 11400000, guid: 232fa58f7c2c9e44cb1114566741ca3e, type: 2}
+  collisionBox: {fileID: 3809375461727288948}
+  rageColor: {r: 0.7372549, g: 0.42745098, b: 0.42745098, a: 1}
 --- !u!1 &3809375461727288950
 GameObject:
   m_ObjectHideFlags: 0

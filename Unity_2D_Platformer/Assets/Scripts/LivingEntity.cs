@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,20 +16,25 @@ public abstract class LivingEntity : MonoBehaviour
     [SerializeField] public float dmg;
 
     [Header("Sprite Renderer")]
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] public SpriteRenderer spriteRenderer;
 
     [Header("Animation Handler")]
     [SerializeField] private AnimationHandler _animHandler;
     public AnimationHandler animHandler { get { return _animHandler; } }
+    public event Action onDeath;
 
     public int hitDir {get; private set;}
+    public bool isDead { get; private set; }
 
     protected float lastTimeDamaged;
     protected bool canBeDamage
     {
         get { return Time.time >= lastTimeDamaged + timeBetDamaged; }
     }
-
+    private void Awake()
+    {
+        isDead = false;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +47,7 @@ public abstract class LivingEntity : MonoBehaviour
         
     }
 
-    public virtual bool ApplyDamage(float dmg, GameObject damager)
+    public virtual bool ApplyDamage(float dmg, LivingEntity damager)
     {
         if(canBeDamage == false)
         {
@@ -56,6 +62,11 @@ public abstract class LivingEntity : MonoBehaviour
 
             lastTimeDamaged = Time.time;
             hp -= dmg;
+            
+            if(hp <= 0f)
+            {
+                Die();
+            }
 
             StartCoroutine(StartGracePeriod());
 
@@ -63,7 +74,7 @@ public abstract class LivingEntity : MonoBehaviour
         }
     }
 
-    private IEnumerator StartGracePeriod()
+    protected IEnumerator StartGracePeriod()
     {
         float elapsedTime = 0f;
         bool isVisible = true;
@@ -84,7 +95,11 @@ public abstract class LivingEntity : MonoBehaviour
         finalColor.a = 1f;
         spriteRenderer.color = finalColor;
     }
-
+    public virtual void Die()
+    {
+        onDeath?.Invoke();
+        isDead = true;
+    }
     public abstract void OnAnimationEnterEvent();
     public abstract void OnAnimationTransitionEvent();
     public abstract void OnAnimationExitEvent();
