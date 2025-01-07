@@ -55,6 +55,7 @@ public class Player : LivingEntity
 
     void Start()
     {
+        hp = maxHp;
         movementStateMachine.ChangeState(movementStateMachine.runState);
         movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.idleState);
     }

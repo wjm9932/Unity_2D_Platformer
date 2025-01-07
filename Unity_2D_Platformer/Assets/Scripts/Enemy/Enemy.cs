@@ -33,6 +33,7 @@ public class Enemy : LivingEntity
 
     void Start()
     {
+        hp = maxHp;
         enemyStateMachine.ChangeState(enemyStateMachine.patrolState);
     }
 

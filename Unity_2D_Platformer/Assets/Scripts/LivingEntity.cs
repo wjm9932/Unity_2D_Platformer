@@ -12,18 +12,15 @@ public abstract class LivingEntity : MonoBehaviour
     [Header("Health")]
     [SerializeField] public HealthBar healthBar;
     [SerializeField] private float _hp;
-    [SerializeField] private float maxHp;
-    private float hp
+    [SerializeField] protected float maxHp;
+    protected float hp
     {
         set
         {
             _hp = value;
-            if (healthBar != null)
-            {
-                healthBar.UpdateHealthBar(_hp, maxHp);
-            }
+            healthBar.UpdateHealthBar(_hp, maxHp);
         }
-        get
+        private get
         {
             return _hp;
         }
