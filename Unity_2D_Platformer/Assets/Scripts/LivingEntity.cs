@@ -9,8 +9,26 @@ public abstract class LivingEntity : MonoBehaviour
     [Header("Grace Period")]
     [SerializeField] protected float timeBetDamaged;
 
-    [Header("Health Point")]
-    [SerializeField] private float hp;
+    [Header("Health")]
+    [SerializeField] public HealthBar healthBar;
+    [SerializeField] private float _hp;
+    [SerializeField] private float maxHp;
+    private float hp
+    {
+        set
+        {
+            _hp = value;
+            if (healthBar != null)
+            {
+                healthBar.UpdateHealthBar(_hp, maxHp);
+            }
+        }
+        get
+        {
+            return _hp;
+        }
+    }
+
 
     [Header("Damage")]
     [SerializeField] public float dmg;
@@ -23,7 +41,7 @@ public abstract class LivingEntity : MonoBehaviour
     public AnimationHandler animHandler { get { return _animHandler; } }
     public event Action onDeath;
 
-    public int hitDir {get; private set;}
+    public int hitDir { get; private set; }
     public bool isDead { get; private set; }
 
     protected float lastTimeDamaged;
@@ -38,18 +56,18 @@ public abstract class LivingEntity : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public virtual bool ApplyDamage(float dmg, LivingEntity damager)
     {
-        if(canBeDamage == false)
+        if (canBeDamage == false)
         {
             return false;
         }
@@ -62,8 +80,8 @@ public abstract class LivingEntity : MonoBehaviour
 
             lastTimeDamaged = Time.time;
             hp -= dmg;
-            
-            if(hp <= 0f)
+
+            if (hp <= 0f)
             {
                 Die();
             }
@@ -83,7 +101,7 @@ public abstract class LivingEntity : MonoBehaviour
         {
             isVisible = !isVisible;
             Color color = spriteRenderer.color;
-            color.a = isVisible ? 1f : 0.5f; 
+            color.a = isVisible ? 1f : 0.5f;
             spriteRenderer.color = color;
 
             yield return new WaitForSeconds(0.1f);

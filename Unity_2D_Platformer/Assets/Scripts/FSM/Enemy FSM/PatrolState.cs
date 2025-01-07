@@ -15,6 +15,8 @@ public class PatrolState : IState
     }
     public void Enter()
     {
+        sm.owner.healthBar.gameObject.SetActive(false);
+
         targetPositionX = Random.Range(sm.owner.patrolPoint_1, sm.owner.patrolPoint_2);
         Flip(targetPositionX > sm.owner.transform.position.x);
 

@@ -57,7 +57,7 @@ public class Enemy : LivingEntity
         {
             target = damager;
 
-            if (enemyStateMachine.currentState != enemyStateMachine.enemyHitState && enemyStateMachine.currentState != enemyStateMachine.enemyDieState) 
+            if (enemyStateMachine.currentState != enemyStateMachine.enemyDieState) 
             {
                 enemyStateMachine.ChangeState(enemyStateMachine.enemyHitState);
             }

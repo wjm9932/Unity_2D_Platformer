@@ -11,6 +11,7 @@ public class EnemyDieState : IState
     }
     public void Enter()
     {
+        sm.owner.healthBar.gameObject.SetActive(false);
         sm.owner.animHandler.animator.SetTrigger("Die");
     }
     public void Update()

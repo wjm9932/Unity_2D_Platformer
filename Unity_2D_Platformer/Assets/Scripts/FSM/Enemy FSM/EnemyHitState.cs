@@ -16,6 +16,8 @@ public class EnemyHitState : IState
     }
     public void Enter()
     {
+        sm.owner.healthBar.gameObject.SetActive(true);
+
         ApplyKnockbackForce(sm.owner.movementType.knockbackForce);
         timer = duration + 0.3f;
 
