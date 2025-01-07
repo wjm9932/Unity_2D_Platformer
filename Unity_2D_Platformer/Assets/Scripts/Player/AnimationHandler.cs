@@ -6,35 +6,31 @@ using UnityEngine.Windows;
 public class AnimationHandler : MonoBehaviour
 {
     //private PlayerMovement playerMovement;
-    private Player player;
-    public Animator animator;
-
-    public bool isSlide { private get; set; } = false;
+    private LivingEntity entity;
+    public Animator animator { get; private set; }
 
     private void Awake()
     {
-        player = transform.root.GetComponent<Player>();
+        entity = transform.root.GetComponent<LivingEntity>();
         animator = GetComponent<Animator>();
     }
 
     private void LateUpdate()
     {   
-        animator.SetBool("IsSlide", isSlide);
-        animator.SetBool("IsRun", player.input.moveInput.x != 0);
-        animator.SetFloat("VelocityY", player.rb.velocity.y);
+        
     }
 
     private void OnAnimationEnterEvent()
     {
-        player.OnAnimationEnterEvent();
+        entity.OnAnimationEnterEvent();
     }
     private void OnAnimationTransitionEvent()
     {
-        player.OnAnimationTransitionEvent();
+        entity.OnAnimationTransitionEvent();
     }
     private void OnAnimationExitEvent()
     {
-        player.OnAnimationExitEvent();
+        entity.OnAnimationExitEvent();
     }
 
     public bool IsAnimationFinished()

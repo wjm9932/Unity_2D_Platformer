@@ -30,13 +30,12 @@ public class DashState : IState
         }
 
         ApplyDashForce(dashForce);
-        sm.owner.GetComponent<PlatformEffector2D>().colliderMask &= ~(sm.owner.enemyLayer.value);
+        sm.owner.GetComponent<PlatformEffector2D>().colliderMask &= ~(sm.owner.enemyCollisionBoxLayer.value);
         sm.owner.animHandler.animator.SetBool("IsDash", true);
     }
 
     public void Update()
     {
-
         if (Mathf.Abs(sm.owner.rb.velocity.x) < 5f)
         {
             sm.ChangeState(sm.runState);
@@ -52,7 +51,7 @@ public class DashState : IState
     }
     public void Exit()
     {
-        sm.owner.GetComponent<PlatformEffector2D>().colliderMask |= sm.owner.enemyLayer.value;
+        sm.owner.GetComponent<PlatformEffector2D>().colliderMask |= sm.owner.enemyCollisionBoxLayer.value;
         sm.owner.animHandler.animator.SetBool("IsDash", false);
     }
 

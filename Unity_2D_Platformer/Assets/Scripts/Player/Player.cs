@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
-public class Player : LivinEntity
+public class Player : LivingEntity
 {
     [Space(20)]
     [Header("Player Components")]
@@ -11,16 +11,13 @@ public class Player : LivinEntity
     [Header("Movement  Type")]
     public MovementTypeSO movementType;
 
-    [Header("Animation Handler")]
-    [SerializeField] private AnimationHandler _animHandler;
-    public AnimationHandler animHandler { get { return _animHandler; } }
-
     public Rigidbody2D rb { get; private set; }
     public PlayerInput input { get; private set; }
 
     #region LayerMask
     [Header("Layer")]
     public LayerMask enemyLayer;
+    public LayerMask enemyCollisionBoxLayer;
     public LayerMask whatIsGround;
     #endregion
 
@@ -100,17 +97,20 @@ public class Player : LivinEntity
     {
         movementStateMachine.LateUpdate();
         movementStateMachine.jsm.LateUpdate();
+
+        animHandler.animator.SetBool("IsRun", input.moveInput.x != 0);
+        animHandler.animator.SetFloat("VelocityY", rb.velocity.y);
     }
 
-    public void OnAnimationEnterEvent()
+    public override void OnAnimationEnterEvent()
     {
         movementStateMachine.OnAnimationEnterEvent();
     }
-    public void OnAnimationTransitionEvent()
+    public override void OnAnimationTransitionEvent()
     {
         movementStateMachine.OnAnimationTransitionEvent();
     }
-    public void OnAnimationExitEvent()
+    public override void OnAnimationExitEvent()
     {
         movementStateMachine.OnAnimationExitEvent();
     }

@@ -11,7 +11,7 @@ public class SlideState : IState, IGravityModifier
     }
     public void Enter()
     {
-        sm.owner.animHandler.isSlide = true;
+        sm.owner.animHandler.animator.SetBool("IsSlide", true);
         SetGravityScale();
     }
     public void Update()
@@ -47,8 +47,7 @@ public class SlideState : IState, IGravityModifier
     }
     public void Exit()
     {
-        sm.owner.animHandler.isSlide = false;
-
+        sm.owner.animHandler.animator.SetBool("IsSlide", false);
     }
 
     public virtual void OnAnimationEnterEvent()

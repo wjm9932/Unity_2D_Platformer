@@ -8,7 +8,7 @@ public class Combo_2AttackState : AttackState
     private float stopDistance;
     public Combo_2AttackState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
     {
-        stopDistance = 1f;
+        stopDistance = 0.5f;
     }
     public override void Enter()
     {
@@ -37,7 +37,7 @@ public class Combo_2AttackState : AttackState
 
             for (int i = 0; i < enemies.Length; i++)
             {
-                enemies[i].transform.root.GetComponent<LivinEntity>().ApplyDamage(sm.owner.dmg, sm.owner.gameObject);
+                enemies[i].transform.root.GetComponent<LivingEntity>().ApplyDamage(sm.owner.dmg, sm.owner.gameObject);
             }
         }
 

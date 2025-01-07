@@ -16,8 +16,9 @@ public class PatrolState : IState
     public void Enter()
     {
         targetPositionX = Random.Range(sm.owner.patrolPoint_1, sm.owner.patrolPoint_2);
-
         Flip(targetPositionX > sm.owner.transform.position.x);
+
+        sm.owner.animHandler.animator.SetBool("IsPatrol", true);
     }
     public void Update()
     {
@@ -36,6 +37,7 @@ public class PatrolState : IState
     }
     public void Exit()
     {
+        sm.owner.animHandler.animator.SetBool("IsPatrol", false);
     }
 
     public virtual void OnAnimationEnterEvent()

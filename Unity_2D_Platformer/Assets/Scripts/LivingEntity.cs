@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LivinEntity : MonoBehaviour
+public abstract class LivingEntity : MonoBehaviour
 {
     [Header("LivingEntity Components")]
     [Header("Grace Period")]
@@ -16,6 +16,10 @@ public class LivinEntity : MonoBehaviour
 
     [Header("Sprite Renderer")]
     [SerializeField] private SpriteRenderer spriteRenderer;
+
+    [Header("Animation Handler")]
+    [SerializeField] private AnimationHandler _animHandler;
+    public AnimationHandler animHandler { get { return _animHandler; } }
 
     public int hitDir {get; private set;}
 
@@ -66,21 +70,22 @@ public class LivinEntity : MonoBehaviour
 
         while (elapsedTime < timeBetDamaged)
         {
-            // 스프라이트 깜빡이기
             isVisible = !isVisible;
             Color color = spriteRenderer.color;
-            color.a = isVisible ? 1f : 0.5f; // 1f: 보임, 0.5f: 반투명
+            color.a = isVisible ? 1f : 0.5f; 
             spriteRenderer.color = color;
 
-            // 깜빡임 간격 설정
             yield return new WaitForSeconds(0.1f);
 
             elapsedTime += 0.1f;
         }
 
-        // 무적 시간 종료 후 알파 값을 원래대로 복원
         Color finalColor = spriteRenderer.color;
         finalColor.a = 1f;
         spriteRenderer.color = finalColor;
     }
+
+    public abstract void OnAnimationEnterEvent();
+    public abstract void OnAnimationTransitionEvent();
+    public abstract void OnAnimationExitEvent();
 }
