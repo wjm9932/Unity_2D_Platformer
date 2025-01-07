@@ -12,13 +12,14 @@ public class HitState : IState
     {
         sm = playerMovementStateMachine;
         decelerationFactor = 0.2f;
-        duration = sm.owner.CalculateTimeByDashForce(sm.owner.movementType.knockbackForce.x, decelerationFactor);
+        duration = Utility.CalculateTimeByDashForce(sm.owner.movementType.knockbackForce.x, decelerationFactor);
     }
     public void Enter()
     {
         ApplyKnockbackForce(sm.owner.movementType.knockbackForce);
         timer = duration;
 
+        Debug.Log(timer);
         if (sm.jsm.currentState == sm.jsm.slideState)
         {
             sm.jsm.ChangeState(sm.jsm.fallingState);
@@ -72,16 +73,21 @@ public class HitState : IState
 
     private void ApplyKnockbackForce(Vector2 force)
     {
-        if (sm.owner.rb.velocity.y > 0f)
+        //if (sm.owner.rb.velocity.y > 0f)
+        //{
+        //    force.y -= sm.owner.rb.velocity.y;
+        //}
+        //else if (sm.jsm.currentState != sm.jsm.idleState)
+        //{
+        //    force.y = 0f;
+        //}
+
+        if (Mathf.Abs(sm.owner.rb.velocity.y) > 0f)
         {
             force.y -= sm.owner.rb.velocity.y;
         }
-        else if (sm.jsm.currentState != sm.jsm.idleState)
-        {
-            force.y = 0f;
-        }
-        
-        force.x *= -(sm.owner.transform.right.x *sm.owner.hitDir);
+
+        force.x *= -(sm.owner.transform.right.x * sm.owner.hitDir);
         if (Mathf.Abs(sm.owner.rb.velocity.x) > 0f)
         {
             force.x -= sm.owner.rb.velocity.x;

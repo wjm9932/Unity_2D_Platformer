@@ -18,3 +18,4 @@ MonoBehaviour:
   runDecceleration: 1
   runDeccelAmount: 12.5
   idleTime: 2
+  knockbackForce: {x: 20, y: 0}

@@ -48,6 +48,10 @@ public class Enemy : LivingEntity
         }
         else
         {
+            if(enemyStateMachine.currentState != enemyStateMachine.enemyHitState)
+            {
+                enemyStateMachine.ChangeState(enemyStateMachine.enemyHitState);
+            }
             return true;
         }
     }

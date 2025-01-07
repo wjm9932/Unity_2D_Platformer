@@ -29,6 +29,9 @@ public class EnemyMovementTypeSO : ScriptableObject
     [Header("Idle Time")]
     public float idleTime;
 
+    [Header("Knockback")]
+    public Vector2 knockbackForce;
+
     private void OnValidate()
     {
         //Calculate are run acceleration & deceleration forces using formula: amount = ((1 / Time.fixedDeltaTime) * acceleration) / runMaxSpeed
