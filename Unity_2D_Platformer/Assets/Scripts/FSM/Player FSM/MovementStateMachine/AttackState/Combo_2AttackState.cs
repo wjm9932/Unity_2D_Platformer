@@ -27,6 +27,7 @@ public class Combo_2AttackState : AttackState
         }
         sm.owner.rb.AddForce(sm.owner.transform.right * dashForce, ForceMode2D.Impulse);
 
+        sm.owner.dmg = 20f;
         sm.owner.animHandler.animator.SetTrigger("Combo_2");
     }
     public override void Update()

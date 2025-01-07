@@ -5,26 +5,19 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Enemy Movement Type")]
 public class EnemyMovementTypeSO : ScriptableObject
 {
-    //[Header("Gravity")]
-    //[HideInInspector] public float gravityStrength; //Downwards force (gravity) needed for the desired jumpHeight and jumpTimeToApex.
-    //[HideInInspector] public float gravityScale; //Strength of the player's gravity as a multiplier of gravity (set in ProjectSettings/Physics2D).
-    //                                             //Also the value the player's rigidbody2D.gravityScale is set to.
-    //[Space(5)]
-    //public float fallGravityMult; //Multiplier to the player's gravityScale when falling.
-    //public float maxFallSpeed; //Maximum fall speed (terminal velocity) of the player when falling.
-    //[Space(5)]
-    //public float fastFallGravityMult; //Larger multiplier to the player's gravityScale when they are falling and a downwards input is pressed.
-    //                                  //Seen in games such as Celeste, lets the player fall extra fast if they wish.
-    //public float maxFastFallSpeed; //Maximum fall speed(terminal velocity) of the player when performing a faster fall.
+    [Header("Patrol")]
+    public float patrolMaxSpeed;
+    [SerializeField] private float patrolAcceleration; 
+    [HideInInspector] public float patrolAccelAmount; 
+    [SerializeField] private float patrolDecceleration;
+    [HideInInspector] public float patrolDeccelAmount;
 
-    //[Space(20)]
-
-    [Header("Run")]
-    public float runMaxSpeed; //Target speed we want the player to reach.
-    public float runAcceleration; //The speed at which our player accelerates to max speed, can be set to runMaxSpeed for instant acceleration down to 0 for none at all
-    [HideInInspector] public float runAccelAmount; //The actual force (multiplied with speedDiff) applied to the player.
-    public float runDecceleration; //The speed at which our player decelerates from their current speed, can be set to runMaxSpeed for instant deceleration down to 0 for none at all
-    [HideInInspector] public float runDeccelAmount; //Actual force (multiplied with speedDiff) applied to the player .
+    [Header("Track")]
+    public float trackMaxSpeed;
+    [SerializeField] private float trackAcceleration;
+    [HideInInspector] public float trackAccelAmount;
+    [SerializeField] private float trackDecceleration;
+    [HideInInspector] public float trackDeccelAmount;
 
     [Header("Idle Time")]
     public float idleTime;
@@ -35,12 +28,18 @@ public class EnemyMovementTypeSO : ScriptableObject
     private void OnValidate()
     {
         //Calculate are run acceleration & deceleration forces using formula: amount = ((1 / Time.fixedDeltaTime) * acceleration) / runMaxSpeed
-        runAccelAmount = ((1 / Time.fixedDeltaTime) * runAcceleration) / runMaxSpeed;
-        runDeccelAmount = ((1 / Time.fixedDeltaTime) * runDecceleration) / runMaxSpeed;
+        patrolAccelAmount = ((1 / Time.fixedDeltaTime) * patrolAcceleration) / patrolMaxSpeed;
+        patrolDeccelAmount = ((1 / Time.fixedDeltaTime) * patrolDecceleration) / patrolMaxSpeed;
+
+        trackAccelAmount = ((1 / Time.fixedDeltaTime) * trackAcceleration) / trackMaxSpeed;
+        trackDeccelAmount = ((1 / Time.fixedDeltaTime) * trackDecceleration) / trackMaxSpeed;
 
         #region Variable Ranges
-        runAcceleration = Mathf.Clamp(runAcceleration, 0.01f, runMaxSpeed);
-        runDecceleration = Mathf.Clamp(runDecceleration, 0.01f, runMaxSpeed);
+        patrolAcceleration = Mathf.Clamp(patrolAcceleration, 0.01f, patrolMaxSpeed);
+        patrolDecceleration = Mathf.Clamp(patrolDecceleration, 0.01f, patrolMaxSpeed);
+
+        trackAcceleration = Mathf.Clamp(trackAcceleration, 0.01f, trackMaxSpeed);
+        trackDecceleration = Mathf.Clamp(trackDecceleration, 0.01f, trackMaxSpeed);
 
         idleTime = Mathf.Max(0f, idleTime);
 

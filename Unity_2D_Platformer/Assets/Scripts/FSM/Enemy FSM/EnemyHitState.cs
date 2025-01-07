@@ -17,14 +17,15 @@ public class EnemyHitState : IState
     public void Enter()
     {
         ApplyKnockbackForce(sm.owner.movementType.knockbackForce);
-        timer = duration;
+        timer = duration + 0.2f;
+        sm.owner.animHandler.animator.SetBool("IsHit", true);
     }
     public void Update()
     {
         timer -= Time.deltaTime;
         if (timer < 0f)
         {
-            sm.ChangeState(sm.patrolState);
+            sm.ChangeState(sm.trackState);
         }
     }
     public void FixedUpdate()
@@ -42,6 +43,7 @@ public class EnemyHitState : IState
     }
     public void Exit()
     {
+        sm.owner.animHandler.animator.SetBool("IsHit", false);
     }
 
     public virtual void OnAnimationEnterEvent()

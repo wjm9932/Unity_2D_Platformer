@@ -46,7 +46,7 @@ public class EnemyIdleState : IState
     private void DeaccelPlayerVelocity()
     {
         float speedDiff = 0f - sm.owner.rb.velocity.x;
-        float movement = speedDiff * sm.owner.movementType.runDeccelAmount;
+        float movement = speedDiff * sm.owner.movementType.patrolDeccelAmount;
 
         sm.owner.rb.AddForce(movement * Vector2.right);
     }

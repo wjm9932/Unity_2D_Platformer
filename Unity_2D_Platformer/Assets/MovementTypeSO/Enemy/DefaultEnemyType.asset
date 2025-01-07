@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b96b05852de035458eeac0b83ecc914, type: 3}
   m_Name: DefaultEnemyType
   m_EditorClassIdentifier: 
-  runMaxSpeed: 4
-  runAcceleration: 0.5
-  runAccelAmount: 6.25
-  runDecceleration: 1
-  runDeccelAmount: 12.5
+  patrolMaxSpeed: 2
+  patrolAcceleration: 0.5
+  patrolAccelAmount: 12.5
+  patrolDecceleration: 1
+  patrolDeccelAmount: 25
+  trackMaxSpeed: 4
+  trackAcceleration: 1
+  trackAccelAmount: 12.5
+  trackDecceleration: 2
+  trackDeccelAmount: 25
   idleTime: 2
   knockbackForce: {x: 20, y: 0}

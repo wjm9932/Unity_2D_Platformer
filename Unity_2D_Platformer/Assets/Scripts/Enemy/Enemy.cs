@@ -10,6 +10,7 @@ public class Enemy : LivingEntity
     [Header("Movement  Type")]
     public EnemyMovementTypeSO movementType;
 
+    public GameObject target { get; set; }
     public float patrolPoint_1 { get; private set; }
     public float patrolPoint_2 { get; private set; }
 
@@ -48,10 +49,13 @@ public class Enemy : LivingEntity
         }
         else
         {
-            if(enemyStateMachine.currentState != enemyStateMachine.enemyHitState)
+            target = damager;
+
+            if (enemyStateMachine.currentState != enemyStateMachine.enemyHitState)
             {
                 enemyStateMachine.ChangeState(enemyStateMachine.enemyHitState);
             }
+
             return true;
         }
     }

@@ -53,9 +53,9 @@ public class PatrolState : IState
 
     private void Run()
     {
-        float targetSpeed = sm.owner.transform.right.x * sm.owner.movementType.runMaxSpeed;
+        float targetSpeed = sm.owner.transform.right.x * sm.owner.movementType.patrolMaxSpeed;
 
-        float accelAmount = sm.owner.movementType.runAccelAmount;
+        float accelAmount = sm.owner.movementType.patrolAccelAmount;
 
         float speedDif = targetSpeed - sm.owner.rb.velocity.x;
         float movement = speedDif * accelAmount;
