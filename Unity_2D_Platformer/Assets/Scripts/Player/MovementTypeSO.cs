@@ -30,8 +30,8 @@ public class MovementTypeSO : ScriptableObject
     [Space(20)]
 
     [Header("Jump")]
-    public float jumpHeight; //Height of the player's jump
-    public float jumpTimeToApex; //Time between applying the jump force and reaching the desired jump height. These values also control the player's gravity and jump force.
+    [SerializeField] private float jumpHeight; //Height of the player's jump
+    [SerializeField] private float jumpTimeToApex; //Time between applying the jump force and reaching the desired jump height. These values also control the player's gravity and jump force.
     [HideInInspector] public float jumpForce; //The actual force applied (upwards) to the player when they jump.
 
     [Header("Both Jumps")]
@@ -44,6 +44,10 @@ public class MovementTypeSO : ScriptableObject
 
     [Header("Wall Jump")]
     public Vector2 wallJumpForce; //The actual force (this time set by us) applied to the player when wall jumping.
+
+    [Header("Jump Attack Bounce")]
+    [SerializeField] private float bounceHeight;
+    [HideInInspector] public float bounceForce;
 
     [Space(20)]
 
@@ -83,6 +87,7 @@ public class MovementTypeSO : ScriptableObject
 
         //Calculate jumpForce using the formula (initialJumpVelocity = gravity * timeToJumpApex)
         jumpForce = Mathf.Abs(gravityStrength) * jumpTimeToApex;
+        bounceForce = Mathf.Sqrt(2 * Mathf.Abs(gravityStrength) * bounceHeight);
 
         #region Variable Ranges
         runAcceleration = Mathf.Clamp(runAcceleration, 0.01f, runMaxSpeed);

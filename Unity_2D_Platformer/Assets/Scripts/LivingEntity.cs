@@ -42,7 +42,7 @@ public abstract class LivingEntity : MonoBehaviour
     public bool isDead { get; private set; }
 
     protected float lastTimeDamaged;
-    protected bool canBeDamage
+    protected bool canBeDamaged
     {
         get { return Time.time >= lastTimeDamaged + timeBetDamaged; }
     }
@@ -64,7 +64,7 @@ public abstract class LivingEntity : MonoBehaviour
 
     public virtual bool ApplyDamage(float dmg, LivingEntity damager)
     {
-        if (canBeDamage == false)
+        if (canBeDamaged == false)
         {
             return false;
         }
@@ -74,7 +74,6 @@ public abstract class LivingEntity : MonoBehaviour
             Vector2 pos = new Vector2(transform.position.x, transform.position.y).normalized;
 
             hitDir = Vector2.Dot(damagerPos - pos, transform.right) < 0f ? -1 : 1;
-
             lastTimeDamaged = Time.time;
             hp -= dmg;
 

@@ -13,6 +13,7 @@ public class PlayerJumpStateMachine : StateMachine
     public SlideState slideState { get; private set; }
     public WallJumpState wallJumpState { get; private set; }
     public FallingState fallingState { get; private set; }
+    public JumpAttackState jumpAttackState { get; private set; }
 
     public bool isJumpCut;
     public PlayerJumpStateMachine(Player owner, PlayerMovementStateMachine msm)
@@ -26,5 +27,6 @@ public class PlayerJumpStateMachine : StateMachine
         slideState = new SlideState(this);
         wallJumpState = new WallJumpState(this);
         fallingState = new FallingState(this);
+        jumpAttackState = new JumpAttackState(this);
     }
 }

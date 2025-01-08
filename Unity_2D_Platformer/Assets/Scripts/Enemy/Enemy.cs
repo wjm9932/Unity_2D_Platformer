@@ -11,7 +11,7 @@ public class Enemy : LivingEntity
     public EnemyMovementTypeSO movementType;
 
     [Header("Collision Box")]
-    [SerializeField] private BoxCollider2D collisionBox;
+    [SerializeField] private GameObject collisionBox;
 
     [Header("Track Color")]
     [SerializeField] public Color rageColor;
@@ -33,6 +33,8 @@ public class Enemy : LivingEntity
 
     void Start()
     {
+        lastTimeDamaged = Time.time - timeBetDamaged;
+
         hp = maxHp;
         enemyStateMachine.ChangeState(enemyStateMachine.patrolState);
     }
@@ -84,7 +86,7 @@ public class Enemy : LivingEntity
         base.Die();
 
         GetComponent<Collider2D>().enabled = false;
-        collisionBox.enabled = false;
+        collisionBox.SetActive(false);
         rb.isKinematic = true;
         rb.velocity = Vector3.zero;
 
@@ -97,18 +99,16 @@ public class Enemy : LivingEntity
     {
         float elapsedTime = 0f;
 
-        Color originalColor = spriteRenderer.color;
-
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
             float alpha = Mathf.Lerp(1f, 0f, elapsedTime / duration);
-            spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, alpha);
 
             yield return null; 
         }
 
-        spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0f);
 
         Destroy(gameObject);
     }
@@ -123,9 +123,8 @@ public class Enemy : LivingEntity
     {
         var player = collision.gameObject.GetComponent<Player>();
 
-        if (player != null)
+        if (player != null && canBeDamaged == true)
         {
-
             player.ApplyDamage(dmg, this);
         }
     }
@@ -134,9 +133,8 @@ public class Enemy : LivingEntity
     {
         var player = collision.gameObject.GetComponent<Player>();
 
-        if (player != null)
+        if (player != null && canBeDamaged == true)
         {
-
             player.ApplyDamage(dmg, this);
         }
     }

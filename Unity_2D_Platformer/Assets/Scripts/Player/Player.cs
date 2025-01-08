@@ -18,6 +18,7 @@ public class Player : LivingEntity
     [Header("Layer")]
     public LayerMask enemyLayer;
     public LayerMask enemyCollisionBoxLayer;
+    public LayerMask enemyHeadCollisionBoxLayer;
     public LayerMask whatIsGround;
     #endregion
 
@@ -84,6 +85,18 @@ public class Player : LivingEntity
         }
         #endregion
 
+        if (movementStateMachine.jsm.currentState == movementStateMachine.jsm.jumpFallingState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpAttackState)
+        {
+            var collider = Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, enemyHeadCollisionBoxLayer);
+            if (collider != null)
+            {
+                if(collider.transform.root.GetComponent<Enemy>().ApplyDamage(Mathf.Abs(rb.velocity.y) * 0.4f, this) == true)
+                {
+                    movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.jumpAttackState);
+                }
+            }
+        }
+
         movementStateMachine.Update();
         movementStateMachine.jsm.Update();
     }
@@ -122,9 +135,9 @@ public class Player : LivingEntity
 
     public override bool ApplyDamage(float dmg, LivingEntity damager)
     {
-        if(!(movementStateMachine.currentState is AttackState) && movementStateMachine.currentState != movementStateMachine.hitState)
+        if (!(movementStateMachine.currentState is AttackState) && movementStateMachine.currentState != movementStateMachine.hitState)
         {
-            if(base.ApplyDamage(dmg, damager) == true)
+            if (base.ApplyDamage(dmg, damager) == true)
             {
                 movementStateMachine.ChangeState(movementStateMachine.hitState);
                 return true;
@@ -139,7 +152,7 @@ public class Player : LivingEntity
             return false;
         }
     }
-    
+
 
     #region EDITOR METHODS
 #if UNITY_EDITOR

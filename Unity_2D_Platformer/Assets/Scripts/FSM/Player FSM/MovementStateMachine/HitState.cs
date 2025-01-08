@@ -72,15 +72,6 @@ public class HitState : IState
 
     private void ApplyKnockbackForce(Vector2 force)
     {
-        //if (sm.owner.rb.velocity.y > 0f)
-        //{
-        //    force.y -= sm.owner.rb.velocity.y;
-        //}
-        //else if (sm.jsm.currentState != sm.jsm.idleState)
-        //{
-        //    force.y = 0f;
-        //}
-
         if (Mathf.Abs(sm.owner.rb.velocity.y) > 0f)
         {
             force.y -= sm.owner.rb.velocity.y;
