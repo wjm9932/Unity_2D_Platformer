@@ -35,8 +35,7 @@ MonoBehaviour:
   jumpHangMaxSpeedMult: 1.3
   wallJumpForce: {x: 15, y: 30}
   bounceHeight: 3
-  boundTimeToApex: 0.3
-  bounceForce: 0
+  bounceForce: 25.81989
   slideSpeed: -3
   slideAccel: 1
   slideAccelAmount: 16.666668

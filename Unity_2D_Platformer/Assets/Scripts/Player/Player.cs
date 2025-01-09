@@ -11,8 +11,8 @@ public class Player : LivingEntity
     [Header("Movement  Type")]
     public MovementTypeSO movementType;
 
-    public Rigidbody2D rb { get; private set; }
-    public PlayerInput input { get; private set; }
+    [Header("Respawn Position")]
+    [SerializeField] private Transform respawnPos;
 
     #region LayerMask
     [Header("Layer")]
@@ -46,7 +46,10 @@ public class Player : LivingEntity
     [HideInInspector] public float lastOnWallTime;
     #endregion
 
+    public Rigidbody2D rb { get; private set; }
+    public PlayerInput input { get; private set; }
     public float facingDir { get; private set; }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -68,6 +71,11 @@ public class Player : LivingEntity
         lastOnWallTime -= Time.deltaTime;
         lastPressJumpTime -= Time.deltaTime;
         #endregion
+
+        if(Input.GetKeyDown(KeyCode.R) == true)
+        {
+            RespawnPlayer(respawnPos.position);
+        }
 
         #region Collision Check
         if (movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.wallJumpState)
@@ -132,6 +140,14 @@ public class Player : LivingEntity
     {
         rb.gravityScale = scale;
     }
+    public override void Die()
+    {
+        base.Die();
+        isDead = false;
+        rb.isKinematic = true;
+        GetComponent<Collider2D>().enabled = false;
+        movementStateMachine.ChangeState(movementStateMachine.dieState);
+    }
 
     public override bool ApplyDamage(float dmg, LivingEntity damager)
     {
@@ -139,7 +155,10 @@ public class Player : LivingEntity
         {
             if (base.ApplyDamage(dmg, damager) == true)
             {
-                movementStateMachine.ChangeState(movementStateMachine.hitState);
+                if(movementStateMachine.currentState != movementStateMachine.dieState)
+                {
+                    movementStateMachine.ChangeState(movementStateMachine.hitState);
+                }
                 return true;
             }
             else
@@ -153,6 +172,19 @@ public class Player : LivingEntity
         }
     }
 
+
+    
+
+    private void RespawnPlayer(Vector2 respawnPos)
+    {
+        transform.position = respawnPos;
+
+        hp = maxHp;
+        rb.isKinematic = false;
+        GetComponent<Collider2D>().enabled = true;
+        movementStateMachine.ChangeState(movementStateMachine.runState);
+        movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.idleState);
+    }
 
     #region EDITOR METHODS
 #if UNITY_EDITOR

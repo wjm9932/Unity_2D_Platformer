@@ -11,6 +11,7 @@ public class PlayerMovementStateMachine : StateMachine
     public Combo_2AttackState combo_2AttackState { get; private set; }
     public HitState hitState { get; private set; }
     public DashState dashState { get; private set; }
+    public DieState dieState { get; private set; }
     public PlayerMovementStateMachine(Player player)
     {
         this.owner = player;
@@ -21,5 +22,6 @@ public class PlayerMovementStateMachine : StateMachine
         combo_2AttackState = new Combo_2AttackState(this);
         hitState = new HitState(this);
         dashState = new DashState(this);
+        dieState = new DieState(this);
     }
 }

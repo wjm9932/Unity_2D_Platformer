@@ -39,7 +39,7 @@ public abstract class LivingEntity : MonoBehaviour
     public event Action onDeath;
 
     public int hitDir { get; private set; }
-    public bool isDead { get; private set; }
+    public bool isDead { get; protected set; }
 
     protected float lastTimeDamaged;
     protected bool canBeDamaged
@@ -114,6 +114,13 @@ public abstract class LivingEntity : MonoBehaviour
         onDeath?.Invoke();
         isDead = true;
     }
+
+    public void KillInstant()
+    {
+        hp = 0f;
+        Die();
+    }
+
     public abstract void OnAnimationEnterEvent();
     public abstract void OnAnimationTransitionEvent();
     public abstract void OnAnimationExitEvent();
