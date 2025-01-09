@@ -77,12 +77,11 @@ public class HitState : IState
             force.y -= sm.owner.rb.velocity.y;
         }
 
-        force.x *= -(sm.owner.transform.right.x * sm.owner.hitDir);
         if (Mathf.Abs(sm.owner.rb.velocity.x) > 0f)
         {
-            force.x -= sm.owner.rb.velocity.x;
+            force.x += Mathf.Abs(sm.owner.rb.velocity.x);
         }
-
+        force.x *= sm.owner.hitDir;
         sm.owner.rb.AddForce(force, ForceMode2D.Impulse);
     }
 }

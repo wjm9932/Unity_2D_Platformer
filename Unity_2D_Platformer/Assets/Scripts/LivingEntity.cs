@@ -48,10 +48,8 @@ public abstract class LivingEntity : MonoBehaviour
         }
         else
         {
-            Vector2 damagerPos = new Vector2(damager.transform.position.x, damager.transform.position.y).normalized;
-            Vector2 pos = new Vector2(transform.position.x, transform.position.y).normalized;
 
-            hitDir = Vector2.Dot(damagerPos - pos, transform.right) < 0f ? -1 : 1;
+            hitDir = damager.transform.position.x < transform.position.x ? 1 : -1;
             lastTimeDamaged = Time.time;
 
             StartCoroutine(StartGracePeriod());
