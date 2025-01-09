@@ -91,8 +91,7 @@ public class Player : LivingEntity
                 facingDir = transform.localRotation.y < 0 ? -1f : 1f;
             }
         }
-        #endregion
-
+        
         if (movementStateMachine.jsm.currentState == movementStateMachine.jsm.jumpFallingState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpAttackState)
         {
             var collider = Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, enemyHeadCollisionBoxLayer);
@@ -104,6 +103,7 @@ public class Player : LivingEntity
                 }
             }
         }
+        #endregion
 
         movementStateMachine.Update();
         movementStateMachine.jsm.Update();
@@ -171,9 +171,6 @@ public class Player : LivingEntity
             return false;
         }
     }
-
-
-    
 
     private void RespawnPlayer(Vector2 respawnPos)
     {
