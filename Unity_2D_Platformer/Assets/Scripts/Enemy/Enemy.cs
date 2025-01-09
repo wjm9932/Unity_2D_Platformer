@@ -7,6 +7,23 @@ public class Enemy : LivingEntity
     [Space(20)]
     [Header("Enemy Components")]
 
+    [Header("Health")]
+    [SerializeField] public HealthBar healthBar;
+    [SerializeField] private float _hp;
+    [SerializeField] protected float maxHp;
+    protected float hp
+    {
+        set
+        {
+            _hp = value;
+            healthBar.UpdateHealthBar(_hp, maxHp);
+        }
+        private get
+        {
+            return _hp;
+        }
+    }
+
     [Header("Movement  Type")]
     public EnemyMovementTypeSO movementType;
 
@@ -58,9 +75,14 @@ public class Enemy : LivingEntity
         }
         else
         {
+            hp -= dmg;
             target = damager;
 
-            if (enemyStateMachine.currentState != enemyStateMachine.enemyDieState) 
+            if (hp <= 0f)
+            {
+                Die();
+            }
+            else
             {
                 enemyStateMachine.ChangeState(enemyStateMachine.enemyHitState);
             }
@@ -118,7 +140,11 @@ public class Enemy : LivingEntity
         patrolPoint_1 = x1;
         patrolPoint_2 = x2;
     }
-
+    public override void KillInstant()
+    {
+        hp = 0;
+        Die();
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         var player = collision.gameObject.GetComponent<Player>();

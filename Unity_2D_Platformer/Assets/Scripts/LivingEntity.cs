@@ -9,22 +9,6 @@ public abstract class LivingEntity : MonoBehaviour
     [Header("Grace Period")]
     [SerializeField] protected float timeBetDamaged;
 
-    [Header("Health")]
-    [SerializeField] public HealthBar healthBar;
-    [SerializeField] private float _hp;
-    [SerializeField] protected float maxHp;
-    protected float hp
-    {
-        set
-        {
-            _hp = value;
-            healthBar.UpdateHealthBar(_hp, maxHp);
-        }
-        private get
-        {
-            return _hp;
-        }
-    }
 
 
     [Header("Damage")]
@@ -69,12 +53,6 @@ public abstract class LivingEntity : MonoBehaviour
 
             hitDir = Vector2.Dot(damagerPos - pos, transform.right) < 0f ? -1 : 1;
             lastTimeDamaged = Time.time;
-            hp -= dmg;
-
-            if (hp <= 0f)
-            {
-                Die();
-            }
 
             StartCoroutine(StartGracePeriod());
 
@@ -109,9 +87,8 @@ public abstract class LivingEntity : MonoBehaviour
         isDead = true;
     }
 
-    public void KillInstant()
+    public virtual void KillInstant()
     {
-        hp = 0f;
         Die();
     }
 

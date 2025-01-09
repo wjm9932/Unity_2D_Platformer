@@ -15,6 +15,12 @@ public class DashState : IState
     }
     public void Enter()
     {
+        if(sm.owner.dashCount <= 0)
+        {
+            sm.ChangeState(sm.runState);
+            return;
+        }
+
         dashForce = sm.owner.movementType.dashForce;
 
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(sm.owner.rb.position.x + (sm.owner.transform.right.x * 0.525f), sm.owner.rb.position.y), sm.owner.transform.right, CalculateDashDistanceByDashForce(dashForce), sm.owner.whatIsGround);
@@ -30,6 +36,7 @@ public class DashState : IState
         }
 
         ApplyDashForce(dashForce);
+        sm.owner.dashCount--;
         sm.owner.GetComponent<PlatformEffector2D>().colliderMask &= ~(sm.owner.enemyCollisionBoxLayer.value);
         sm.owner.animHandler.animator.SetBool("IsDash", true);
     }

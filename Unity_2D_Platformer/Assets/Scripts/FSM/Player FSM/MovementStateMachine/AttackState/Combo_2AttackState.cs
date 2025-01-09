@@ -6,6 +6,7 @@ public class Combo_2AttackState : AttackState
 {
     private float dashForce;
     private float stopDistance;
+    private bool canChargeDash;
     public Combo_2AttackState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
     {
         stopDistance = 0.5f;
@@ -13,6 +14,7 @@ public class Combo_2AttackState : AttackState
     public override void Enter()
     {
         base.Enter();
+        canChargeDash = true;
         dashForce = 50f;
 
         if (sm.owner.input.moveInput.x != 0)
@@ -35,7 +37,11 @@ public class Combo_2AttackState : AttackState
         if (canAttack == true)
         {
             var enemies = Physics2D.OverlapCircleAll(sm.owner.attackRoot.position, sm.owner.attackRange, sm.owner.enemyLayer);
-
+            if(enemies.Length > 0 && canChargeDash == true)
+            {
+                sm.owner.dashCount++;
+                canChargeDash = false;
+            }
             for (int i = 0; i < enemies.Length; i++)
             {
                 enemies[i].transform.root.GetComponent<LivingEntity>().ApplyDamage(sm.owner.dmg, sm.owner);

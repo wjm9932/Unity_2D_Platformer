@@ -8,6 +8,40 @@ public class Player : LivingEntity
     [Space(20)]
     [Header("Player Components")]
 
+    [Header("Health")]
+    [SerializeField] private IndicatorManager health;
+    [SerializeField] private int maxHearts;
+    private int _heartCount;
+    private int heartCount
+    {
+        set
+        {
+            _heartCount = Mathf.Clamp(value, 0, maxHearts);
+            health.UpdateCount(_heartCount);
+        }
+        get
+        {
+            return _heartCount;
+        }
+    }
+
+    [Header("Dash Indicator")]
+    [SerializeField] private IndicatorManager dash;
+    [SerializeField] private int maxDashCount;
+    private int _dashCount;
+    public int dashCount
+    {
+        set
+        {
+            _dashCount = Mathf.Clamp(value, 0, maxDashCount);
+            dash.UpdateCount(_dashCount);
+        }
+        get 
+        {
+            return _dashCount; 
+        }
+    }
+
     [Header("Movement  Type")]
     public MovementTypeSO movementType;
 
@@ -55,11 +89,16 @@ public class Player : LivingEntity
         rb = GetComponent<Rigidbody2D>();
         input = GetComponent<PlayerInput>();
         movementStateMachine = new PlayerMovementStateMachine(this);
+
+        health.SetStartCount(maxHearts);
+        dash.SetStartCount(maxDashCount);
     }
 
     void Start()
     {
-        hp = maxHp;
+        heartCount = maxHearts;
+        _dashCount = maxDashCount;
+
         movementStateMachine.ChangeState(movementStateMachine.runState);
         movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.idleState);
     }
@@ -72,7 +111,7 @@ public class Player : LivingEntity
         lastPressJumpTime -= Time.deltaTime;
         #endregion
 
-        if(Input.GetKeyDown(KeyCode.R) == true)
+        if (Input.GetKeyDown(KeyCode.R) == true)
         {
             RespawnPlayer(respawnPos.position);
         }
@@ -91,13 +130,13 @@ public class Player : LivingEntity
                 facingDir = transform.localRotation.y < 0 ? -1f : 1f;
             }
         }
-        
+
         if (movementStateMachine.jsm.currentState == movementStateMachine.jsm.jumpFallingState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpAttackState)
         {
             var collider = Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, enemyHeadCollisionBoxLayer);
             if (collider != null)
             {
-                if(collider.transform.root.GetComponent<Enemy>().ApplyDamage(Mathf.Abs(rb.velocity.y) * 0.4f, this) == true)
+                if (collider.transform.root.GetComponent<Enemy>().ApplyDamage(Mathf.Abs(rb.velocity.y) * 0.4f, this) == true)
                 {
                     movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.jumpAttackState);
                 }
@@ -143,7 +182,7 @@ public class Player : LivingEntity
     public override void Die()
     {
         base.Die();
-        isDead = false;
+        isDead = true;
         rb.isKinematic = true;
         GetComponent<Collider2D>().enabled = false;
         movementStateMachine.ChangeState(movementStateMachine.dieState);
@@ -155,7 +194,13 @@ public class Player : LivingEntity
         {
             if (base.ApplyDamage(dmg, damager) == true)
             {
-                if(movementStateMachine.currentState != movementStateMachine.dieState)
+                heartCount--;
+
+                if (heartCount <= 0)
+                {
+                    Die();
+                }
+                else
                 {
                     movementStateMachine.ChangeState(movementStateMachine.hitState);
                 }
@@ -175,12 +220,18 @@ public class Player : LivingEntity
     private void RespawnPlayer(Vector2 respawnPos)
     {
         transform.position = respawnPos;
-
-        hp = maxHp;
+        heartCount = maxHearts;
+        isDead = false;
         rb.isKinematic = false;
         GetComponent<Collider2D>().enabled = true;
         movementStateMachine.ChangeState(movementStateMachine.runState);
         movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.idleState);
+    }
+
+    public override void KillInstant()
+    {
+        heartCount = 0;
+        Die();
     }
 
     #region EDITOR METHODS
