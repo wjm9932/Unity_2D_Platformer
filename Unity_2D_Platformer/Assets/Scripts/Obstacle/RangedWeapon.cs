@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.Pool;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BoxCollider2D))]
-public class Arrow : MonoBehaviour, IPoolableObject
+public class RangedWeapon : MonoBehaviour, IPoolableObject
 {
     public IObjectPool<GameObject> pool { get; private set; }
 
     [SerializeField] private float velocity;
+    [SerializeField] private float targetDistance;
+
     private Rigidbody2D rb;
     private Vector2 startPosition;
-    private float targetDistance;
 
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class Arrow : MonoBehaviour, IPoolableObject
 
     private void Update()
     {
-        if(Vector2.Distance(transform.position, startPosition) >= targetDistance)
+        if (Vector2.Distance(transform.position, startPosition) >= targetDistance)
         {
             pool.Release(this.gameObject);
         }
@@ -40,18 +40,21 @@ public class Arrow : MonoBehaviour, IPoolableObject
 
         rb.velocity = velocity * transform.right;
     }
-    public void SetTargetDistance(float distance)
-    {
-        targetDistance = distance;
-    }
     public void Release()
     {
         pool.Release(gameObject);
     }
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<Player>() != null)
+        {
+            collision.gameObject.GetComponent<Player>().ApplyDamage(1, this.gameObject);
+            pool.Release(gameObject);
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.GetComponent<Player>() != null)
+        if (collision.GetComponent<Player>() != null)
         {
             collision.GetComponent<Player>().ApplyDamage(1, this.gameObject);
             pool.Release(gameObject);

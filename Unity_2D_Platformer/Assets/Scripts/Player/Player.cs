@@ -105,6 +105,11 @@ public class Player : LivingEntity
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            var weapon = ObjectPoolManager.Instance.GetPoolableObject(ObjectPoolManager.ObjectType.ARROW).GetComponent<RangedWeapon>();
+            weapon.Initialize(Vector2.zero, Quaternion.identity);
+        }
         #region Timer
         lastOnGroundTime -= Time.deltaTime;
         lastOnWallTime -= Time.deltaTime;

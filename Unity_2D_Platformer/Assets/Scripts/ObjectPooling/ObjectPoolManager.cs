@@ -22,11 +22,15 @@ public class ObjectPoolManager : MonoBehaviour
         public int count;
     }
 
-    [SerializeField]
-    private ObjectInfo[] objectInfos;
+    [SerializeField] private GameObject[] testObj;
+
+
+    [SerializeField] private ObjectInfo[] objectInfos;
 
     private Dictionary<ObjectType, GameObject> prefabs = new Dictionary<ObjectType, GameObject>();
     private Dictionary<ObjectType, IObjectPool<GameObject>> objectPools = new Dictionary<ObjectType, IObjectPool<GameObject>>();
+
+    private Dictionary<GameObject, GameObject> test = new Dictionary<GameObject, GameObject>();
 
     private void Awake()
     {
@@ -36,6 +40,16 @@ public class ObjectPoolManager : MonoBehaviour
             Destroy(this.gameObject);
 
         InitializeObjectPool();
+
+        for(int i = 0; i < testObj.Length; i++)
+        {
+            test.Add(testObj[i], testObj[i]);
+        }
+    }
+
+    public GameObject GetTestObj(GameObject test)
+    {
+        return this.test[test];
     }
 
     private void InitializeObjectPool()
