@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5610838608519586893}
   - component: {fileID: 5610838608519586895}
   - component: {fileID: 5610838608519586892}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RangedWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,8 +137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8606eba551f7c8546a923631bf176a96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 15
-  targetDistance: 25
 --- !u!114 &5610838608519586892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,4 +149,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe2ff94fa9cec440aa654d945112fd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 500
+  rotationSpeed: 1000

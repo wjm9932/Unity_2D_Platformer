@@ -8,9 +8,8 @@ public class RangedWeapon : MonoBehaviour, IPoolableObject
 {
     public IObjectPool<GameObject> pool { get; private set; }
 
-    [SerializeField] private float velocity;
-    [SerializeField] private float targetDistance;
-
+    private float velocity;
+    private float targetDistance;
     private Rigidbody2D rb;
     private Vector2 startPosition;
 
@@ -37,9 +36,14 @@ public class RangedWeapon : MonoBehaviour, IPoolableObject
         startPosition = position;
         transform.position = position;
         transform.rotation = rotation;
+    }
 
+    public void SetTargetDistanceAndVelocity(float distance, float velocity)
+    {
+        targetDistance = distance;
         rb.velocity = velocity * transform.right;
     }
+
     public void Release()
     {
         pool.Release(gameObject);
@@ -56,8 +60,10 @@ public class RangedWeapon : MonoBehaviour, IPoolableObject
     {
         if (collision.GetComponent<Player>() != null)
         {
-            collision.GetComponent<Player>().ApplyDamage(1, this.gameObject);
-            pool.Release(gameObject);
+            if(collision.GetComponent<Player>().ApplyDamage(1, this.gameObject) == true)
+            {
+                pool.Release(gameObject);
+            }
         }
     }
 }

@@ -9,28 +9,16 @@ public class ObjectPoolManager : MonoBehaviour
 {
     public static ObjectPoolManager Instance;
 
-    public enum ObjectType
-    { 
-        ARROW,
-    }
-
     [System.Serializable]
-    private struct ObjectInfo
+    private struct objInfos
     {
-        public ObjectType objectType;
-        public GameObject prefab;
+        public GameObject targetObject;
         public int count;
     }
 
-    [SerializeField] private GameObject[] testObj;
+    [SerializeField] private objInfos[] infos;
+    private Dictionary<GameObject, IObjectPool<GameObject>> objectPools = new Dictionary<GameObject, IObjectPool<GameObject>>();
 
-
-    [SerializeField] private ObjectInfo[] objectInfos;
-
-    private Dictionary<ObjectType, GameObject> prefabs = new Dictionary<ObjectType, GameObject>();
-    private Dictionary<ObjectType, IObjectPool<GameObject>> objectPools = new Dictionary<ObjectType, IObjectPool<GameObject>>();
-
-    private Dictionary<GameObject, GameObject> test = new Dictionary<GameObject, GameObject>();
 
     private void Awake()
     {
@@ -41,46 +29,34 @@ public class ObjectPoolManager : MonoBehaviour
 
         InitializeObjectPool();
 
-        for(int i = 0; i < testObj.Length; i++)
-        {
-            test.Add(testObj[i], testObj[i]);
-        }
     }
-
-    public GameObject GetTestObj(GameObject test)
-    {
-        return this.test[test];
-    }
-
     private void InitializeObjectPool()
     {
-        for(int i = 0; i < objectInfos.Length; i++)
+        for(int i = 0; i < infos.Length; i++)
         {
-            ObjectType currentType = objectInfos[i].objectType;
-            IObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => CreateObject(currentType), OnGetObject, OnReleasObject, OnDestroyObject, 
-                true, objectInfos[i].count);
+            IObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => CreateObject(infos[i].targetObject), OnGetObject, OnReleasObject, OnDestroyObject, 
+                true, 10);
 
-            if (prefabs.ContainsKey(objectInfos[i].objectType))
+            if (objectPools.ContainsKey(infos[i].targetObject))
             {
-                Debug.LogFormat("{0} Already added", objectInfos[i].objectType);
+                Debug.LogFormat("{0} Already added", infos[i].targetObject);
                 return;
             }
 
-            prefabs.Add(objectInfos[i].objectType, objectInfos[i].prefab);
-            objectPools.Add(objectInfos[i].objectType, pool);
+            objectPools.Add(infos[i].targetObject, pool);
 
-            for (int j = 0; j < objectInfos[i].count; j++)
+            for (int j = 0; j < 10; j++)
             {
-                GameObject poolObj = CreateObject(objectInfos[i].objectType);
+                GameObject poolObj = CreateObject(infos[i].targetObject);
                 poolObj.GetComponent<IPoolableObject>().pool.Release(poolObj);
             }
 
         }
     }
-    private GameObject CreateObject(ObjectType objectType)
+    private GameObject CreateObject(GameObject poolingObj)
     {
-        GameObject obj = Instantiate(prefabs[objectType]);
-        obj.GetComponent<IPoolableObject>().SetPool(objectPools[objectType]);
+        GameObject obj = Instantiate(poolingObj);
+        obj.GetComponent<IPoolableObject>().SetPool(objectPools[poolingObj]);
 
         return obj;
     }
@@ -97,14 +73,14 @@ public class ObjectPoolManager : MonoBehaviour
         Destroy(obj);
     }
 
-    public GameObject GetPoolableObject(ObjectType objectType)
+    public GameObject GetPoolableObject(GameObject targetObject)
     {
-        if(objectPools.ContainsKey(objectType) == false)
+        if(objectPools.ContainsKey(targetObject) == false)
         {
             Debug.LogError("There is no target object type  in object pool");
             return null;
         }
 
-        return objectPools[objectType].Get();
+        return objectPools[targetObject].Get();
     }
 }
