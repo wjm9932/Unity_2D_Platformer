@@ -136,7 +136,7 @@ public class Player : LivingEntity
             var collider = Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, enemyHeadCollisionBoxLayer);
             if (collider != null)
             {
-                if (collider.transform.root.GetComponent<Enemy>().ApplyDamage(Mathf.Abs(rb.velocity.y) * 0.4f, this) == true)
+                if (collider.transform.root.GetComponent<Enemy>().ApplyDamage(Mathf.Abs(rb.velocity.y) * 0.4f, this.gameObject) == true)
                 {
                     movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.jumpAttackState);
                 }
@@ -188,13 +188,14 @@ public class Player : LivingEntity
         movementStateMachine.ChangeState(movementStateMachine.dieState);
     }
 
-    public override bool ApplyDamage(float dmg, LivingEntity damager)
+    public override bool ApplyDamage(float dmg, GameObject damager)
     {
         if (!(movementStateMachine.currentState is AttackState) && movementStateMachine.currentState != movementStateMachine.hitState)
         {
             if (base.ApplyDamage(dmg, damager) == true)
             {
-                heartCount--;
+                heartCount -= (int)dmg;
+
 
                 if (heartCount <= 0)
                 {

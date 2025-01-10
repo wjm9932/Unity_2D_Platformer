@@ -67,7 +67,7 @@ public class Enemy : LivingEntity
         enemyStateMachine.FixedUpdate();
     }
 
-    public override bool ApplyDamage(float dmg, LivingEntity damager)
+    public override bool ApplyDamage(float dmg, GameObject damager)
     {
         if (base.ApplyDamage(dmg, damager) == false)
         {
@@ -76,7 +76,7 @@ public class Enemy : LivingEntity
         else
         {
             hp -= dmg;
-            target = damager;
+            target = damager.GetComponent<LivingEntity>();
 
             if (hp <= 0f)
             {
@@ -151,7 +151,7 @@ public class Enemy : LivingEntity
 
         if (player != null && canBeDamaged == true)
         {
-            player.ApplyDamage(dmg, this);
+            player.ApplyDamage(1, this.gameObject);
         }
     }
 
@@ -161,7 +161,7 @@ public class Enemy : LivingEntity
 
         if (player != null && canBeDamaged == true)
         {
-            player.ApplyDamage(dmg, this);
+            player.ApplyDamage(1, this.gameObject);
         }
     }
 }

@@ -9,11 +9,6 @@ public abstract class LivingEntity : MonoBehaviour
     [Header("Grace Period")]
     [SerializeField] protected float timeBetDamaged;
 
-
-
-    [Header("Damage")]
-    [SerializeField] public float dmg;
-
     [Header("Sprite Renderer")]
     [SerializeField] public SpriteRenderer spriteRenderer;
 
@@ -24,6 +19,7 @@ public abstract class LivingEntity : MonoBehaviour
 
     public int hitDir { get; private set; }
     public bool isDead { get; protected set; }
+    public float dmg { get; set; }
 
     protected float lastTimeDamaged;
     protected bool canBeDamaged
@@ -40,7 +36,7 @@ public abstract class LivingEntity : MonoBehaviour
 
     }
 
-    public virtual bool ApplyDamage(float dmg, LivingEntity damager)
+    public virtual bool ApplyDamage(float dmg, GameObject damager)
     {
         if (canBeDamaged == false)
         {
