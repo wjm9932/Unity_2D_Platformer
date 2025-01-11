@@ -83,6 +83,7 @@ public class Player : LivingEntity
     public Rigidbody2D rb { get; private set; }
     public PlayerInput input { get; private set; }
     public float facingDir { get; private set; }
+    private Vector2 currentCheckpointPosition;
 
     protected override void Awake()
     {
@@ -99,7 +100,8 @@ public class Player : LivingEntity
     {
         base.Start();
         heartCount = maxHearts;
-        _dashCount = maxDashCount;
+        dashCount = maxDashCount;
+        currentCheckpointPosition = this.transform.position;
 
         movementStateMachine.ChangeState(movementStateMachine.runState);
         movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.idleState);
@@ -116,7 +118,7 @@ public class Player : LivingEntity
 
         if (Input.GetKeyDown(KeyCode.R) == true)
         {
-            RespawnPlayer(respawnPos.position);
+            RespawnPlayer(currentCheckpointPosition);
         }
 
         #region Collision Check
@@ -236,6 +238,12 @@ public class Player : LivingEntity
     {
         heartCount = 0;
         base.KillInstant();
+    }
+
+
+    public void SetCheckPoint(Vector2 pos)
+    {
+        currentCheckpointPosition = pos;
     }
 
     #region EDITOR METHODS
