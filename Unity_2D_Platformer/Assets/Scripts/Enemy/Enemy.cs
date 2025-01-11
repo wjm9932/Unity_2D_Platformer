@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : LivingEntity
+public abstract class Enemy : LivingEntity
 {
     [Space(20)]
     [Header("Enemy Components")]
 
     [Header("Health")]
     [SerializeField] public HealthBar healthBar;
-    [SerializeField] private float _hp;
+    [SerializeField] protected float _hp;
     [SerializeField] protected float maxHp;
     protected float hp
     {
@@ -18,7 +18,7 @@ public class Enemy : LivingEntity
             _hp = value;
             healthBar.UpdateHealthBar(_hp, maxHp);
         }
-        private get
+        get
         {
             return _hp;
         }
@@ -40,69 +40,19 @@ public class Enemy : LivingEntity
     public Rigidbody2D rb { get; private set; }
     public float stopDistance { get; private set; }
 
-    private EnemyStateMachine enemyStateMachine;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         stopDistance = (GetComponent<BoxCollider2D>().size.x / 2f) + transform.localScale.x;
         rb = GetComponent<Rigidbody2D>();
-        enemyStateMachine = new EnemyStateMachine(this);
     }
 
-    void Start()
+    protected override void Start()
     {
         lastTimeDamaged = Time.time - timeBetDamaged;
-
         hp = maxHp;
-        enemyStateMachine.ChangeState(enemyStateMachine.patrolState);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        enemyStateMachine.Update();
-    }
-
-    private void FixedUpdate()
-    {
-        enemyStateMachine.FixedUpdate();
-    }
-
-    public override bool ApplyDamage(float dmg, GameObject damager)
-    {
-        if (base.ApplyDamage(dmg, damager) == false)
-        {
-            return false;
-        }
-        else
-        {
-            hp -= dmg;
-            target = damager.GetComponent<LivingEntity>();
-
-            if (hp <= 0f)
-            {
-                Die();
-            }
-            else
-            {
-                enemyStateMachine.ChangeState(enemyStateMachine.enemyHitState);
-            }
-
-            return true;
-        }
-    }
-
-    public override void OnAnimationEnterEvent()
-    {
-        enemyStateMachine.OnAnimationEnterEvent();
-    }
-    public override void OnAnimationTransitionEvent()
-    {
-        enemyStateMachine.OnAnimationTransitionEvent();
-    }
-    public override void OnAnimationExitEvent()
-    {
-        enemyStateMachine.OnAnimationExitEvent();
-    }
     public override void Die()
     {
         base.Die();
@@ -113,8 +63,6 @@ public class Enemy : LivingEntity
         rb.velocity = Vector3.zero;
 
         StartCoroutine(FadeAndDestroy(1.5f));
-
-        enemyStateMachine.ChangeState(enemyStateMachine.enemyDieState);
     }
 
     private IEnumerator FadeAndDestroy(float duration)
@@ -143,8 +91,9 @@ public class Enemy : LivingEntity
     public override void KillInstant()
     {
         hp = 0;
-        Die();
+        base.KillInstant();
     }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         var player = collision.gameObject.GetComponent<Player>();

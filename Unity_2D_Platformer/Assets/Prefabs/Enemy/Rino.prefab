@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 3809375461314189193}
   - component: {fileID: 3809375461314189191}
   - component: {fileID: 3809375461314189192}
-  - component: {fileID: 5619182890821576493}
+  - component: {fileID: 2531878719963604597}
   m_Layer: 7
   m_Name: Rino
   m_TagString: Untagged
@@ -117,7 +117,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
---- !u!114 &5619182890821576493
+--- !u!114 &2531878719963604597
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,19 +126,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 3809375461314189194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ee5e83096c6c884f8859dda53e6061f, type: 3}
+  m_Script: {fileID: 11500000, guid: fbc98a8ba913746439afd1b1b5b71c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetDamaged: 0.5
+  spriteRenderer: {fileID: 3809375461776395216}
+  _animHandler: {fileID: 5703536396070363531}
   healthBar: {fileID: 2096473048936856752}
   _hp: 40
   maxHp: 40
-  dmg: 10
-  spriteRenderer: {fileID: 3809375461776395216}
-  _animHandler: {fileID: 5703536396070363531}
   movementType: {fileID: 11400000, guid: 232fa58f7c2c9e44cb1114566741ca3e, type: 2}
   collisionBox: {fileID: 3717887328839034138}
-  rageColor: {r: 0.7372549, g: 0.42745098, b: 0.42745098, a: 1}
+  rageColor: {r: 0.7372549, g: 0.42745098, b: 0.42745098, a: 0}
 --- !u!1 &3809375461727288950
 GameObject:
   m_ObjectHideFlags: 0

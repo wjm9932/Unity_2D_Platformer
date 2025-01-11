@@ -26,12 +26,12 @@ public abstract class LivingEntity : MonoBehaviour
     {
         get { return Time.time >= lastTimeDamaged + timeBetDamaged; }
     }
-    private void Awake()
+    protected virtual void Awake()
     {
         isDead = false;
     }
 
-    void Start()
+    protected virtual void Start()
     {
 
     }
@@ -86,7 +86,16 @@ public abstract class LivingEntity : MonoBehaviour
         Die();
     }
 
-    public abstract void OnAnimationEnterEvent();
-    public abstract void OnAnimationTransitionEvent();
-    public abstract void OnAnimationExitEvent();
+    public virtual void OnAnimationEnterEvent()
+    {
+
+    }
+    public virtual void OnAnimationTransitionEvent()
+    {
+
+    }
+    public virtual void OnAnimationExitEvent()
+    {
+
+    }
 }

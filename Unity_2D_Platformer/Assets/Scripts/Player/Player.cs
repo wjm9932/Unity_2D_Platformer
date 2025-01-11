@@ -84,8 +84,9 @@ public class Player : LivingEntity
     public PlayerInput input { get; private set; }
     public float facingDir { get; private set; }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         rb = GetComponent<Rigidbody2D>();
         input = GetComponent<PlayerInput>();
         movementStateMachine = new PlayerMovementStateMachine(this);
@@ -94,8 +95,9 @@ public class Player : LivingEntity
         dash.SetStartCount(maxDashCount);
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         heartCount = maxHearts;
         _dashCount = maxDashCount;
 
@@ -233,7 +235,7 @@ public class Player : LivingEntity
     public override void KillInstant()
     {
         heartCount = 0;
-        Die();
+        base.KillInstant();
     }
 
     #region EDITOR METHODS
