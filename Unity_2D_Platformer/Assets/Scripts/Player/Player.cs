@@ -9,7 +9,7 @@ public class Player : LivingEntity
     [Header("Player Components")]
 
     [Header("Health")]
-    [SerializeField] private IndicatorManager health;
+    [SerializeField] private IndicatorManager heartBar;
     [SerializeField] private int maxHearts;
     private int _heartCount;
     private int heartCount
@@ -17,7 +17,7 @@ public class Player : LivingEntity
         set
         {
             _heartCount = Mathf.Clamp(value, 0, maxHearts);
-            health.UpdateCount(_heartCount);
+            heartBar.UpdateCount(_heartCount);
         }
         get
         {
@@ -92,7 +92,7 @@ public class Player : LivingEntity
         input = GetComponent<PlayerInput>();
         movementStateMachine = new PlayerMovementStateMachine(this);
 
-        health.SetStartCount(maxHearts);
+        heartBar.SetStartCount(maxHearts);
         dash.SetStartCount(maxDashCount);
     }
 
@@ -244,6 +244,11 @@ public class Player : LivingEntity
     public void SetCheckPoint(Vector2 pos)
     {
         currentCheckpointPosition = pos;
+    }
+
+    public bool RecoverHealth()
+    {
+        return heartCount++ < maxHearts;
     }
 
     #region EDITOR METHODS
