@@ -1,55 +1,221 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : LivingEntity
 {
-    public Rigidbody2D rb { get; private set; }
-    public Animator animator { get; private set; }
-    public PlayerInput input { get; private set; }
+    [Space(20)]
+    [Header("Player Components")]
 
-
-    private float gravityScale;
-    private PlayerMovementStateMachine movementStateMachine;
-    [SerializeField] private LayerMask whatIsGround;
-    private void Awake()
+    [Header("Health")]
+    [SerializeField] private IndicatorManager health;
+    [SerializeField] private int maxHearts;
+    private int _heartCount;
+    private int heartCount
     {
-        movementStateMachine = new PlayerMovementStateMachine(this);
-
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        input = GetComponent<PlayerInput>();
-
-        gravityScale = rb.gravityScale;
+        set
+        {
+            _heartCount = Mathf.Clamp(value, 0, maxHearts);
+            health.UpdateCount(_heartCount);
+        }
+        get
+        {
+            return _heartCount;
+        }
     }
 
-
-    void Start()
+    [Header("Dash Indicator")]
+    [SerializeField] private IndicatorManager dash;
+    [SerializeField] private int maxDashCount;
+    private int _dashCount;
+    public int dashCount
     {
-        movementStateMachine.ChangeState(movementStateMachine.idleState);
+        set
+        {
+            _dashCount = Mathf.Clamp(value, 0, maxDashCount);
+            dash.UpdateCount(_dashCount);
+        }
+        get 
+        {
+            return _dashCount; 
+        }
+    }
+
+    [Header("Movement  Type")]
+    public MovementTypeSO movementType;
+
+    [Header("Respawn Position")]
+    [SerializeField] private Transform respawnPos;
+
+    #region LayerMask
+    [Header("Layer")]
+    public LayerMask enemyLayer;
+    public LayerMask enemyCollisionBoxLayer;
+    public LayerMask enemyHeadCollisionBoxLayer;
+    public LayerMask whatIsGround;
+    #endregion
+
+    #region Collision Check Parameteres
+    [Header("Collision Check")]
+    public Transform groundChecker;
+    public Vector2 groundCheckSize = new Vector2();
+    public Transform wallCollisionChecker;
+    public Vector2 wallCollisionCheckerSize = new Vector2();
+    #endregion
+
+    #region Attack Root
+    [Header("Attack Root")]
+    public Transform attackRoot;
+    public float attackRange;
+    #endregion
+
+    #region State Machine
+    private PlayerMovementStateMachine movementStateMachine;
+    #endregion
+
+    #region Timer
+    [HideInInspector] public float lastOnGroundTime;
+    [HideInInspector] public float lastPressJumpTime;
+    [HideInInspector] public float lastOnWallTime;
+    #endregion
+
+    public Rigidbody2D rb { get; private set; }
+    public PlayerInput input { get; private set; }
+    public float facingDir { get; private set; }
+    private Vector2 currentCheckpointPosition;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        rb = GetComponent<Rigidbody2D>();
+        input = GetComponent<PlayerInput>();
+        movementStateMachine = new PlayerMovementStateMachine(this);
+
+        health.SetStartCount(maxHearts);
+        dash.SetStartCount(maxDashCount);
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        heartCount = maxHearts;
+        dashCount = maxDashCount;
+        currentCheckpointPosition = this.transform.position;
+
+        movementStateMachine.ChangeState(movementStateMachine.runState);
+        movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.idleState);
     }
 
     void Update()
     {
-        rb.gravityScale = GetGravity();
+        
+        #region Timer
+        lastOnGroundTime -= Time.deltaTime;
+        lastOnWallTime -= Time.deltaTime;
+        lastPressJumpTime -= Time.deltaTime;
+        #endregion
+
+        if (Input.GetKeyDown(KeyCode.R) == true)
+        {
+            RespawnPlayer(currentCheckpointPosition);
+        }
+
+        #region Collision Check
+        if (movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.wallJumpState)
+        {
+            if (Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, whatIsGround) == true) //checks if set box overlaps with ground
+            {
+                lastOnGroundTime = movementType.coyoteTime; //if so sets the lastGrounded to coyoteTime
+            }
+
+            if (Physics2D.OverlapBox(wallCollisionChecker.position, wallCollisionCheckerSize, 0, whatIsGround))
+            {
+                lastOnWallTime = movementType.wallJumpCoyoteTime;
+                facingDir = transform.localRotation.y < 0 ? -1f : 1f;
+            }
+        }
+
+        if (movementStateMachine.jsm.currentState == movementStateMachine.jsm.jumpFallingState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpAttackState)
+        {
+            var collider = Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, enemyHeadCollisionBoxLayer);
+            if (collider != null)
+            {
+                if (collider.transform.root.GetComponent<Enemy>().ApplyDamage(Mathf.Abs(rb.velocity.y) * 0.4f, this.gameObject) == true)
+                {
+                    movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.jumpAttackState);
+                }
+            }
+        }
+        #endregion
 
         movementStateMachine.Update();
+        movementStateMachine.jsm.Update();
     }
+
     private void FixedUpdate()
     {
         movementStateMachine.FixedUpdate();
+        movementStateMachine.jsm.FixedUpdate();
     }
 
     private void LateUpdate()
     {
         movementStateMachine.LateUpdate();
+        movementStateMachine.jsm.LateUpdate();
+
+        animHandler.animator.SetBool("IsRun", input.moveInput.x != 0);
+        animHandler.animator.SetFloat("VelocityY", rb.velocity.y);
     }
 
-    public bool IsOnGround()
+    public override void OnAnimationEnterEvent()
     {
-        if (Physics2D.Raycast(transform.position, Vector2.down, 0.5f + 0.02f, whatIsGround) == true)
+        movementStateMachine.OnAnimationEnterEvent();
+    }
+    public override void OnAnimationTransitionEvent()
+    {
+        movementStateMachine.OnAnimationTransitionEvent();
+    }
+    public override void OnAnimationExitEvent()
+    {
+        movementStateMachine.OnAnimationExitEvent();
+    }
+    public void SetGravityScale(float scale)
+    {
+        rb.gravityScale = scale;
+    }
+    public override void Die()
+    {
+        base.Die();
+        isDead = true;
+        rb.isKinematic = true;
+        GetComponent<Collider2D>().enabled = false;
+        movementStateMachine.ChangeState(movementStateMachine.dieState);
+    }
+
+    public override bool ApplyDamage(float dmg, GameObject damager)
+    {
+        if (!(movementStateMachine.currentState is AttackState) && movementStateMachine.currentState != movementStateMachine.hitState)
         {
-            return true;
+            if (base.ApplyDamage(dmg, damager) == true)
+            {
+                heartCount -= (int)dmg;
+
+
+                if (heartCount <= 0)
+                {
+                    Die();
+                }
+                else
+                {
+                    movementStateMachine.ChangeState(movementStateMachine.hitState);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
@@ -57,43 +223,42 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void FlipPlayer(bool isLeft)
+    private void RespawnPlayer(Vector2 respawnPos)
     {
-        if (isLeft == true)
-        {
-            transform.localRotation = Quaternion.Euler(0, 180, 0);
-        }
-        else
-        {
-            transform.localRotation = Quaternion.Euler(0, 0, 0);
-        }
+        transform.position = respawnPos;
+        heartCount = maxHearts;
+        isDead = false;
+        rb.isKinematic = false;
+        GetComponent<Collider2D>().enabled = true;
+        movementStateMachine.ChangeState(movementStateMachine.runState);
+        movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.idleState);
     }
 
-    public bool IsPlayerFalling()
+    public override void KillInstant()
     {
-        if(rb.velocity.y < 0.5f)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        heartCount = 0;
+        base.KillInstant();
     }
 
-    public float GetGravity()
+
+    public void SetCheckPoint(Vector2 pos)
     {
-        if (IsPlayerFalling() == true)
-        {
-            return 2f * gravityScale;
-        }
-        else if (IsOnGround() == false)
-        {
-            return gravityScale;
-        }
-        else
-        {
-            return 0f;
-        }
+        currentCheckpointPosition = pos;
     }
+
+    #region EDITOR METHODS
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(groundChecker.position, groundCheckSize);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(wallCollisionChecker.position, wallCollisionCheckerSize);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackRoot.position, attackRange);
+    }
+#endif
+    #endregion
 }

@@ -112,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
 
             Jump();
 
-            animHandler.isJumpStarted = true;
+            //animHandler.isJumpTriggered = true;
         }
         else if(CanWallJump() == true)
         {
@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
 
             WallJump(slideDir ? -1 : 1);
 
-            animHandler.isJumpStarted = true;
+            //animHandler.isJumpTriggered = true;
         }
         #endregion
 
@@ -156,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
         {
             SetGravityScale(movementType.gravityScale * movementType.jumpHangGravityMult);
         }
-        else if (rb.velocity.y < 0)
+        else if (rb.velocity.y < 0 && lastOnGroundTime <= 0f)
         {
             SetGravityScale(movementType.gravityScale * movementType.fallGravityMult);
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -movementType.maxFallSpeed));
@@ -226,11 +226,15 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
         #endregion
     }
-
     private void WallJump(int dir)
     {
+        isJumping = true;
+        isJumpCut = false;
+        isJumpFalling = false;
+
         lastPressJumpTime = 0;
-        lastOnGroundTime = 0;
+        lastOnWallTime = 0;
+        lastOnGroundTime = 0f;
 
         Vector2 force = new Vector2(movementType.wallJumpForce.x, movementType.wallJumpForce.y);
         force.x *= dir; //apply force in opposite direction of wall

@@ -19,9 +19,9 @@ public class MovementTypeSO : ScriptableObject
 
     [Header("Run")]
     public float runMaxSpeed; //Target speed we want the player to reach.
-    public float runAcceleration; //The speed at which our player accelerates to max speed, can be set to runMaxSpeed for instant acceleration down to 0 for none at all
+    [SerializeField] private float runAcceleration; //The speed at which our player accelerates to max speed, can be set to runMaxSpeed for instant acceleration down to 0 for none at all
     [HideInInspector] public float runAccelAmount; //The actual force (multiplied with speedDiff) applied to the player.
-    public float runDecceleration; //The speed at which our player decelerates from their current speed, can be set to runMaxSpeed for instant deceleration down to 0 for none at all
+    [SerializeField] private float runDecceleration; //The speed at which our player decelerates from their current speed, can be set to runMaxSpeed for instant deceleration down to 0 for none at all
     [HideInInspector] public float runDeccelAmount; //Actual force (multiplied with speedDiff) applied to the player .
     [Space(5)]
     [Range(0f, 1)] public float accelInAir; //Multipliers applied to acceleration rate when airborne.
@@ -30,9 +30,9 @@ public class MovementTypeSO : ScriptableObject
     [Space(20)]
 
     [Header("Jump")]
-    public float jumpHeight; //Height of the player's jump
-    public float jumpTimeToApex; //Time between applying the jump force and reaching the desired jump height. These values also control the player's gravity and jump force.
-    public float jumpForce; //The actual force applied (upwards) to the player when they jump.
+    [SerializeField] private float jumpHeight; //Height of the player's jump
+    [SerializeField] private float jumpTimeToApex; //Time between applying the jump force and reaching the desired jump height. These values also control the player's gravity and jump force.
+    [HideInInspector] public float jumpForce; //The actual force applied (upwards) to the player when they jump.
 
     [Header("Both Jumps")]
     public float jumpCutGravityMult; //Multiplier to increase gravity if the player releases thje jump button while still jumping
@@ -44,9 +44,10 @@ public class MovementTypeSO : ScriptableObject
 
     [Header("Wall Jump")]
     public Vector2 wallJumpForce; //The actual force (this time set by us) applied to the player when wall jumping.
-    //[Space(5)]
-    //[Range(0f, 1f)] public float wallJumpRunLerp; //Reduces the effect of player's movement while wall jumping.
-    //[Range(0f, 1.5f)] public float wallJumpCoolTime; //Time after wall jumping the player's movement is slowed for.
+
+    [Header("Jump Attack Bounce")]
+    [SerializeField] private float bounceHeight;
+    [HideInInspector] public float bounceForce;
 
     [Space(20)]
 
@@ -57,25 +58,18 @@ public class MovementTypeSO : ScriptableObject
 
     [Header("Jump Assists")]
     [Range(0.01f, 0.5f)] public float coyoteTime; //Grace period after falling off a platform, where you can still jump
-    [Range(0.01f, 0.5f)] public float wallJumpCoyoteTime; //Grace period after falling off a platform, where you can still jump
     [Range(0.01f, 0.5f)] public float jumpInputBufferTime; //Grace period after pressing jump where a jump will be automatically performed once the requirements (eg. being grounded) are met.
+    [Range(0.01f, 0.5f)] public float wallJumpCoyoteTime;
 
-    //[Space(20)]
+    [Header("Attack Assit")]
+    [Range(0.01f, 0.5f)] public float attackBufferTime;
 
-    //[Header("Dash")]
-    //public int dashAmount;
-    //public float dashSpeed;
-    //public float dashSleepTime; //Duration for which the game freezes when we press dash but before we read directional input and apply a force
-    //[Space(5)]
-    //public float dashAttackTime;
-    //[Space(5)]
-    //public float dashEndTime; //Time after you finish the inital drag phase, smoothing the transition back to idle (or any standard state)
-    //public Vector2 dashEndSpeed; //Slows down player, makes dash feel more responsive (used in Celeste)
-    //[Range(0f, 1f)] public float dashEndRunLerp; //Slows the affect of player movement while dashing
-    //[Space(5)]
-    //public float dashRefillTime;
-    //[Space(5)]
-    //[Range(0.01f, 0.5f)] public float dashInputBufferTime;
+    [Header("Knockback")]
+    public Vector2 knockbackForce;
+
+    [Header("Dash")]
+    public float dashForce;
+    [Range(0.01f, 0.5f)] public float dashInputBufferTime;
 
 
     //Unity Callback, called when the inspector updates
@@ -93,13 +87,11 @@ public class MovementTypeSO : ScriptableObject
 
         //Calculate jumpForce using the formula (initialJumpVelocity = gravity * timeToJumpApex)
         jumpForce = Mathf.Abs(gravityStrength) * jumpTimeToApex;
+        bounceForce = Mathf.Sqrt(2 * Mathf.Abs(gravityStrength) * bounceHeight);
 
         #region Variable Ranges
         runAcceleration = Mathf.Clamp(runAcceleration, 0.01f, runMaxSpeed);
         runDecceleration = Mathf.Clamp(runDecceleration, 0.01f, runMaxSpeed);
-
-        //jumpHangAccelerationMult = Mathf.Max(jumpHangAccelerationMult, 1f, jumpHangAccelerationMult);
-        //jumpHangMaxSpeedMult = Mathf.Max(jumpHangMaxSpeedMult, 1f, jumpHangMaxSpeedMult);
 
         slideAccel = Mathf.Clamp(slideAccel, 1f, Mathf.Abs(slideSpeed));
 
