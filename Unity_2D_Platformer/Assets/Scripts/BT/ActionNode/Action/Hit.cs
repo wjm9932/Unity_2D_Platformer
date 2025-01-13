@@ -9,7 +9,6 @@ public class Hit : IAction, ICompositionNodeResettable
     private Blackboard blackboard;
     private readonly float duration;
     private readonly float decelerationFactor;
-    private float timer;
 
     public Hit(Blackboard blackBoard)
     {
@@ -24,7 +23,6 @@ public class Hit : IAction, ICompositionNodeResettable
         blackboard.GetData<Enemy>("owner").healthBar.gameObject.SetActive(true);
 
         ApplyKnockbackForce(blackboard.GetData<Enemy>("owner").movementType.knockbackForce);
-        timer = duration;
 
         blackboard.GetData<Enemy>("owner").spriteRenderer.color = blackboard.GetData<Enemy>("owner").rageColor;
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsHit", true);
@@ -32,10 +30,8 @@ public class Hit : IAction, ICompositionNodeResettable
 
     public NodeState Execute()
     {
-        timer -= Time.deltaTime;
-        if (timer < 0f)
+        if (blackboard.GetData<Enemy>("owner").canBeDamaged == true)
         {
-            blackboard.SetData<bool>("isHit", false);
             return NodeState.Success;
         }
 
@@ -48,7 +44,6 @@ public class Hit : IAction, ICompositionNodeResettable
     }
     public void OnExit()
     {
-        blackboard.SetData<bool>("isHit", false);
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsHit", false);
     }
 

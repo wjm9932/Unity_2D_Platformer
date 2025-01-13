@@ -63,18 +63,12 @@ public class WarriorSkeleton : Enemy
             {
                 Die();
             }
-            else
-            {
-                btBuilder.blackboard.SetData<bool>("isHit", true);
-            }
             return true;
         }
     }
     private void BuildBT()
     {
         btBuilder.blackboard.SetData<Enemy>("owner", this);
-        btBuilder.blackboard.SetData<bool>("isHit", false);
-        btBuilder.blackboard.SetData<bool>("isPlayerOnSight", false);
 
         root = btBuilder
             .AddSelector()
@@ -83,7 +77,7 @@ public class WarriorSkeleton : Enemy
                     .AddAction(new Die(btBuilder.blackboard), btBuilder.actionManager)
                 .EndComposite()
                 .AddSequence()
-                    .AddCondition(() => btBuilder.blackboard.GetData<bool>("isHit"))
+                    .AddCondition(() => canBeDamaged == false)
                     .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
                 .EndComposite()
                 .AddAttackSequence(true)
