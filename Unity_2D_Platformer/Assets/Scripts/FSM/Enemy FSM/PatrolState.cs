@@ -11,7 +11,7 @@ public class PatrolState : IState
     public PatrolState(EnemyStateMachine enemyStateMachine)
     {
         sm = enemyStateMachine;
-        stopDistance = sm.owner.stopDistance;
+        stopDistance = sm.owner.patrolStopDistance;
     }
     public void Enter()
     {

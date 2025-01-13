@@ -20,7 +20,10 @@ public class ResetNode : IAction, ICompositionNodeResettable
     {
         return NodeState.Success;
     }
+    public void ExecuteInFixedUpdate()
+    {
 
+    }
     public void OnExit()
     {
 

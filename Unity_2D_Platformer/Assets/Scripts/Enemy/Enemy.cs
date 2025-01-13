@@ -38,12 +38,13 @@ public abstract class Enemy : LivingEntity
     public float patrolPoint_2 { get; private set; }
 
     public Rigidbody2D rb { get; private set; }
-    public float stopDistance { get; private set; }
+    public float patrolStopDistance { get; private set; }
+    public float trackStopDistance { get; protected set; }
 
     protected override void Awake()
     {
         base.Awake();
-        stopDistance = (GetComponent<BoxCollider2D>().size.x / 2f) + transform.localScale.x;
+        patrolStopDistance = (GetComponent<BoxCollider2D>().size.x / 2f) * transform.localScale.x;
         rb = GetComponent<Rigidbody2D>();
     }
 

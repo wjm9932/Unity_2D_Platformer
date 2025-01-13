@@ -7,6 +7,8 @@ public interface IAction
     void OnEnter();
     void OnExit();
     NodeState Execute();
+
+    void ExecuteInFixedUpdate();
 }
 
 //public class ActionManager
@@ -66,6 +68,14 @@ public class ActionManager
         {
             currentState = currentAction.Execute();
             return currentState;
+        }
+    }
+
+    public void ExecuteCurrentActionInFixedUpdate()
+    {
+        if(currentState == NodeState.Running)
+        {
+            currentAction?.ExecuteInFixedUpdate();
         }
     }
 }

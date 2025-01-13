@@ -162,8 +162,10 @@ GameObject:
   - component: {fileID: 2728898524108704116}
   - component: {fileID: 2728898524108704118}
   - component: {fileID: 2728898524108704113}
+  - component: {fileID: 2140981173}
+  - component: {fileID: 2140981174}
   m_Layer: 7
-  m_Name: Skeleton
+  m_Name: WarriorSkeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,6 +236,39 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2, y: 3}
   m_EdgeRadius: 0
+--- !u!114 &2140981173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2728898524108704117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c578ec1d87473474fb63deac864316ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2140981174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2728898524108704117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a3a4cdebf419ac46b0088c798d30316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBetDamaged: 0.5
+  spriteRenderer: {fileID: 2728898522730726249}
+  _animHandler: {fileID: 2728898522730726251}
+  healthBar: {fileID: 4091192189617970375}
+  _hp: 100
+  maxHp: 100
+  movementType: {fileID: 11400000, guid: 232fa58f7c2c9e44cb1114566741ca3e, type: 2}
+  collisionBox: {fileID: 2728898523777886955}
+  rageColor: {r: 0.6509434, g: 0.35924706, b: 0.35924706, a: 1}
 --- !u!1 &2728898524217196234
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,7 +369,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -468,3 +503,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3690017472716546538, guid: 7134a7163bc6e144088f3e6903e0349f, type: 3}
   m_PrefabInstance: {fileID: 2728898523495374967}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4091192189617970375 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2096473048936856752, guid: 7134a7163bc6e144088f3e6903e0349f, type: 3}
+  m_PrefabInstance: {fileID: 2728898523495374967}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26bedf712b110da49bc5a73209c0fd10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

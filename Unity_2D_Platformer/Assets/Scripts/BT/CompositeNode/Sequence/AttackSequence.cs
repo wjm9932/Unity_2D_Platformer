@@ -41,11 +41,11 @@ public class AttackSequence : CompositeNode
         {
             currentIndex++;
             currentNode = null;
-            return NodeState.Running; 
+            return NodeState.Running;
         }
         else
         {
-            if(!requireAllSuccess)
+            if (!requireAllSuccess)
             {
                 if (currentIndex != 0)
                 {

@@ -34,6 +34,10 @@ public class TestAction : IAction
         }
     }
 
+    public void ExecuteInFixedUpdate()
+    {
+
+    }
     public void OnExit()
     {
 
