@@ -65,10 +65,6 @@ public class WarriorSkeleton : Enemy
             }
             else
             {
-                if (dmg > 10f)
-                {
-
-                }
                 btBuilder.blackboard.SetData<bool>("isHit", true);
             }
             return true;

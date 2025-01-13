@@ -22,7 +22,7 @@ public abstract class LivingEntity : MonoBehaviour
     public float dmg { get; set; }
 
     protected float lastTimeDamaged;
-    protected bool canBeDamaged
+    public bool canBeDamaged
     {
         get { return Time.time >= lastTimeDamaged + timeBetDamaged; }
     }

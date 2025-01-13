@@ -24,7 +24,7 @@ public class Hit : IAction, ICompositionNodeResettable
         blackboard.GetData<Enemy>("owner").healthBar.gameObject.SetActive(true);
 
         ApplyKnockbackForce(blackboard.GetData<Enemy>("owner").movementType.knockbackForce);
-        timer = duration + 0.3f;
+        timer = duration;
 
         blackboard.GetData<Enemy>("owner").spriteRenderer.color = blackboard.GetData<Enemy>("owner").rageColor;
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsHit", true);
