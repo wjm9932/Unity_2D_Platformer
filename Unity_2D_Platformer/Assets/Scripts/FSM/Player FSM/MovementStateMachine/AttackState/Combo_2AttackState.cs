@@ -36,15 +36,10 @@ public class Combo_2AttackState : AttackState
     {
         if (canAttack == true)
         {
-            var enemies = Physics2D.OverlapCircleAll(sm.owner.attackRoot.position, sm.owner.attackRange, sm.owner.enemyLayer);
-            if(enemies.Length > 0 && canChargeDash == true)
+            if(Attack() == true && canChargeDash == true)
             {
                 sm.owner.dashCount++;
                 canChargeDash = false;
-            }
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                enemies[i].transform.root.GetComponent<LivingEntity>().ApplyDamage(sm.owner.dmg, sm.owner.gameObject);
             }
         }
 

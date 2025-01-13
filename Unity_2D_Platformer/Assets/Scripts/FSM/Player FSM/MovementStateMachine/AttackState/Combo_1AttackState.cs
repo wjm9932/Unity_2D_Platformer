@@ -20,26 +20,21 @@ public class Combo_1AttackState : AttackState
     {
         comboAttackBufferTime -= Time.deltaTime;
 
-        if (canAttack == true)
+        if(canAttack == true)
         {
-            var enemies = Physics2D.OverlapCircleAll(sm.owner.attackRoot.position, sm.owner.attackRange, sm.owner.enemyLayer);
-
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                enemies[i].transform.root.GetComponent<LivingEntity>().ApplyDamage(sm.owner.dmg, sm.owner.gameObject);
-            }
+            Attack();
         }
 
-        if(sm.owner.input.isAttack == true)
+        if (sm.owner.input.isAttack == true)
         {
             comboAttackBufferTime = sm.owner.movementType.attackBufferTime;
         }
-        
+
         if (sm.jsm.currentState == sm.jsm.fallingState)
         {
             sm.ChangeState(sm.runState);
         }
-        else if( comboAttackBufferTime > 0f && canComboAttack == true)
+        else if (comboAttackBufferTime > 0f && canComboAttack == true)
         {
             sm.ChangeState(sm.combo_2AttackState);
         }

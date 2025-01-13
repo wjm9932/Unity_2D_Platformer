@@ -59,4 +59,24 @@ public abstract class AttackState : IState
 
         sm.owner.rb.AddForce(movement * Vector2.right);
     }
+
+    protected bool Attack()
+    {
+        bool isAttackSucced = false;
+        var enemies = Physics2D.OverlapCircleAll(sm.owner.attackRoot.position, sm.owner.attackRange, sm.owner.enemyLayer);
+
+        foreach (var enemyCollider in enemies)
+        {
+            var livingEntity = enemyCollider.transform.GetComponent<LivingEntity>();
+            if (livingEntity != null)
+            {
+                if(livingEntity.ApplyDamage(sm.owner.dmg, sm.owner.gameObject) == true)
+                {
+                    isAttackSucced = true;
+                }
+            }
+        }
+
+        return isAttackSucced;
+    }
 }
