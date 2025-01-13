@@ -64,4 +64,18 @@ public class Patrol : IAction
 
         blackboard.GetData<Enemy>("owner").rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
     }
+
+
+    public void OnAnimationEnterEvent()
+    {
+
+    }
+    public void OnAnimationTransitionEvent()
+    {
+
+    }
+    public void OnAnimationExitEvent()
+    {
+
+    }
 }

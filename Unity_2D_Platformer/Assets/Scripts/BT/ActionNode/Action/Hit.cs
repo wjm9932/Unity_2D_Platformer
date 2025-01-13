@@ -21,7 +21,6 @@ public class Hit : IAction, ICompositionNodeResettable
     public void OnEnter()
     {
         onResetCompositionNode();
-
         blackboard.GetData<Enemy>("owner").healthBar.gameObject.SetActive(true);
 
         ApplyKnockbackForce(blackboard.GetData<Enemy>("owner").movementType.knockbackForce);
@@ -78,5 +77,18 @@ public class Hit : IAction, ICompositionNodeResettable
     public void SetResetAction(Action resetAction)
     {
         this.onResetCompositionNode = resetAction;
+    }
+
+    public void OnAnimationEnterEvent()
+    {
+
+    }
+    public void OnAnimationTransitionEvent()
+    {
+
+    }
+    public void OnAnimationExitEvent()
+    {
+
     }
 }

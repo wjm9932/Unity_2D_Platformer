@@ -36,7 +36,18 @@ public class Idle : IAction
     {
 
     }
+    public void OnAnimationEnterEvent()
+    {
 
+    }
+    public void OnAnimationTransitionEvent()
+    {
+
+    }
+    public void OnAnimationExitEvent()
+    {
+
+    }
     private void DeaccelPlayerVelocity()
     {
         float speedDiff = 0f - blackboard.GetData<Enemy>("owner").rb.velocity.x;

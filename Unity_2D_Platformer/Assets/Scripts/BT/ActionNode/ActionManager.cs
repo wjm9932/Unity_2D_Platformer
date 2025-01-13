@@ -9,6 +9,9 @@ public interface IAction
     NodeState Execute();
 
     void ExecuteInFixedUpdate();
+    void OnAnimationEnterEvent();
+    void OnAnimationTransitionEvent();
+    void OnAnimationExitEvent();
 }
 
 //public class ActionManager
@@ -77,5 +80,18 @@ public class ActionManager
         {
             currentAction?.ExecuteInFixedUpdate();
         }
+    }
+
+    public void OnAnimationEnterEvent()
+    {
+        currentAction.OnAnimationEnterEvent();
+    }
+    public void OnAnimationTransitionEvent()
+    {
+        currentAction.OnAnimationTransitionEvent();
+    }
+    public void OnAnimationExitEvent()
+    {
+        currentAction.OnAnimationExitEvent();
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class HitState : IState
@@ -23,7 +24,7 @@ public class HitState : IState
         {
             sm.jsm.ChangeState(sm.jsm.fallingState);
         }
-
+        sm.owner.animHandler.animator.ResetTrigger("ResetCombo");
         sm.owner.animHandler.animator.SetBool("IsHit", true);
     }
     public void Update()

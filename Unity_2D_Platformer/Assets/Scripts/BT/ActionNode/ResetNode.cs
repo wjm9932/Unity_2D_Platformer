@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class ResetNode : IAction, ICompositionNodeResettable
 {
-    private Blackboard blackboard;
     private Action onResetCompositionNode;
-    public ResetNode(Blackboard blackBoard)
+    public ResetNode()
     {
-        this.blackboard = blackBoard;
     }
 
     public void OnEnter()
@@ -28,7 +26,18 @@ public class ResetNode : IAction, ICompositionNodeResettable
     {
 
     }
+    public void OnAnimationEnterEvent()
+    {
 
+    }
+    public void OnAnimationTransitionEvent()
+    {
+
+    }
+    public void OnAnimationExitEvent()
+    {
+
+    }
     public void SetResetAction(Action resetAction)
     {
         this.onResetCompositionNode = resetAction;

@@ -14,14 +14,13 @@ public class Track : IAction
     public void OnEnter()
     {
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsTrack", true);
-
     }
 
     public NodeState Execute()
     {
         Flip(blackboard.GetData<Enemy>("owner").transform.position.x < blackboard.GetData<Enemy>("owner").target.transform.position.x);
 
-        if (IsTargetOnWayPoints() == false)
+        if (IsTargetOnWayPoints() == false || blackboard.GetData<Enemy>("owner").target.isDead == true)
         {
             blackboard.GetData<Enemy>("owner").target = null;
             return NodeState.Failure;
@@ -72,5 +71,17 @@ public class Track : IAction
         float movement = speedDif * accelAmount;
 
         blackboard.GetData<Enemy>("owner").rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
+    }
+    public void OnAnimationEnterEvent()
+    {
+
+    }
+    public void OnAnimationTransitionEvent()
+    {
+
+    }
+    public void OnAnimationExitEvent()
+    {
+
     }
 }

@@ -58,7 +58,7 @@ public class Combo_1AttackState : AttackState
     }
     public override void Exit()
     {
-
+        base.Exit();
     }
     public override void OnAnimationEnterEvent()
     {

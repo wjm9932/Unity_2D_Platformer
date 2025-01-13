@@ -1,42 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class TestAction : IAction
+public class Die : IAction
 {
     private Blackboard blackboard;
-    private float testTime;
-    private int index;
-    public TestAction(Blackboard blackBoard, int index)
+
+    public Die(Blackboard blackBoard)
     {
         this.blackboard = blackBoard;
-        this.index = index;
     }
 
     public void OnEnter()
     {
-        testTime = 0f;
+        blackboard.GetData<Enemy>("owner").spriteRenderer.color = Color.white;
+        blackboard.GetData<Enemy>("owner").healthBar.gameObject.SetActive(false);
+        blackboard.GetData<Enemy>("owner").animHandler.animator.SetTrigger("Die");
     }
 
     public NodeState Execute()
     {
-        testTime += Time.deltaTime;
-        if (testTime >= 2f)
-        {
-            Debug.Log("Success " + index);
-            return NodeState.Success;
-        }
-        else
-        {
-            Debug.Log("Running " +  index);
-            return NodeState.Running;
-        }
+        return NodeState.Running;
     }
 
     public void ExecuteInFixedUpdate()
     {
-
     }
     public void OnExit()
     {
@@ -55,4 +43,3 @@ public class TestAction : IAction
 
     }
 }
-

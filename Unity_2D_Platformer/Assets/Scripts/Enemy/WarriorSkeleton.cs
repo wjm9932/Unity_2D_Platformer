@@ -7,6 +7,7 @@ public class WarriorSkeleton : Enemy
     private BehaviorTreeBuilder btBuilder;
     private CompositeNode root;
 
+
     protected override void Awake()
     {
         base.Awake();
@@ -17,7 +18,7 @@ public class WarriorSkeleton : Enemy
     {
         base.Start();
         BuildBT();
-        trackStopDistance = patrolStopDistance + 1f;
+        trackStopDistance = patrolStopDistance + 1.5f;
     }
 
     void Update()
@@ -27,6 +28,19 @@ public class WarriorSkeleton : Enemy
     private void FixedUpdate()
     {
         btBuilder.actionManager.ExecuteCurrentActionInFixedUpdate();
+    }
+
+    public override void OnAnimationEnterEvent()
+    {
+        btBuilder.actionManager.OnAnimationEnterEvent();
+    }
+    public override void OnAnimationTransitionEvent()
+    {
+        btBuilder.actionManager.OnAnimationTransitionEvent();
+    }
+    public override void OnAnimationExitEvent()
+    {
+        btBuilder.actionManager.OnAnimationExitEvent();
     }
 
     public override void Die()
@@ -51,6 +65,10 @@ public class WarriorSkeleton : Enemy
             }
             else
             {
+                if (dmg > 10f)
+                {
+
+                }
                 btBuilder.blackboard.SetData<bool>("isHit", true);
             }
             return true;
@@ -64,6 +82,10 @@ public class WarriorSkeleton : Enemy
 
         root = btBuilder
             .AddSelector()
+                .AddSequence()
+                    .AddCondition(() => isDead == true)
+                    .AddAction(new Die(btBuilder.blackboard), btBuilder.actionManager)
+                .EndComposite()
                 .AddSequence()
                     .AddCondition(() => btBuilder.blackboard.GetData<bool>("isHit"))
                     .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
@@ -82,4 +104,14 @@ public class WarriorSkeleton : Enemy
             .EndComposite()
             .Build();
     }
+
+    #region EDITOR METHODS
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackRoot.position, attackRange);
+    }
+#endif
+    #endregion
 }

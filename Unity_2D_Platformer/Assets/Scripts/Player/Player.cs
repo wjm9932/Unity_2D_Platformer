@@ -45,8 +45,6 @@ public class Player : LivingEntity
     [Header("Movement  Type")]
     public MovementTypeSO movementType;
 
-    [Header("Respawn Position")]
-    [SerializeField] private Transform respawnPos;
 
     #region LayerMask
     [Header("Layer")]
@@ -109,7 +107,7 @@ public class Player : LivingEntity
 
     void Update()
     {
-        
+        //Debug.Log(movementStateMachine.currentState);
         #region Timer
         lastOnGroundTime -= Time.deltaTime;
         lastOnWallTime -= Time.deltaTime;

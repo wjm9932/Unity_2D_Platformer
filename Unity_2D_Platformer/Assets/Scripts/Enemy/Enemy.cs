@@ -41,6 +41,18 @@ public abstract class Enemy : LivingEntity
     public float patrolStopDistance { get; private set; }
     public float trackStopDistance { get; protected set; }
 
+
+    #region LayerMask
+    [Header("Layer")]
+    public LayerMask targetLayer;
+    #endregion
+
+    #region Attack Root
+    [Header("Attack Root")]
+    public Transform attackRoot;
+    public float attackRange;
+    #endregion
+
     protected override void Awake()
     {
         base.Awake();

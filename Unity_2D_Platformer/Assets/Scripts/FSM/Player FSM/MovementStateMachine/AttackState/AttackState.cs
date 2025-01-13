@@ -38,6 +38,7 @@ public abstract class AttackState : IState
     }
     public virtual void Exit()
     {
+
     }
 
     public virtual void OnAnimationEnterEvent()
