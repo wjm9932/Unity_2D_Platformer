@@ -18,12 +18,16 @@ public class EnemyMovementTypeSO : ScriptableObject
     [HideInInspector] public float trackAccelAmount;
     [SerializeField] private float trackDecceleration;
     [HideInInspector] public float trackDeccelAmount;
+    public float trackStopDistance;
 
     [Header("Idle Time")]
     public float idleTime;
 
     [Header("Knockback")]
     public Vector2 knockbackForce;
+
+    [Header("Groggy Time")]
+    public float groggyTime;
 
     private void OnValidate()
     {

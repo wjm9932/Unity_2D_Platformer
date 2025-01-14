@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b96b05852de035458eeac0b83ecc914, type: 3}
-  m_Name: DefaultEnemyType
+  m_Name: SpearEnemyType
   m_EditorClassIdentifier: 
   patrolMaxSpeed: 2
   patrolAcceleration: 0.3
@@ -22,7 +22,7 @@ MonoBehaviour:
   trackAccelAmount: 6.25
   trackDecceleration: 2
   trackDeccelAmount: 25
-  trackStopDistance: 1.5
+  trackStopDistance: 2.5
   idleTime: 2
   knockbackForce: {x: 20, y: 0}
-  groggyTime: 0.2
+  groggyTime: 0.3

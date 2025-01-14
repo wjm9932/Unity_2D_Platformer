@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WarriorSkeleton : Enemy
+public class MeleeSkeleton : Enemy
 {
     private BehaviorTreeBuilder btBuilder;
     private CompositeNode root;
-
 
     protected override void Awake()
     {
@@ -18,7 +17,7 @@ public class WarriorSkeleton : Enemy
     {
         base.Start();
         BuildBT();
-        trackStopDistance = patrolStopDistance + 1.5f;
+        trackStopDistance = patrolStopDistance + movementType.trackStopDistance;
     }
 
     void Update()
@@ -80,7 +79,7 @@ public class WarriorSkeleton : Enemy
                     .AddCondition(() => canBeDamaged == false)
                     .AddAttackSequence()
                         .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
-                        .AddAction(new Wait(0.3f, () => canBeDamaged == false), btBuilder.actionManager)
+                        .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false), btBuilder.actionManager)
                     .EndComposite()
                 .EndComposite()
                 .AddAttackSequence(true)
