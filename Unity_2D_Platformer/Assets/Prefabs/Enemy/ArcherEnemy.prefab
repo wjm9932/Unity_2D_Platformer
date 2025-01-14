@@ -307,7 +307,7 @@ MonoBehaviour:
   attackRoot: {fileID: 7283769443258909757}
   attackRange: 0
   rangeWeapon: {fileID: 0}
-  attackCoolTime: 2
+  attackCoolTime: 1
 --- !u!1 &2728898524217196234
 GameObject:
   m_ObjectHideFlags: 0

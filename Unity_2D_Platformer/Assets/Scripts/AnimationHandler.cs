@@ -36,14 +36,6 @@ public class AnimationHandler : MonoBehaviour
     public bool IsAnimationFinished()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        //AnimatorClipInfo[] clipInfos = animator.GetCurrentAnimatorClipInfo(0);
-
-        //if (clipInfos.Length > 0)
-        //{
-        //    Debug.Log(stateInfo.normalizedTime);
-        //}
-        //var name = clipInfos[0].clip.name;
-        //var a = animator.IsInTransition(0);
 
         return stateInfo.normalizedTime >= 1f && !animator.IsInTransition(0); 
     }
