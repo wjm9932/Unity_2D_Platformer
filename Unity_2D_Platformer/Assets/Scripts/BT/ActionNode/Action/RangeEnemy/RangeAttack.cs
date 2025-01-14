@@ -6,6 +6,7 @@ public class RangeAttack : IAction
 {
     private Blackboard blackboard;
     private float decelerationFactor;
+    private bool isDone;
     public RangeAttack(Blackboard blackBoard)
     {
         this.blackboard = blackBoard;
@@ -14,12 +15,14 @@ public class RangeAttack : IAction
 
     public void OnEnter()
     {
+        isDone = false;
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsAttack1", true);
+        Flip(blackboard.GetData<Enemy>("owner").transform.position.x < blackboard.GetData<Enemy>("owner").target.transform.position.x);
     }
 
     public NodeState Execute()
     {
-        if (blackboard.GetData<Enemy>("owner").animHandler.IsAnimationFinished() == true)
+        if (isDone == true)
         {
             blackboard.SetData<float>("attackCoolTime", 0f);
             return NodeState.Success;
@@ -54,6 +57,18 @@ public class RangeAttack : IAction
     }
     public void OnAnimationExitEvent()
     {
+        isDone = true;
+    }
 
+    private void Flip(bool isMovingRight)
+    {
+        if (isMovingRight && blackboard.GetData<Enemy>("owner").transform.localRotation.eulerAngles.y != 0)
+        {
+            blackboard.GetData<Enemy>("owner").transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (!isMovingRight && blackboard.GetData<Enemy>("owner").transform.localRotation.eulerAngles.y != 180)
+        {
+            blackboard.GetData<Enemy>("owner").transform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
     }
 }

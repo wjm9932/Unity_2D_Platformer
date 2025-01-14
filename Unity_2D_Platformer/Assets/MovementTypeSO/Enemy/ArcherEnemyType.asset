@@ -22,7 +22,7 @@ MonoBehaviour:
   trackAccelAmount: 8
   trackDecceleration: 2
   trackDeccelAmount: 20
-  trackStopDistance: 7
+  trackStopDistance: 5
   idleTime: 2
-  knockbackForce: {x: 20, y: 0}
+  knockbackForce: {x: 40, y: 0}
   groggyTime: 0.1

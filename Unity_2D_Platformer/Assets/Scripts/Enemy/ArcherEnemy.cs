@@ -72,7 +72,7 @@ public class ArcherEnemy : Enemy
     private void BuildBT()
     {
         btBuilder.blackboard.SetData<Enemy>("owner", this);
-        btBuilder.blackboard.SetData<float>("attackCoolTime", 0f);
+        btBuilder.blackboard.SetData<float>("attackCoolTime", attackCoolTime);
 
         root = btBuilder
             .AddSelector()
@@ -88,10 +88,18 @@ public class ArcherEnemy : Enemy
                     .EndComposite()
                 .EndComposite()
                 .AddAttackSequence()
-                    .AddCondition(() => target != null)
-                    .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
-                    .AddCondition(() => btBuilder.blackboard.GetData<float>("attackCoolTime") >= attackCoolTime)
-                    .AddAction(new RangeAttack(btBuilder.blackboard), btBuilder.actionManager)
+                    .AddCondition(()=> target != null)
+                    .AddSelector()
+                        .AddAttackSequence()
+                            .AddCondition(() => btBuilder.blackboard.GetData<float>("attackCoolTime") >= attackCoolTime)
+                            .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddAction(new RangeAttack(btBuilder.blackboard), btBuilder.actionManager)
+                        .EndComposite()
+                        .AddSequence()
+                            .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddAction(new WaitUntilCoolTime(btBuilder.blackboard), btBuilder.actionManager)
+                        .EndComposite()
+                    .EndComposite()
                 .EndComposite()
                 .AddAttackSequence()
                     .AddAction(new Patrol(btBuilder.blackboard), btBuilder.actionManager)

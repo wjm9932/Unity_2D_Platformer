@@ -18,6 +18,7 @@ public class AttackSequence : CompositeNode
 
     public override NodeState Evaluate()
     {
+        
         if (currentNode == null)
         {
             if (currentIndex < children.Count)
@@ -30,7 +31,10 @@ public class AttackSequence : CompositeNode
                 return NodeState.Success;
             }
         }
-
+        if (attackSequenceNumber == 4)
+        {
+            //Debug.Log(currentIndex);
+        }
         NodeState state = currentNode.Evaluate();
 
         if (state == NodeState.Running)

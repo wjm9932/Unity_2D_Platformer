@@ -7,14 +7,12 @@ public class Hit : IAction, ICompositionNodeResettable
     private Action onResetCompositionNode;
 
     private Blackboard blackboard;
-    private readonly float duration;
     private readonly float decelerationFactor;
 
     public Hit(Blackboard blackBoard)
     {
         this.blackboard = blackBoard;
         decelerationFactor = 0.2f;
-        duration = Utility.CalculateTimeByDashForce(blackboard.GetData<Enemy>("owner").movementType.knockbackForce.x, decelerationFactor);
     }
 
     public void OnEnter()

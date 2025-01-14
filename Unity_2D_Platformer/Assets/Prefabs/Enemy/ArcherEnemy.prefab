@@ -296,8 +296,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2728898522730726249}
   _animHandler: {fileID: 2728898522730726251}
   healthBar: {fileID: 4091192189617970375}
-  _hp: 30
-  maxHp: 30
+  _hp: 100
+  maxHp: 100
   movementType: {fileID: 11400000, guid: 6abfebbf91c243442b6e60c03cee1bff, type: 2}
   collisionBox: {fileID: 2728898523777886955}
   rageColor: {r: 0.6509804, g: 0.36078432, b: 0.36078432, a: 1}
