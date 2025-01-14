@@ -83,6 +83,8 @@ public class Player : LivingEntity
     public float facingDir { get; private set; }
     private Vector2 currentCheckpointPosition;
 
+    public GameObject a;
+
     protected override void Awake()
     {
         base.Awake();
@@ -118,7 +120,10 @@ public class Player : LivingEntity
         {
             RespawnPlayer(currentCheckpointPosition);
         }
-
+        if (Input.GetKeyDown(KeyCode.B) == true)
+        {
+            ObjectPoolManager.Instance.GetPoolableObject(a);
+        }
         #region Collision Check
         if (movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.wallJumpState)
         {

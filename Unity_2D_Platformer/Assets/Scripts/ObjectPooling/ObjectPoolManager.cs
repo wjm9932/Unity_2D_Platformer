@@ -32,34 +32,41 @@ public class ObjectPoolManager : MonoBehaviour
     }
     private void InitializeObjectPool()
     {
-        for(int i = 0; i < infos.Length; i++)
+        for (int i = 0; i < infos.Length; i++)
         {
-            IObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => CreateObject(infos[i].targetObject), OnGetObject, OnReleasObject, OnDestroyObject, 
-                true, 10);
-
             if (objectPools.ContainsKey(infos[i].targetObject))
             {
                 Debug.LogFormat("{0} Already added", infos[i].targetObject);
-                return;
+                continue;
             }
+
+            IObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => CreateObject(infos[i].targetObject), OnGetObject, OnReleasObject, OnDestroyObject,
+                true, infos[i].count);
 
             objectPools.Add(infos[i].targetObject, pool);
 
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < infos[i].count; j++)
             {
                 GameObject poolObj = CreateObject(infos[i].targetObject);
                 poolObj.GetComponent<IPoolableObject>().pool.Release(poolObj);
             }
-
         }
     }
     private GameObject CreateObject(GameObject poolingObj)
     {
-        GameObject obj = Instantiate(poolingObj);
-        obj.GetComponent<IPoolableObject>().SetPool(objectPools[poolingObj]);
+        IPoolableObject poolableObject = poolingObj.GetComponent<IPoolableObject>();
+        if (poolableObject == null)
+        {
+            Debug.LogError($"GameObject {poolingObj.name} must implement IPoolableObject.");
+            return null;
+        }
 
+        var obj = Instantiate(poolingObj);
+        obj.GetComponent<IPoolableObject>().SetPool(objectPools[poolingObj]);
         return obj;
     }
+
+
     private void OnGetObject(GameObject obj)
     {
         obj.gameObject.SetActive(true);
@@ -75,10 +82,16 @@ public class ObjectPoolManager : MonoBehaviour
 
     public GameObject GetPoolableObject(GameObject targetObject)
     {
-        if(objectPools.ContainsKey(targetObject) == false)
+        if (objectPools.ContainsKey(targetObject) == false)
         {
-            Debug.LogError("There is no target object type  in object pool");
-            return null;
+            IObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => CreateObject(targetObject), OnGetObject, OnReleasObject, OnDestroyObject, true, 10);
+            objectPools.Add(targetObject, pool);
+
+            for (int j = 0; j < 10; j++)
+            {
+                GameObject poolObj = CreateObject(targetObject);
+                poolObj.GetComponent<IPoolableObject>().pool.Release(poolObj);
+            }
         }
 
         return objectPools[targetObject].Get();
