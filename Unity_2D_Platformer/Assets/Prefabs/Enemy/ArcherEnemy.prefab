@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 2728898524108704118}
   - component: {fileID: 2728898524108704113}
   - component: {fileID: 2140981173}
-  - component: {fileID: 2140981174}
+  - component: {fileID: 884819182911520265}
   m_Layer: 7
   m_Name: ArcherEnemy
   m_TagString: Untagged
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c578ec1d87473474fb63deac864316ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2140981174
+--- !u!114 &884819182911520265
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,23 +289,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 2728898524108704117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a3a4cdebf419ac46b0088c798d30316, type: 3}
+  m_Script: {fileID: 11500000, guid: b9a2633bc526d11409a66a616501ed29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetDamaged: 0.5
   spriteRenderer: {fileID: 2728898522730726249}
   _animHandler: {fileID: 2728898522730726251}
   healthBar: {fileID: 4091192189617970375}
-  _hp: 50
-  maxHp: 50
+  _hp: 30
+  maxHp: 30
   movementType: {fileID: 11400000, guid: 6abfebbf91c243442b6e60c03cee1bff, type: 2}
   collisionBox: {fileID: 2728898523777886955}
-  rageColor: {r: 0.6509434, g: 0.35924706, b: 0.35924706, a: 1}
+  rageColor: {r: 0.6509804, g: 0.36078432, b: 0.36078432, a: 1}
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
   attackRoot: {fileID: 7283769443258909757}
-  attackRange: 0.2
+  attackRange: 0
+  rangeWeapon: {fileID: 0}
+  attackCoolTime: 2
 --- !u!1 &2728898524217196234
 GameObject:
   m_ObjectHideFlags: 0

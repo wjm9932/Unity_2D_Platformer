@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeSkeleton : Enemy
+public class ArcherEnemy : Enemy
 {
     private BehaviorTreeBuilder btBuilder;
     private CompositeNode root;
 
+    [Header("Archer Enemy Component")]
+    [SerializeField] private GameObject rangeWeapon;
+    [SerializeField] private float attackCoolTime;
     protected override void Awake()
     {
         base.Awake();
@@ -22,6 +25,7 @@ public class MeleeSkeleton : Enemy
 
     void Update()
     {
+        btBuilder.blackboard.SetData<float>("attackCoolTime", btBuilder.blackboard.GetData<float>("attackCoolTime") + Time.deltaTime);
         root.Evaluate();
     }
     private void FixedUpdate()
@@ -68,6 +72,7 @@ public class MeleeSkeleton : Enemy
     private void BuildBT()
     {
         btBuilder.blackboard.SetData<Enemy>("owner", this);
+        btBuilder.blackboard.SetData<float>("attackCoolTime", 0f);
 
         root = btBuilder
             .AddSelector()
@@ -77,13 +82,16 @@ public class MeleeSkeleton : Enemy
                 .EndComposite()
                 .AddAttackSequence()
                     .AddCondition(() => canBeDamaged == false)
-                    .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
-                    .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false), btBuilder.actionManager)
+                    .AddAttackSequence()
+                        .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
+                        .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false), btBuilder.actionManager)
+                    .EndComposite()
                 .EndComposite()
-                .AddAttackSequence(true)
+                .AddAttackSequence()
                     .AddCondition(() => target != null)
                     .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
-                    .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
+                    .AddCondition(() => btBuilder.blackboard.GetData<float>("attackCoolTime") >= attackCoolTime)
+                    .AddAction(new RangeAttack(btBuilder.blackboard), btBuilder.actionManager)
                 .EndComposite()
                 .AddAttackSequence()
                     .AddAction(new Patrol(btBuilder.blackboard), btBuilder.actionManager)
