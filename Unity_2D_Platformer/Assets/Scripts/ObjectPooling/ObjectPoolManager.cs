@@ -48,7 +48,7 @@ public class ObjectPoolManager : MonoBehaviour
             for (int j = 0; j < infos[i].count; j++)
             {
                 GameObject poolObj = CreateObject(infos[i].targetObject);
-                poolObj.GetComponent<IPoolableObject>().pool.Release(poolObj);
+                poolObj.GetComponent<IPoolableObject>().Release();
             }
         }
     }

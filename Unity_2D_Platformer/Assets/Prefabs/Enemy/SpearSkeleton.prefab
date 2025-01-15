@@ -306,6 +306,8 @@ MonoBehaviour:
     m_Bits: 64
   attackRoot: {fileID: 7283769443258909757}
   attackRange: 1
+  dropItem: {fileID: 935369320324283961, guid: b8c5bd318701da041a4f850742a45e41, type: 3}
+  dropChances: 0.5
 --- !u!1 &2728898524217196234
 GameObject:
   m_ObjectHideFlags: 0

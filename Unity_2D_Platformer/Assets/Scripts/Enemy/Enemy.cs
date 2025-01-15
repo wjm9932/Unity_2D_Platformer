@@ -33,14 +33,6 @@ public abstract class Enemy : LivingEntity
     [Header("Track Color")]
     [SerializeField] public Color rageColor;
 
-    public LivingEntity target { get; set; }
-    public float patrolPoint_1 { get; private set; }
-    public float patrolPoint_2 { get; private set; }
-
-    public Rigidbody2D rb { get; private set; }
-    public float patrolStopDistance { get; private set; }
-    public float trackStopDistance { get; protected set; }
-
 
     #region LayerMask
     [Header("Layer")]
@@ -52,6 +44,20 @@ public abstract class Enemy : LivingEntity
     public Transform attackRoot;
     public float attackRange;
     #endregion
+
+    #region Drop Item
+    [Header("Drop Item")]
+    [SerializeField] private GameObject dropItem;
+    [SerializeField] [Range(0f, 1f)] private float dropChances;
+    #endregion
+
+    public LivingEntity target { get; set; }
+    public float patrolPoint_1 { get; private set; }
+    public float patrolPoint_2 { get; private set; }
+
+    public Rigidbody2D rb { get; private set; }
+    public float patrolStopDistance { get; private set; }
+    public float trackStopDistance { get; protected set; }
 
     protected override void Awake()
     {
@@ -70,6 +76,7 @@ public abstract class Enemy : LivingEntity
     {
         base.Die();
 
+        DropItem(dropChances);
         GetComponent<Collider2D>().enabled = false;
         collisionBox.SetActive(false);
         rb.isKinematic = true;
@@ -124,6 +131,14 @@ public abstract class Enemy : LivingEntity
         if (player != null && canBeDamaged == true)
         {
             player.ApplyDamage(1, this.gameObject);
+        }
+    }
+
+    private void DropItem(float chances)
+    {
+        if(Random.Range(0f, 1f) <= chances)
+        {
+            ObjectPoolManager.Instance.GetPoolableObject(dropItem, transform.position, transform.rotation);
         }
     }
 }

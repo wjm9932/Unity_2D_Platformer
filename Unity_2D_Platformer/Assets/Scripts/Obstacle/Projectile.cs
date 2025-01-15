@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour, IPoolableObject
     {
         if (Vector2.Distance(transform.position, startPosition) >= targetDistance)
         {
-            pool.Release(this.gameObject);
+            Release();
         }
     }
 
