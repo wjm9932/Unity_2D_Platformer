@@ -73,6 +73,7 @@ public class ArcherEnemy : Enemy
     {
         btBuilder.blackboard.SetData<Enemy>("owner", this);
         btBuilder.blackboard.SetData<float>("attackCoolTime", attackCoolTime);
+        btBuilder.blackboard.SetData<GameObject>("arrow", rangeWeapon);
 
         root = btBuilder
             .AddSelector()

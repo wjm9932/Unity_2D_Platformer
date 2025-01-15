@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class RangedWeapon : MonoBehaviour, IPoolableObject
+public class Projectile : MonoBehaviour, IPoolableObject
 {
     public IObjectPool<GameObject> pool { get; private set; }
 

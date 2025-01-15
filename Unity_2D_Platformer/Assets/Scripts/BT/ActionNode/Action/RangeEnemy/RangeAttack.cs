@@ -24,7 +24,6 @@ public class RangeAttack : IAction
     {
         if (isDone == true)
         {
-            blackboard.SetData<float>("attackCoolTime", 0f);
             return NodeState.Success;
         }
 
@@ -49,7 +48,9 @@ public class RangeAttack : IAction
 
     public void OnAnimationEnterEvent()
     {
-        // Instance arrow or something
+        var arrow = ObjectPoolManager.Instance.GetPoolableObject(blackboard.GetData<GameObject>("arrow"), blackboard.GetData<Enemy>("owner").attackRoot.position, blackboard.GetData<Enemy>("owner").transform.rotation).GetComponent<Projectile>();
+        arrow.SetTargetDistanceAndVelocity(25f, 25f);
+        blackboard.SetData<float>("attackCoolTime", 0f);
     }
     public void OnAnimationTransitionEvent()
     {

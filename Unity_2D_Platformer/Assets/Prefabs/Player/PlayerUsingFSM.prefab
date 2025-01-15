@@ -156,7 +156,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: -3318188226485093758, guid: ae72133dacba6ec4eb33ecde48f50e56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -349,7 +349,6 @@ MonoBehaviour:
   dash: {fileID: 0}
   maxDashCount: 3
   movementType: {fileID: 11400000, guid: 94a47a3563bb6bd48b7f6d918c00a74b, type: 2}
-  respawnPos: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -371,6 +370,7 @@ MonoBehaviour:
   lastOnGroundTime: 0
   lastPressJumpTime: 0
   lastOnWallTime: 0
+  a: {fileID: 2728898524108704117, guid: 79c181a318b251541913f77957f3ed20, type: 3}
 --- !u!1 &5852806615158255338
 GameObject:
   m_ObjectHideFlags: 0

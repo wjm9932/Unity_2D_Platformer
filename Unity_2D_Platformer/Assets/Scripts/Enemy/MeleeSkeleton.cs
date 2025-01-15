@@ -80,7 +80,7 @@ public class MeleeSkeleton : Enemy
                     .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
                     .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false), btBuilder.actionManager)
                 .EndComposite()
-                .AddAttackSequence(true)
+                .AddAttackSequence()
                     .AddCondition(() => target != null)
                     .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
                     .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)

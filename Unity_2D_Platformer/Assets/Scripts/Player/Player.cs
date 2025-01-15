@@ -116,13 +116,9 @@ public class Player : LivingEntity
         lastPressJumpTime -= Time.deltaTime;
         #endregion
 
-        if (Input.GetKeyDown(KeyCode.R) == true)
+        if (Input.GetKeyDown(KeyCode.R) == true && isDead == true)
         {
             RespawnPlayer(currentCheckpointPosition);
-        }
-        if (Input.GetKeyDown(KeyCode.B) == true)
-        {
-            ObjectPoolManager.Instance.GetPoolableObject(a);
         }
         #region Collision Check
         if (movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.wallJumpState)

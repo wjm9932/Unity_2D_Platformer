@@ -17,11 +17,11 @@ MonoBehaviour:
   patrolAccelAmount: 7.5000005
   patrolDecceleration: 1
   patrolDeccelAmount: 25
-  trackMaxSpeed: 4
+  trackMaxSpeed: 3.5
   trackAcceleration: 0.5
-  trackAccelAmount: 6.25
+  trackAccelAmount: 7.142857
   trackDecceleration: 2
-  trackDeccelAmount: 25
+  trackDeccelAmount: 28.571428
   trackStopDistance: 2.5
   idleTime: 2
   knockbackForce: {x: 20, y: 0}
