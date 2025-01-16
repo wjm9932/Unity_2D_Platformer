@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1119452948913078342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6, y: 0, z: 0}
+  m_LocalPosition: {x: 1.48, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -305,10 +305,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   attackRoot: {fileID: 7283769443258909757}
-  attackRange: 1
+  attackRange: 0.8
   dropItem: {fileID: 935369320324283961, guid: b8c5bd318701da041a4f850742a45e41, type: 3}
   dropChances: 0.5
-  blockChances: 0.5
+  blockChances: 0.55
 --- !u!1 &2728898524217196234
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,21 +520,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: HP_Bar
       objectReference: {fileID: 0}
-    - target: {fileID: 3690017473098264079, guid: 7134a7163bc6e144088f3e6903e0349f, type: 3}
-      propertyPath: m_AnchorMax.x
+    - target: {fileID: 3690017472716546539, guid: 7134a7163bc6e144088f3e6903e0349f, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3690017473098264079, guid: 7134a7163bc6e144088f3e6903e0349f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3690017473098264079, guid: 7134a7163bc6e144088f3e6903e0349f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5061210973356441984, guid: 7134a7163bc6e144088f3e6903e0349f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5061210973356441984, guid: 7134a7163bc6e144088f3e6903e0349f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7134a7163bc6e144088f3e6903e0349f, type: 3}

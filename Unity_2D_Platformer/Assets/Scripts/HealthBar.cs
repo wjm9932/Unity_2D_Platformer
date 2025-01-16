@@ -8,7 +8,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Slider easeBar;
     [SerializeField] private Slider hpBar;
 
-    private float lerpSpeed = 3f;
+    private float lerpSpeed = 2f;
     public void UpdateHealthBar(float health, float maxHealth)
     {
         hpBar.value = health / maxHealth;
