@@ -16,7 +16,7 @@ public class SwordAttack : IAction
     public void OnEnter()
     {
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsAttack1", true);
-
+        blackboard.GetData<Enemy>("owner").animHandler.ResetOneFrameDelay();
         canAttack = false;
     }
 
@@ -26,7 +26,7 @@ public class SwordAttack : IAction
         {
             Attack();
         }
-        if(blackboard.GetData<Enemy>("owner").animHandler.IsAnimationFinished() == true)
+        if(blackboard.GetData<Enemy>("owner").animHandler.IsAnimationFinishedWithDelay() == true)
         {
             return NodeState.Success;
         }

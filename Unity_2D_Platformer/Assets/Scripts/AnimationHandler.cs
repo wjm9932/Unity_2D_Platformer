@@ -8,16 +8,12 @@ public class AnimationHandler : MonoBehaviour
     //private PlayerMovement playerMovement;
     private LivingEntity entity;
     public Animator animator { get; private set; }
-
+    private bool isReadyToCheck; 
     private void Awake()
     {
         entity = transform.root.GetComponent<LivingEntity>();
         animator = GetComponent<Animator>();
-    }
-
-    private void LateUpdate()
-    {   
-        
+        isReadyToCheck = false;
     }
 
     private void OnAnimationEnterEvent()
@@ -32,7 +28,24 @@ public class AnimationHandler : MonoBehaviour
     {
         entity.OnAnimationExitEvent();
     }
+    public void ResetOneFrameDelay()
+    {
+        isReadyToCheck = false;
+        StartCoroutine(EnableCheckAfterOneFrame());
+    }
 
+    private IEnumerator EnableCheckAfterOneFrame()
+    {
+        yield return null;
+        isReadyToCheck = true;
+    }
+    public bool IsAnimationFinishedWithDelay()
+    {
+        if (!isReadyToCheck)
+            return false;
+
+        return IsAnimationFinished();
+    }
     public bool IsAnimationFinished()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
