@@ -298,7 +298,7 @@ MonoBehaviour:
   healthBar: {fileID: 4091192189617970375}
   _hp: 60
   maxHp: 60
-  movementType: {fileID: 11400000, guid: 232fa58f7c2c9e44cb1114566741ca3e, type: 2}
+  movementType: {fileID: 11400000, guid: 840ecdd7142dd1a44bff9aab64999277, type: 2}
   collisionBox: {fileID: 2728898523777886955}
   rageColor: {r: 0.6509804, g: 0.36078432, b: 0.36078432, a: 1}
   targetLayer:

@@ -22,7 +22,7 @@ public class Block : IAction, ICompositionNodeResettable
         onResetCompositionNode(parentCompositionNodeIndex);
         blackboard.GetData<Enemy>("owner").healthBar.gameObject.SetActive(true);
 
-        ApplyKnockbackForce(blackboard.GetData<Enemy>("owner").movementType.knockbackForce / 2f);
+        ApplyKnockbackForce(blackboard.GetData<Enemy>("owner").movementType.knockbackForce / 5f);
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsBlock", true);
     }
 

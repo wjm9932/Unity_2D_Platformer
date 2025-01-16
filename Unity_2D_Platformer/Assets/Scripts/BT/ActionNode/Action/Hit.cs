@@ -6,6 +6,7 @@ public class Hit : IAction, ICompositionNodeResettable
 {
     public Action<int> onResetCompositionNode { private get; set; }
     public int parentCompositionNodeIndex { private get; set; } 
+
     private Blackboard blackboard;
     private readonly float decelerationFactor;
 
