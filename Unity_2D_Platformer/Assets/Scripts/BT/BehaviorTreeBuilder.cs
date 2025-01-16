@@ -10,7 +10,7 @@ public class BehaviorTreeBuilder : MonoBehaviour
 
     private Stack<CompositeNode> nodeStack = new Stack<CompositeNode>();
     private CompositeNode currentNode;
-    private int compositeNodeCounterForDebug = 0;
+    private int compositionNodeIndex = -1;
 
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class BehaviorTreeBuilder : MonoBehaviour
 
     public BehaviorTreeBuilder AddSelector()
     {
-        var selector = new Selector(compositeNodeCounterForDebug++);
+        var selector = new Selector(++compositionNodeIndex);
         if (currentNode != null) nodeStack.Push(currentNode);
         currentNode = selector;
         return this;
@@ -28,7 +28,7 @@ public class BehaviorTreeBuilder : MonoBehaviour
 
     public BehaviorTreeBuilder AddAttackSelector()
     {
-        var selector = new AttackSelector(compositeNodeCounterForDebug++);
+        var selector = new AttackSelector(++compositionNodeIndex);
         if (currentNode != null) nodeStack.Push(currentNode);
         currentNode = selector;
         return this;
@@ -36,7 +36,7 @@ public class BehaviorTreeBuilder : MonoBehaviour
 
     public BehaviorTreeBuilder AddRandomAttackSelector()
     {
-        var selector = new RandomAttackSelector(compositeNodeCounterForDebug++);
+        var selector = new RandomAttackSelector(++compositionNodeIndex);
         if (currentNode != null) nodeStack.Push(currentNode);
         currentNode = selector;
         return this;
@@ -44,14 +44,14 @@ public class BehaviorTreeBuilder : MonoBehaviour
 
     public BehaviorTreeBuilder AddSequence()
     {
-        var sequence = new Sequence(compositeNodeCounterForDebug++);
+        var sequence = new Sequence(++compositionNodeIndex);
         if (currentNode != null) nodeStack.Push(currentNode);
         currentNode = sequence;
         return this;
     }
     public BehaviorTreeBuilder AddAttackSequence(bool requireAllSuccess = false)
     {
-        var selector = new AttackSequence(requireAllSuccess, compositeNodeCounterForDebug++);
+        var selector = new AttackSequence(requireAllSuccess, ++compositionNodeIndex);
         if (currentNode != null) nodeStack.Push(currentNode);
         currentNode = selector;
         return this;
@@ -66,7 +66,7 @@ public class BehaviorTreeBuilder : MonoBehaviour
 
     public BehaviorTreeBuilder AddAction(IAction action, ActionManager actionManager)
     {
-        currentNode.AddChild(new ActionNode(action, actionManager));
+        currentNode.AddChild(new ActionNode(action, actionManager, compositionNodeIndex));
         return this;
     }
 
@@ -97,13 +97,13 @@ public class BehaviorTreeBuilder : MonoBehaviour
         return currentNode;
     }
 
-    private void InjectResetActionDependencies(Action resetAction, CompositeNode node)
+    private void InjectResetActionDependencies(Action<int> resetAction, CompositeNode node)
     {
         foreach (var child in node.GetChildren())
         {
             if (child is ActionNode actionNode)
             {
-                actionNode.SetResetAction(resetAction);
+                actionNode.SetResetAction(resetAction, actionNode.parentCompositionNodeIndex);
             }
             else if (child is CompositeNode compositeChild)
             {

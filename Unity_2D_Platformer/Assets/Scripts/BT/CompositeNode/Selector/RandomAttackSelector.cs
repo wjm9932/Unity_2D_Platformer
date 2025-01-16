@@ -6,11 +6,11 @@ using UnityEngine;
 public class RandomAttackSelector : CompositeNode
 {
     private INode runningNode;
-    private int number;
+    private int index;
 
     public RandomAttackSelector(int number)
     {
-        this.number = number;
+        this.index = number;
     }
 
     public override NodeState Evaluate()
@@ -36,7 +36,7 @@ public class RandomAttackSelector : CompositeNode
 
         ShuffleChildren();
 
-        foreach(var child in children)
+        foreach (var child in children)
         {
             NodeState state = child.Evaluate();
 
@@ -69,9 +69,13 @@ public class RandomAttackSelector : CompositeNode
         }
     }
 
-    public override void Reset()
+    public override void Reset(int index)
     {
-        base.Reset();
-        runningNode = null;
+        base.Reset(index);
+
+        if (index < this.index)
+        {
+            runningNode = null;
+        }
     }
 }

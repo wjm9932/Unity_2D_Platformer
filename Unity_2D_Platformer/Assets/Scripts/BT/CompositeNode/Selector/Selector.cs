@@ -4,11 +4,11 @@ using Unity.VisualScripting;
 using UnityEngine;
 public class Selector : CompositeNode
 {
-    private int number;
+    private int index;
 
     public Selector(int number)
     {
-        this.number = number;
+        this.index = number;
     }
     public override NodeState Evaluate()
     {

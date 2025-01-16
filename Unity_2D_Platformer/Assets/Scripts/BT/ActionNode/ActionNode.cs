@@ -6,11 +6,13 @@ public class ActionNode : INode
 {
     private IAction action;
     private ActionManager actionManager;
+    public int parentCompositionNodeIndex { get; private set; }
 
-    public ActionNode(IAction action, ActionManager actionManager)
+    public ActionNode(IAction action, ActionManager actionManager, int compositionNodeIndex)
     {
         this.action = action;
         this.actionManager = actionManager;
+        this.parentCompositionNodeIndex = compositionNodeIndex;
     }
 
     public NodeState Evaluate()
@@ -19,11 +21,11 @@ public class ActionNode : INode
         return actionManager.ExecuteCurrentAction();
     }
 
-    public void SetResetAction(Action resetAction)
+    public void SetResetAction(Action<int> resetAction, int parentCompositionNodeIndex)
     {
         if(action is ICompositionNodeResettable dependentAction)
         {
-            dependentAction.SetResetAction(resetAction); 
+            dependentAction.SetResetAction(resetAction, parentCompositionNodeIndex); 
         }
     }
 }

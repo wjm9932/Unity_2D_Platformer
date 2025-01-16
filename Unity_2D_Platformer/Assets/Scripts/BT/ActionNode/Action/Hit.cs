@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Hit : IAction, ICompositionNodeResettable
 {
-    private Action onResetCompositionNode;
-
+    public Action<int> onResetCompositionNode { private get; set; }
+    public int parentCompositionNodeIndex { private get; set; } 
     private Blackboard blackboard;
     private readonly float decelerationFactor;
 
@@ -17,7 +17,7 @@ public class Hit : IAction, ICompositionNodeResettable
 
     public void OnEnter()
     {
-        onResetCompositionNode();
+        onResetCompositionNode(parentCompositionNodeIndex);
         blackboard.GetData<Enemy>("owner").healthBar.gameObject.SetActive(true);
 
         ApplyKnockbackForce(blackboard.GetData<Enemy>("owner").movementType.knockbackForce);
@@ -67,9 +67,10 @@ public class Hit : IAction, ICompositionNodeResettable
         force.x *= blackboard.GetData<Enemy>("owner").hitDir;
         blackboard.GetData<Enemy>("owner").rb.AddForce(force, ForceMode2D.Impulse);
     }
-    public void SetResetAction(Action resetAction)
+    public void SetResetAction(Action<int> resetAction, int parentCompositionNodeIndex)
     {
         this.onResetCompositionNode = resetAction;
+        this.parentCompositionNodeIndex = parentCompositionNodeIndex;
     }
 
     public void OnAnimationEnterEvent()

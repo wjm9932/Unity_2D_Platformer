@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface ICompositionNodeResettable
 {
-    void SetResetAction(Action resetAction);
+    public void SetResetAction(Action<int> resetAction, int parentCompositionNodeIndex);
+    public Action<int> onResetCompositionNode { set; }
+    public int parentCompositionNodeIndex { set; }
 }

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Sequence : CompositeNode
 {
-    private int number;
+    private int index;
 
     public Sequence(int number)
     {
-        this.number = number;
+        this.index = number;
     }
 
     public override NodeState Evaluate()

@@ -9,16 +9,15 @@ public class AttackSequence : CompositeNode
     private bool requireAllSuccess;
 
 
-    private int attackSequenceNumber;
+    private int index;
     public AttackSequence(bool requireAllSuccess, int attackSequenceNumber)
     {
         this.requireAllSuccess = requireAllSuccess;
-        this.attackSequenceNumber = attackSequenceNumber;
+        this.index = attackSequenceNumber;
     }
 
     public override NodeState Evaluate()
     {
-        
         if (currentNode == null)
         {
             if (currentIndex < children.Count)
@@ -67,10 +66,14 @@ public class AttackSequence : CompositeNode
         }
     }
 
-    public override void Reset()
+    public override void Reset(int index)
     {
-        base.Reset();
-        ResetNodeInfo();
+        base.Reset(index);
+
+        if (index < this.index)
+        {
+            ResetNodeInfo();
+        }
     }
 
     private void ResetNodeInfo()

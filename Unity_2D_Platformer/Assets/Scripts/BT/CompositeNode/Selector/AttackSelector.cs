@@ -6,10 +6,10 @@ public class AttackSelector : CompositeNode
 {
     INode runningNode;
 
-    private int number;
+    private int index;
     public AttackSelector(int number)
     {
-        this.number = number;
+        this.index = number;
     }
     public override NodeState Evaluate()
     {
@@ -23,7 +23,7 @@ public class AttackSelector : CompositeNode
             }
 
             runningNode = null;
-            
+
             if (runningState == NodeState.Success)
             {
                 return NodeState.Success;
@@ -58,9 +58,13 @@ public class AttackSelector : CompositeNode
         return NodeState.Failure;
     }
 
-    public override void Reset()
+    public override void Reset(int index)
     {
-        base.Reset();
-        runningNode = null;
+        base.Reset(index);
+
+        if (index < this.index)
+        {
+            runningNode = null;
+        }
     }
 }

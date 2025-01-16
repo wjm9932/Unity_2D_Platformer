@@ -10,13 +10,13 @@ public abstract class CompositeNode : INode
 
     public abstract NodeState Evaluate();
 
-    public virtual void Reset()
+    public virtual void Reset(int parentCompositionNodeIndex)
     {
         foreach (var child in children)
         {
             if (child is CompositeNode compositeChild)
             {
-                compositeChild.Reset();
+                compositeChild.Reset(parentCompositionNodeIndex);
             }
         }
     }

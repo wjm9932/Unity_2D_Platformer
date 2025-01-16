@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class ResetNode : IAction, ICompositionNodeResettable
 {
-    private Action onResetCompositionNode;
+    public Action<int> onResetCompositionNode { private get; set; }
+    public int parentCompositionNodeIndex { private get; set; }
+
     public ResetNode()
     {
     }
 
     public void OnEnter()
     {
-        onResetCompositionNode();
+        onResetCompositionNode(-1);
     }
 
     public NodeState Execute()
@@ -38,8 +40,9 @@ public class ResetNode : IAction, ICompositionNodeResettable
     {
 
     }
-    public void SetResetAction(Action resetAction)
+    public void SetResetAction(Action<int> resetAction, int parentCompositionNodeIndex)
     {
         this.onResetCompositionNode = resetAction;
+        this.parentCompositionNodeIndex = parentCompositionNodeIndex;
     }
 }
