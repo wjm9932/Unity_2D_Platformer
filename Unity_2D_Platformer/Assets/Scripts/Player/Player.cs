@@ -49,7 +49,6 @@ public class Player : LivingEntity
     #region LayerMask
     [Header("Layer")]
     public LayerMask enemyLayer;
-    public LayerMask enemyCollisionBoxLayer;
     public LayerMask enemyHeadCollisionBoxLayer;
     public LayerMask whatIsGround;
     #endregion
@@ -83,7 +82,7 @@ public class Player : LivingEntity
     public float facingDir { get; private set; }
     private Vector2 currentCheckpointPosition;
 
-    public GameObject a;
+    public bool isDashing = false;
 
     protected override void Awake()
     {
@@ -110,22 +109,24 @@ public class Player : LivingEntity
     void Update()
     {
         //Debug.Log(movementStateMachine.currentState);
+
+        if (Input.GetKeyDown(KeyCode.R) == true && isDead == true)
+        {
+            RespawnPlayer(currentCheckpointPosition);
+        }
+
         #region Timer
         lastOnGroundTime -= Time.deltaTime;
         lastOnWallTime -= Time.deltaTime;
         lastPressJumpTime -= Time.deltaTime;
         #endregion
 
-        if (Input.GetKeyDown(KeyCode.R) == true && isDead == true)
-        {
-            RespawnPlayer(currentCheckpointPosition);
-        }
         #region Collision Check
         if (movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.wallJumpState)
         {
-            if (Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, whatIsGround) == true) //checks if set box overlaps with ground
+            if (Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, whatIsGround) == true)
             {
-                lastOnGroundTime = movementType.coyoteTime; //if so sets the lastGrounded to coyoteTime
+                lastOnGroundTime = movementType.coyoteTime;
             }
 
             if (Physics2D.OverlapBox(wallCollisionChecker.position, wallCollisionCheckerSize, 0, whatIsGround))
@@ -142,6 +143,10 @@ public class Player : LivingEntity
             {
                 if (collider.transform.root.GetComponent<Enemy>().ApplyDamage(Mathf.Abs(rb.velocity.y) * 0.4f, this.gameObject) == true)
                 {
+                    if(collider.transform.root.GetComponent<Boss>() != null)
+                    {
+                        collider.transform.root.GetComponent<Boss>().isHardAttack = true;
+                    }
                     movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.jumpAttackState);
                 }
             }
@@ -194,7 +199,7 @@ public class Player : LivingEntity
 
     public override bool ApplyDamage(float dmg, GameObject damager)
     {
-        if (!(movementStateMachine.currentState is AttackState) && movementStateMachine.currentState != movementStateMachine.hitState)
+        if (!(movementStateMachine.currentState is AttackState) && movementStateMachine.currentState != movementStateMachine.hitState && isDashing == false)
         {
             if (base.ApplyDamage(dmg, damager) == true)
             {
@@ -238,7 +243,6 @@ public class Player : LivingEntity
         heartCount = 0;
         base.KillInstant();
     }
-
 
     public void SetCheckPoint(Vector2 pos)
     {

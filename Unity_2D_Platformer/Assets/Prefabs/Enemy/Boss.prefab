@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1119452948913078342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6, y: 0, z: 0}
+  m_LocalPosition: {x: 1.95, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -298,16 +298,17 @@ MonoBehaviour:
   healthBar: {fileID: 4091192189617970375}
   _hp: 100
   maxHp: 100
-  movementType: {fileID: 11400000, guid: 232fa58f7c2c9e44cb1114566741ca3e, type: 2}
+  movementType: {fileID: 11400000, guid: fbabb4f8d731ea0419f1b83f9ee0131d, type: 2}
   collisionBox: {fileID: 2728898523777886955}
   rageColor: {r: 0.6509804, g: 0.36078432, b: 0.36078432, a: 1}
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
   attackRoot: {fileID: 7283769443258909757}
-  attackRange: 1.5
+  attackRange: 2
   dropItem: {fileID: 0}
   dropChances: 0
+  isHardAttack: 0
 --- !u!1 &2728898524217196234
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +392,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2728898524818040620}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -501,7 +502,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3690017472716546538, guid: 7134a7163bc6e144088f3e6903e0349f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3690017472716546538, guid: 7134a7163bc6e144088f3e6903e0349f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

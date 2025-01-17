@@ -44,7 +44,6 @@ public abstract class LivingEntity : MonoBehaviour
         }
         else
         {
-
             hitDir = damager.transform.position.x < transform.position.x ? 1 : -1;
             lastTimeDamaged = Time.time;
 
