@@ -136,9 +136,12 @@ public abstract class Enemy : LivingEntity
 
     private void DropItem(float chances)
     {
-        if(Random.Range(0f, 1f) <= chances)
+        if(dropItem != null)
         {
-            ObjectPoolManager.Instance.GetPoolableObject(dropItem, transform.position, transform.rotation);
+            if (Random.Range(0f, 1f) <= chances)
+            {
+                ObjectPoolManager.Instance.GetPoolableObject(dropItem, transform.position, transform.rotation);
+            }
         }
     }
 }

@@ -61,7 +61,7 @@ public abstract class AttackState : IState
         sm.owner.rb.AddForce(movement * Vector2.right);
     }
 
-    protected bool Attack()
+    protected bool Attack(bool isHardAttack)
     {
         bool isAttackSucced = false;
         var enemies = Physics2D.OverlapCircleAll(sm.owner.attackRoot.position, sm.owner.attackRange, sm.owner.enemyLayer);
@@ -74,6 +74,11 @@ public abstract class AttackState : IState
                 if(livingEntity.ApplyDamage(sm.owner.dmg, sm.owner.gameObject) == true)
                 {
                     isAttackSucced = true;
+
+                    if(livingEntity.GetComponent<Boss>() != null)
+                    {
+                        livingEntity.GetComponent<Boss>().isHardAttack = isHardAttack;
+                    }
                 }
             }
         }

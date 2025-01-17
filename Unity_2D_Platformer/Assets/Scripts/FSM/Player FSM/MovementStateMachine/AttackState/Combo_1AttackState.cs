@@ -22,7 +22,7 @@ public class Combo_1AttackState : AttackState
 
         if(canAttack == true)
         {
-            Attack();
+            Attack(false);
         }
 
         if (sm.owner.input.isAttack == true)

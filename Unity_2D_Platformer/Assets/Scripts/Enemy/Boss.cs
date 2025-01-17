@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeSkeleton : Enemy
+public class Boss : Enemy
 {
     private BehaviorTreeBuilder btBuilder;
     private CompositeNode root;
+
+    public bool isHardAttack;
 
     protected override void Awake()
     {
@@ -76,7 +78,7 @@ public class MeleeSkeleton : Enemy
                     .AddAction(new Die(btBuilder.blackboard), btBuilder.actionManager)
                 .EndComposite()
                 .AddAttackSequence()
-                    .AddCondition(() => canBeDamaged == false)
+                    .AddCondition(() => canBeDamaged == false && isHardAttack == true)
                     .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
                     .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false), btBuilder.actionManager)
                 .EndComposite()

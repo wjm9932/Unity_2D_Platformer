@@ -36,13 +36,12 @@ public class Combo_2AttackState : AttackState
     {
         if (canAttack == true)
         {
-            if(Attack() == true && canChargeDash == true)
+            if(Attack(true) == true && canChargeDash == true)
             {
                 sm.owner.dashCount++;
                 canChargeDash = false;
             }
         }
-
 
         if (sm.jsm.currentState == sm.jsm.fallingState)
         {
