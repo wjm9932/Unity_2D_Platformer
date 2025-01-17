@@ -25,4 +25,4 @@ MonoBehaviour:
   trackStopDistance: 2.5
   idleTime: 2
   knockbackForce: {x: 20, y: 0}
-  groggyTime: 0.2
+  groggyTime: 0
