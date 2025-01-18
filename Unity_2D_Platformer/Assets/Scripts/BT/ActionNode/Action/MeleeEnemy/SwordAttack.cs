@@ -10,7 +10,7 @@ public class SwordAttack : IAction
     public SwordAttack(Blackboard blackBoard)
     {
         this.blackboard = blackBoard;
-        decelerationFactor = 0.2f;
+        decelerationFactor = 0.35f;
     }
 
     public void OnEnter()

@@ -16,6 +16,7 @@ public class Patrol : IAction
     public void OnEnter()
     {
         blackboard.GetData<Enemy>("owner").healthBar.gameObject.SetActive(false);
+        blackboard.GetData<Enemy>("owner").target = null;
 
         targetPositionX = Random.Range(blackboard.GetData<Enemy>("owner").patrolPoint_1, blackboard.GetData<Enemy>("owner").patrolPoint_2);
         Flip(targetPositionX > blackboard.GetData<Enemy>("owner").transform.position.x);

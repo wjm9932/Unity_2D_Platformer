@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1119452948913078342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.95, y: -0.5, z: 0}
+  m_LocalPosition: {x: 2.23, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -305,7 +305,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   attackRoot: {fileID: 7283769443258909757}
-  attackRange: 2
+  attackRange: 3
   dropItem: {fileID: 0}
   dropChances: 0
   isHardAttack: 0

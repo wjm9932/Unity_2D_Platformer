@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Boss : Enemy
@@ -63,9 +64,18 @@ public class Boss : Enemy
                     .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false), btBuilder.actionManager)
                 .EndComposite()
                 .AddAttackSequence()
-                    .AddCondition(() => target != null)
-                    .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
-                    .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
+                    .AddCondition(() => target != null && IsTargetOnWayPoints() == true && target.isDead == false)
+                    .AddSelector()
+                        .AddAttackSequence()
+                            .AddCondition(() => Input.GetKeyDown(KeyCode.B))
+                            .AddAction(new Dash(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
+                        .EndComposite()
+                        .AddAttackSequence()
+                            .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
+                        .EndComposite()
+                    .EndComposite()
                 .EndComposite()
                 .AddAttackSequence()
                     .AddAction(new Patrol(btBuilder.blackboard), btBuilder.actionManager)
@@ -73,6 +83,14 @@ public class Boss : Enemy
                 .EndComposite()
             .EndComposite()
             .Build();
+    }
+
+    private bool IsTargetOnWayPoints()
+    {
+        float minX = Mathf.Min(patrolPoint_1, patrolPoint_2);
+        float maxX = Mathf.Max(patrolPoint_1, patrolPoint_2);
+
+        return minX <= target.transform.position.x && target.transform.position.x <= maxX;
     }
 
     #region EDITOR METHODS
