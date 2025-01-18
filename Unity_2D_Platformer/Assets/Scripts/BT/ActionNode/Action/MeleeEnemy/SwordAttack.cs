@@ -56,7 +56,7 @@ public class SwordAttack : IAction
 
         if(target != null)
         {
-            target.GetComponent<LivingEntity>().ApplyDamage(1, blackboard.GetData<Enemy>("owner").gameObject);
+            target.GetComponent<Player>().TakeDamage(blackboard.GetData<Enemy>("owner").gameObject);
         }
     }
 

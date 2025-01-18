@@ -37,6 +37,7 @@ public class DashState : IState
         }
 
         ApplyDashForce(dashForce);
+
         sm.owner.dashCount--;
         sm.owner.animHandler.animator.SetBool("IsDash", true);
     }

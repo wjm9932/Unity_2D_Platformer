@@ -52,7 +52,7 @@ public class Projectile : MonoBehaviour, IPoolableObject
     {
         if (collision.gameObject.GetComponent<Player>() != null)
         {
-            collision.gameObject.GetComponent<Player>().ApplyDamage(1, this.gameObject);
+            collision.gameObject.GetComponent<Player>().TakeDamage(this.gameObject);
             pool.Release(gameObject);
         }
     }
@@ -60,7 +60,7 @@ public class Projectile : MonoBehaviour, IPoolableObject
     {
         if (collision.GetComponent<Player>() != null)
         {
-            if(collision.GetComponent<Player>().ApplyDamage(1, this.gameObject) == true)
+            if(collision.GetComponent<Player>().TakeDamage(this.gameObject) == true)
             {
                 pool.Release(gameObject);
             }

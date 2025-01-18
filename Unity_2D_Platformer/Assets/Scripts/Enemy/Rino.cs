@@ -35,9 +35,9 @@ public class Rino : Enemy
         enemyStateMachine.ChangeState(enemyStateMachine.enemyDieState);
     }
 
-    public override bool ApplyDamage(float dmg, GameObject damager)
+    public override bool TakeDamage(float dmg, GameObject damager, bool isHardAttack = false)
     {
-        if (base.ApplyDamage(dmg, damager) == false)
+        if (base.TakeDamage(dmg, damager) == false)
         {
             return false;
         }

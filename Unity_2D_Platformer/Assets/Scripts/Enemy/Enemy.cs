@@ -58,6 +58,8 @@ public abstract class Enemy : LivingEntity
     public Rigidbody2D rb { get; private set; }
     public float patrolStopDistance { get; private set; }
     public float trackStopDistance { get; protected set; }
+    public bool isHardAttack;
+
 
     protected override void Awake()
     {
@@ -114,13 +116,34 @@ public abstract class Enemy : LivingEntity
         base.KillInstant();
     }
 
+    public virtual bool TakeDamage(float dmg, GameObject damager, bool isHardAttack = false)
+    {
+        if (base.ApplyDamage(dmg, damager) == false)
+        {
+            return false;
+        }
+        else
+        {
+            this.isHardAttack = isHardAttack;
+
+            hp -= dmg;
+            target = damager.GetComponent<LivingEntity>();
+
+            if (hp <= 0f)
+            {
+                Die();
+            }
+            return true;
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         var player = collision.gameObject.GetComponent<Player>();
 
         if (player != null && canBeDamaged == true)
         {
-            player.ApplyDamage(1, this.gameObject);
+            player.TakeDamage(this.gameObject);
         }
     }
 
@@ -130,7 +153,7 @@ public abstract class Enemy : LivingEntity
 
         if (player != null && canBeDamaged == true)
         {
-            player.ApplyDamage(1, this.gameObject);
+            player.TakeDamage(this.gameObject);
         }
     }
 

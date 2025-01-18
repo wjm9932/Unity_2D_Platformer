@@ -7,8 +7,6 @@ public class Boss : Enemy
     private BehaviorTreeBuilder btBuilder;
     private CompositeNode root;
 
-    public bool isHardAttack;
-
     protected override void Awake()
     {
         base.Awake();
@@ -49,24 +47,6 @@ public class Boss : Enemy
         base.Die();
     }
 
-    public override bool ApplyDamage(float dmg, GameObject damager)
-    {
-        if (base.ApplyDamage(dmg, damager) == false)
-        {
-            return false;
-        }
-        else
-        {
-            hp -= dmg;
-            target = damager.GetComponent<LivingEntity>();
-
-            if (hp <= 0f)
-            {
-                Die();
-            }
-            return true;
-        }
-    }
     private void BuildBT()
     {
         btBuilder.blackboard.SetData<Enemy>("owner", this);

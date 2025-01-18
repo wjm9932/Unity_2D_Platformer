@@ -50,33 +50,6 @@ public class ShieldSkeleton : Enemy
         base.Die();
     }
 
-    public override bool ApplyDamage(float dmg, GameObject damager)
-    {
-        if (base.ApplyDamage(dmg, damager) == false)
-        {
-            return false;
-        }
-        else
-        {
-            isBlock = false;
-            target = damager.GetComponent<LivingEntity>();
-
-            if (Random.Range(0f, 1f) <= blockChances)
-            {
-                isBlock = true;
-            }
-            else
-            {
-                hp -= dmg;
-            }
-
-            if (hp <= 0f)
-            {
-                Die();
-            }
-            return true;
-        }
-    }
     private void BuildBT()
     {
         btBuilder.blackboard.SetData<Enemy>("owner", this);

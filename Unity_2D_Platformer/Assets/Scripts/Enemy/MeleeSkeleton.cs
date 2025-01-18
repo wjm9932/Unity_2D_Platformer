@@ -46,25 +46,6 @@ public class MeleeSkeleton : Enemy
     {
         base.Die();
     }
-
-    public override bool ApplyDamage(float dmg, GameObject damager)
-    {
-        if (base.ApplyDamage(dmg, damager) == false)
-        {
-            return false;
-        }
-        else
-        {
-            hp -= dmg;
-            target = damager.GetComponent<LivingEntity>();
-
-            if (hp <= 0f)
-            {
-                Die();
-            }
-            return true;
-        }
-    }
     private void BuildBT()
     {
         btBuilder.blackboard.SetData<Enemy>("owner", this);

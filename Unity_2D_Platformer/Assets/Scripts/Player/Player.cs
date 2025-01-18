@@ -141,7 +141,7 @@ public class Player : LivingEntity
             var collider = Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, enemyHeadCollisionBoxLayer);
             if (collider != null)
             {
-                if (collider.transform.root.GetComponent<Enemy>().ApplyDamage(Mathf.Abs(rb.velocity.y) * 0.4f, this.gameObject) == true)
+                if (collider.transform.root.GetComponent<Enemy>().TakeDamage(Mathf.Abs(rb.velocity.y) * 0.4f, this.gameObject) == true)
                 {
                     if(collider.transform.root.GetComponent<Boss>() != null)
                     {
@@ -197,34 +197,45 @@ public class Player : LivingEntity
         movementStateMachine.ChangeState(movementStateMachine.dieState);
     }
 
-    public override bool ApplyDamage(float dmg, GameObject damager)
+    public bool TakeDamage(GameObject damager, bool isHardAttack = false)
     {
-        if (!(movementStateMachine.currentState is AttackState) && movementStateMachine.currentState != movementStateMachine.hitState && isDashing == false)
-        {
-            if (base.ApplyDamage(dmg, damager) == true)
-            {
-                heartCount -= (int)dmg;
-
-
-                if (heartCount <= 0)
-                {
-                    Die();
-                }
-                else
-                {
-                    movementStateMachine.ChangeState(movementStateMachine.hitState);
-                }
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
+        if (!CanTakeDamage(isHardAttack))
         {
             return false;
         }
+
+        if (!base.ApplyDamage(dmg, damager))
+        {
+            return false;
+        }
+
+        heartCount--;
+
+        if (heartCount <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            movementStateMachine.ChangeState(movementStateMachine.hitState);
+        }
+
+        return true;
+    }
+
+    private bool CanTakeDamage(bool isHardAttack)
+    {
+        if (movementStateMachine.currentState == movementStateMachine.hitState || isDashing)
+        {
+            return false;
+        }
+
+        if (!isHardAttack && movementStateMachine.currentState is AttackState)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private void RespawnPlayer(Vector2 respawnPos)
