@@ -20,8 +20,8 @@ MonoBehaviour:
   trackMaxSpeed: 5
   trackAcceleration: 0.5
   trackAccelAmount: 5
-  trackDecceleration: 2
-  trackDeccelAmount: 20
+  trackDecceleration: 5
+  trackDeccelAmount: 50
   trackStopDistance: 2.5
   idleTime: 2
   knockbackForce: {x: 20, y: 0}

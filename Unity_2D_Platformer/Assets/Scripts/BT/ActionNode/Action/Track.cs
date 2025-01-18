@@ -25,7 +25,7 @@ public class Track : IAction
             blackboard.GetData<Enemy>("owner").target = null;
             return NodeState.Failure;
         }
-        if(Vector2.Distance(blackboard.GetData<Enemy>("owner").target.transform.position, blackboard.GetData<Enemy>("owner").transform.position) <= blackboard.GetData<Enemy>("owner").trackStopDistance)
+        if(Mathf.Abs(blackboard.GetData<Enemy>("owner").target.transform.position.x - blackboard.GetData<Enemy>("owner").transform.position.x) <= blackboard.GetData<Enemy>("owner").patrolStopDistance)
         {
             return NodeState.Success;
         }
@@ -65,9 +65,9 @@ public class Track : IAction
     {
         float targetSpeed = blackboard.GetData<Enemy>("owner").transform.right.x * blackboard.GetData<Enemy>("owner").movementType.trackMaxSpeed;
 
-        float accelAmount = blackboard.GetData<Enemy>("owner").movementType.trackAccelAmount;
 
         float speedDif = targetSpeed - blackboard.GetData<Enemy>("owner").rb.velocity.x;
+        float accelAmount = (targetSpeed > Mathf.Abs(blackboard.GetData<Enemy>("owner").rb.velocity.x)) ? blackboard.GetData<Enemy>("owner").movementType.trackAccelAmount : blackboard.GetData<Enemy>("owner").movementType.trackDeccelAmount;
         float movement = speedDif * accelAmount;
 
         blackboard.GetData<Enemy>("owner").rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
