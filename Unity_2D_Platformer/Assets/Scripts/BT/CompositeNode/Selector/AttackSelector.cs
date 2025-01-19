@@ -21,12 +21,15 @@ public class AttackSelector : CompositeNode
             {
                 return NodeState.Running;
             }
-
-            runningNode = null;
-
-            if (runningState == NodeState.Success)
+            else if (runningState == NodeState.Success)
             {
+                runningNode = null;
                 return NodeState.Success;
+            }
+            else
+            {
+                runningNode = null;
+                return NodeState.Failure;
             }
         }
 

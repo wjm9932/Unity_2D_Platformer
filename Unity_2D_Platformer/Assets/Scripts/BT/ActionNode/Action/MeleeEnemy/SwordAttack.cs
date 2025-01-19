@@ -15,6 +15,8 @@ public class SwordAttack : IAction
 
     public void OnEnter()
     {
+        Flip(blackboard.GetData<Enemy>("owner").transform.position.x < blackboard.GetData<Enemy>("owner").target.transform.position.x);
+
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsAttack1", true);
         blackboard.GetData<Enemy>("owner").animHandler.ResetOneFrameDelay();
         canAttack = false;
@@ -71,5 +73,17 @@ public class SwordAttack : IAction
     public void OnAnimationExitEvent()
     {
         canAttack = false;
+    }
+
+    private void Flip(bool isMovingRight)
+    {
+        if (isMovingRight && blackboard.GetData<Enemy>("owner").transform.localRotation.eulerAngles.y != 0)
+        {
+            blackboard.GetData<Enemy>("owner").transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (!isMovingRight && blackboard.GetData<Enemy>("owner").transform.localRotation.eulerAngles.y != 180)
+        {
+            blackboard.GetData<Enemy>("owner").transform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
     }
 }

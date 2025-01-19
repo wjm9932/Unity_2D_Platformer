@@ -25,7 +25,7 @@ public class Track : IAction
             blackboard.GetData<Enemy>("owner").target = null;
             return NodeState.Failure;
         }
-        if(Mathf.Abs(blackboard.GetData<Enemy>("owner").target.transform.position.x - blackboard.GetData<Enemy>("owner").transform.position.x) <= blackboard.GetData<Enemy>("owner").patrolStopDistance)
+        if(Mathf.Abs(blackboard.GetData<Enemy>("owner").target.transform.position.x - blackboard.GetData<Enemy>("owner").transform.position.x) <= blackboard.GetData<Enemy>("owner").trackStopDistance)
         {
             return NodeState.Success;
         }

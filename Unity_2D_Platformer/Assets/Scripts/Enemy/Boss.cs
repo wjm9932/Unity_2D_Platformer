@@ -65,11 +65,24 @@ public class Boss : Enemy
                 .EndComposite()
                 .AddAttackSequence()
                     .AddCondition(() => target != null && IsTargetOnWayPoints() == true && target.isDead == false)
-                    .AddSelector()
+                    .AddAttackSelector()
+                        .AddSequence()
+                            .AddCondition(() => !IsInRange(10f))
+                            .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
+                        .EndComposite()
                         .AddAttackSequence()
-                            .AddCondition(() => Input.GetKeyDown(KeyCode.B))
+                            .AddCondition(() => RandomExecute(0.6f) && !IsInRange(6f))
                             .AddAction(new Dash(btBuilder.blackboard), btBuilder.actionManager)
-                            .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddAttackSelector()
+                                .AddAttackSequence()
+                                    .AddCondition(() => RandomExecute(0f))
+                                    .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
+                                .EndComposite()
+                                .AddAttackSequence()
+                                    .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
+                                    .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
+                                .EndComposite()
+                            .EndComposite()
                         .EndComposite()
                         .AddAttackSequence()
                             .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
@@ -93,6 +106,14 @@ public class Boss : Enemy
         return minX <= target.transform.position.x && target.transform.position.x <= maxX;
     }
 
+    private bool IsInRange(float distance)
+    {
+        return distance >= Mathf.Abs(target.transform.position.x - transform.position.x);
+    }
+    private bool RandomExecute(float chances)
+    {
+        return Random.Range(0f, 1f) <= chances;
+    }
     #region EDITOR METHODS
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
