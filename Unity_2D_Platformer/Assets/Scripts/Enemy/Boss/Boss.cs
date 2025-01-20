@@ -86,6 +86,7 @@ public class Boss : Enemy
     {
         btBuilder.blackboard.SetData<Enemy>("owner", this);
         btBuilder.blackboard.SetData<Boss>("owner", this);
+        btBuilder.blackboard.SetData<bool>("IsCasting", false);
 
         root = btBuilder
             .AddSelector()
@@ -97,7 +98,7 @@ public class Boss : Enemy
         #endregion
                 #region Hit Sequence
                 .AddAttackSequence()
-                    .AddCondition(() => canBeDamaged == false && isHardAttack == true)
+                    .AddCondition(() => canBeDamaged == false && (isHardAttack == true || btBuilder.blackboard.GetData<bool>("IsCasting") == true))
                     .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
                     .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false), btBuilder.actionManager)
                 .EndComposite()
@@ -169,7 +170,6 @@ public class Boss : Enemy
 
     private bool IsInRange(float distance)
     {
-        //Debug.Log(Mathf.Abs(target.transform.position.x - transform.position.x));
         return distance >= Mathf.Abs(target.transform.position.x - transform.position.x);
     }
     private bool RandomExecute(float chances)

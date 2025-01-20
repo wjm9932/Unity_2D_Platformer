@@ -70,6 +70,7 @@ public abstract class Enemy : LivingEntity
 
     protected override void Start()
     {
+        base.Start();
         hp = maxHp;
     }
 

@@ -13,6 +13,7 @@ public class CastSpell : IAction
 
     public void OnEnter()
     {
+        blackboard.SetData<bool>("IsCasting", true);
         Flip(blackboard.GetData<Boss>("owner").transform.position.x < blackboard.GetData<Boss>("owner").target.transform.position.x);
 
         blackboard.GetData<Boss>("owner").rb.velocity = Vector2.zero;
@@ -37,6 +38,7 @@ public class CastSpell : IAction
     }
     public void OnExit()
     {
+        blackboard.SetData<bool>("IsCasting", false);
         blackboard.GetData<Boss>("owner").animHandler.animator.SetBool("IsCast", false);
     }
     public void OnAnimationEnterEvent()
