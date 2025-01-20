@@ -5,11 +5,12 @@ using UnityEngine;
 public class Dash : IAction
 {
     private Blackboard blackboard;
-    private float dashTime;
+    private readonly float dashTime;
     private float targetPositionX;
     private float speed;
     private bool isCloseEnough;
 
+    private float timeElapsed;
     public Dash(Blackboard blackBoard)
     {
         this.blackboard = blackBoard;
@@ -18,7 +19,7 @@ public class Dash : IAction
 
     public void OnEnter()
     {
-        isCloseEnough = false;
+        timeElapsed = 0f;
         Flip(blackboard.GetData<Enemy>("owner").transform.position.x < blackboard.GetData<Enemy>("owner").target.transform.position.x);
 
         float relativeDistance = Mathf.Abs(blackboard.GetData<Enemy>("owner").transform.position.x - blackboard.GetData<Enemy>("owner").target.transform.position.x);
@@ -27,7 +28,7 @@ public class Dash : IAction
         {
             targetPositionX = blackboard.GetData<Enemy>("owner").transform.position.x;
             speed = 0f;
-            isCloseEnough = true;
+            timeElapsed = dashTime;
         }
         else
         {
@@ -40,13 +41,14 @@ public class Dash : IAction
             speed = distance / dashTime;
         }
 
-
         blackboard.GetData<Enemy>("owner").rb.velocity = blackboard.GetData<Enemy>("owner").transform.right * speed;
     }
 
     public NodeState Execute()
     {
-        if (Mathf.Abs(blackboard.GetData<Enemy>("owner").transform.position.x - targetPositionX) <= 0.1f || isCloseEnough == true)
+        timeElapsed += Time.deltaTime;
+
+        if (timeElapsed >= dashTime)
         {
             return NodeState.Success;
         }

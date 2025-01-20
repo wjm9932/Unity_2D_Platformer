@@ -309,6 +309,7 @@ MonoBehaviour:
   dropItem: {fileID: 0}
   dropChances: 0
   isHardAttack: 0
+  spellPrefab: {fileID: 6777677984813657567, guid: 385e096f9e6cd7544bb39bd9cf0a602d, type: 3}
 --- !u!1 &2728898524217196234
 GameObject:
   m_ObjectHideFlags: 0

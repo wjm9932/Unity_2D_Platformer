@@ -51,14 +51,14 @@ public abstract class Enemy : LivingEntity
     [SerializeField] [Range(0f, 1f)] private float dropChances;
     #endregion
 
-    public LivingEntity target { get; set; }
+    public Player target { get; set; }
     public float patrolPoint_1 { get; private set; }
     public float patrolPoint_2 { get; private set; }
 
     public Rigidbody2D rb { get; private set; }
     public float patrolStopDistance { get; private set; }
     public float trackStopDistance { get; protected set; }
-    public bool isHardAttack;
+    [HideInInspector] public bool isHardAttack;
 
 
     protected override void Awake()
@@ -70,7 +70,6 @@ public abstract class Enemy : LivingEntity
 
     protected override void Start()
     {
-        lastTimeDamaged = Time.time - timeBetDamaged;
         hp = maxHp;
     }
 
@@ -127,7 +126,7 @@ public abstract class Enemy : LivingEntity
             this.isHardAttack = isHardAttack;
 
             hp -= dmg;
-            target = damager.GetComponent<LivingEntity>();
+            target = damager.GetComponent<Player>();
 
             if (hp <= 0f)
             {

@@ -13,6 +13,7 @@ public class ResetNode : IAction, ICompositionNodeResettable
 
     public void OnEnter()
     {
+        Debug.Log("123");
         onResetCompositionNode(-1);
     }
 

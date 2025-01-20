@@ -33,10 +33,10 @@ public abstract class LivingEntity : MonoBehaviour
 
     protected virtual void Start()
     {
-
+        lastTimeDamaged = Time.time - timeBetDamaged;
     }
 
-    public virtual bool ApplyDamage(float dmg, GameObject damager)
+    protected virtual bool ApplyDamage(float dmg, GameObject damager)
     {
         if (canBeDamaged == false)
         {

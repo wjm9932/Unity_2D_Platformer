@@ -59,7 +59,7 @@ public class ShieldSkeleton : Enemy
         {
             this.isHardAttack = isHardAttack;
             isBlock = false;
-            target = damager.GetComponent<LivingEntity>();
+            target = damager.GetComponent<Player>();
 
             if (Random.Range(0f, 1f) <= blockChances)
             {

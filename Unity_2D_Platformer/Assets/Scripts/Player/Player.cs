@@ -80,6 +80,7 @@ public class Player : LivingEntity
     public Rigidbody2D rb { get; private set; }
     public PlayerInput input { get; private set; }
     public float facingDir { get; private set; }
+    public float playerFootOffset { get; private set; }
     private Vector2 currentCheckpointPosition;
 
     public bool isDashing = false;
@@ -101,7 +102,7 @@ public class Player : LivingEntity
         heartCount = maxHearts;
         dashCount = maxDashCount;
         currentCheckpointPosition = this.transform.position;
-
+        playerFootOffset = (GetComponent<BoxCollider2D>().size.y / 2) * transform.lossyScale.y;
         movementStateMachine.ChangeState(movementStateMachine.runState);
         movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.idleState);
     }

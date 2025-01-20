@@ -30,6 +30,7 @@ public class SwordAttack : IAction
         }
         if(blackboard.GetData<Enemy>("owner").animHandler.IsAnimationFinishedWithDelay() == true)
         {
+            blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsAttack1", false);
             return NodeState.Success;
         }
 

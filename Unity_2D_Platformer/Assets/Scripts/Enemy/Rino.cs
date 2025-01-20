@@ -44,7 +44,7 @@ public class Rino : Enemy
         else
         {
             hp -= dmg;
-            target = damager.GetComponent<LivingEntity>();
+            target = damager.GetComponent<Player>();
 
             if (hp <= 0f)
             {
