@@ -16,7 +16,7 @@ public class BossSpell : MonoBehaviour
     {
         if(IsAnimationFinished() == true)
         {
-            Destroy(this.gameObject);
+            Destroy(this.gameObject.transform.root.gameObject);
         }
     }
 
@@ -42,7 +42,6 @@ public class BossSpell : MonoBehaviour
     private bool IsAnimationFinished()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
         return stateInfo.normalizedTime >= 1f;
     }
 }

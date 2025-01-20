@@ -37,6 +37,7 @@ public class CastSpell : IAction
     }
     public void OnExit()
     {
+        blackboard.GetData<Boss>("owner").animHandler.animator.SetBool("IsCast", false);
     }
     public void OnAnimationEnterEvent()
     {
