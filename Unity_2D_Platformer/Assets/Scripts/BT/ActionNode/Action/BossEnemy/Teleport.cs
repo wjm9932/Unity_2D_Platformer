@@ -2,30 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CastSpell : IAction
+public class Teleport : IAction
 {
     private Blackboard blackboard;
+    private bool isTeleportingFinished;
 
-    public CastSpell(Blackboard blackBoard)
+    public Teleport(Blackboard blackBoard)
     {
         this.blackboard = blackBoard;
     }
 
     public void OnEnter()
     {
-        Flip(blackboard.GetData<Boss>("owner").transform.position.x < blackboard.GetData<Boss>("owner").target.transform.position.x);
-
+        isTeleportingFinished = false;
+        blackboard.GetData<Boss>("owner").isVulnerable = true;
         blackboard.GetData<Boss>("owner").rb.velocity = Vector2.zero;
 
         blackboard.GetData<Boss>("owner").animHandler.ResetOneFrameDelay();
-        blackboard.GetData<Boss>("owner").animHandler.animator.SetBool("IsCast", true);
+        blackboard.GetData<Boss>("owner").animHandler.animator.SetTrigger("TeleportStart");
     }
 
     public NodeState Execute()
     {
-        if (blackboard.GetData<Boss>("owner").animHandler.IsAnimationFinishedWithDelay() == true)
+        if (isTeleportingFinished == true)
         {
-            blackboard.GetData<Boss>("owner").animHandler.animator.SetBool("IsCast", false);
             return NodeState.Success;
         }
 
@@ -37,14 +37,11 @@ public class CastSpell : IAction
     }
     public void OnExit()
     {
+        blackboard.GetData<Boss>("owner").isVulnerable = false;
     }
     public void OnAnimationEnterEvent()
     {
-        var position = blackboard.GetData<Boss>("owner").target.transform.position;
-        position.x += 0.5f;
-        position.y -= blackboard.GetData<Boss>("owner").target.playerFootOffset;
-
-        Object.Instantiate(blackboard.GetData<Boss>("owner").spellPrefab, position, Quaternion.identity);
+        Teleportation();
     }
     public void OnAnimationTransitionEvent()
     {
@@ -52,7 +49,16 @@ public class CastSpell : IAction
     }
     public void OnAnimationExitEvent()
     {
+        isTeleportingFinished = true;
+    }
 
+    private void Teleportation()
+    {
+        Vector2 randomPos = blackboard.GetData<Boss>("owner").transform.position;
+
+        randomPos.x = Random.Range(blackboard.GetData<Boss>("owner").patrolPoint_1, blackboard.GetData<Boss>("owner").patrolPoint_2);
+
+        blackboard.GetData<Boss>("owner").transform.position = randomPos;
     }
 
     private void Flip(bool isMovingRight)

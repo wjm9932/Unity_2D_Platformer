@@ -14,7 +14,7 @@ public class Dash : IAction
     public Dash(Blackboard blackBoard)
     {
         this.blackboard = blackBoard;
-        dashTime = 0.3f;
+        dashTime = 0.5f;
     }
 
     public void OnEnter()
@@ -35,7 +35,7 @@ public class Dash : IAction
             blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsDash", true);
 
             targetPositionX = blackboard.GetData<Enemy>("owner").target.transform.position.x
-                              - (blackboard.GetData<Enemy>("owner").trackStopDistance / 2f) * blackboard.GetData<Enemy>("owner").transform.right.x;
+                              - (blackboard.GetData<Enemy>("owner").trackStopDistance) * blackboard.GetData<Enemy>("owner").transform.right.x;
 
             float distance = Mathf.Abs(blackboard.GetData<Enemy>("owner").transform.position.x - targetPositionX);
             speed = distance / dashTime;

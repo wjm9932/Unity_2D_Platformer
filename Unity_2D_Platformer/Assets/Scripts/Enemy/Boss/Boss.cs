@@ -12,6 +12,7 @@ public class Boss : Enemy
     [Header("Boss Components")]
     public GameObject spellPrefab;
 
+    public bool isVulnerable { get; set; }  
     protected override void Awake()
     {
         base.Awake();
@@ -22,6 +23,7 @@ public class Boss : Enemy
     {
         base.Start();
         BuildBT();
+        isVulnerable = false;
         trackStopDistance = patrolStopDistance + movementType.trackStopDistance * transform.localScale.x;
     }
 
@@ -50,6 +52,34 @@ public class Boss : Enemy
     public override void Die()
     {
         base.Die();
+    }
+
+    public override bool TakeDamage(float dmg, GameObject damager, bool isHardAttack = false)
+    {
+        if (isVulnerable == true)
+        {
+            return false;
+        }
+        else if (base.ApplyDamage(dmg, damager) == false)
+        {
+            return false;
+        }
+        else
+        {
+            healthBar.gameObject.SetActive(true);
+            spriteRenderer.color = rageColor;
+
+            this.isHardAttack = isHardAttack;
+            target = damager.GetComponent<Player>();
+
+            hp -= dmg;
+
+            if (hp <= 0f)
+            {
+                Die();
+            }
+            return true;
+        }
     }
 
     private void BuildBT()
@@ -88,7 +118,7 @@ public class Boss : Enemy
                             .AddRandomAttackSelector()
                                 .AddAttackSequence()
                                     .AddAction(new Dash(btBuilder.blackboard), btBuilder.actionManager)
-                                    .AddCondition(() => RandomExecute(0.5f))
+                                    .AddCondition(() => RandomExecute(0.8f))
                                     .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
                                 .EndComposite()
                                 .AddAction(new CastSpell(btBuilder.blackboard), btBuilder.actionManager)
@@ -103,9 +133,19 @@ public class Boss : Enemy
                         .EndComposite()
                         #endregion
                         #region Boss Track Sword Attack Sequence
-                        .AddAttackSequence()
-                            .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
-                            .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
+                        .AddSequence()
+                            .AddRandomAttackSelector()
+                                .AddAttackSequence()
+                                    .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
+                                    .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
+                                .EndComposite()
+                                .AddAttackSequence()
+                                    .AddAction(new Teleport(btBuilder.blackboard), btBuilder.actionManager)
+                                    .AddAction(new CastSpell(btBuilder.blackboard), btBuilder.actionManager)
+                                    .AddAction(new CastSpell(btBuilder.blackboard), btBuilder.actionManager)
+                                    .AddAction(new CastSpell(btBuilder.blackboard), btBuilder.actionManager)
+                                .EndComposite()
+                            .EndComposite()
                         .EndComposite()
                         #endregion
                     .EndComposite()

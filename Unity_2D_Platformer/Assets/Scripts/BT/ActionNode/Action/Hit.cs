@@ -19,11 +19,9 @@ public class Hit : IAction, ICompositionNodeResettable
     public void OnEnter()
     {
         onResetCompositionNode(parentCompositionNodeIndex);
-        blackboard.GetData<Enemy>("owner").healthBar.gameObject.SetActive(true);
 
         ApplyKnockbackForce(blackboard.GetData<Enemy>("owner").movementType.knockbackForce);
 
-        blackboard.GetData<Enemy>("owner").spriteRenderer.color = blackboard.GetData<Enemy>("owner").rageColor;
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsHit", true);
     }
 
