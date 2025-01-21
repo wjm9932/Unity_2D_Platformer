@@ -22,6 +22,8 @@ public class Shoot : IAction
 
     public NodeState Execute()
     {
+        Flip(blackboard.GetData<Enemy>("owner").transform.position.x < blackboard.GetData<Enemy>("owner").target.transform.position.x);
+
         if (isTeleportingFinished == true)
         {
             return NodeState.Success;
@@ -63,7 +65,7 @@ public class Shoot : IAction
 
             var bullet = ObjectPoolManager.Instance.GetPoolableObject(blackboard.GetData<Boss>("owner").bulletPrefab, ownerPosition, Quaternion.identity).GetComponent<Projectile>();
             bullet.transform.right = direction;
-            bullet.SetTargetDistanceAndVelocity(100f, 15f);
+            bullet.SetTargetDistanceAndVelocity(100f, 30f);
 
             yield return new WaitForSeconds(0.5f);
         }
@@ -79,5 +81,16 @@ public class Shoot : IAction
         randomPos.y = blackboard.GetData<Boss>("owner").yPos;
 
         blackboard.GetData<Boss>("owner").transform.position = randomPos;
+    }
+    private void Flip(bool isMovingRight)
+    {
+        if (isMovingRight && blackboard.GetData<Enemy>("owner").transform.localRotation.eulerAngles.y != 0)
+        {
+            blackboard.GetData<Enemy>("owner").transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (!isMovingRight && blackboard.GetData<Enemy>("owner").transform.localRotation.eulerAngles.y != 180)
+        {
+            blackboard.GetData<Enemy>("owner").transform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
     }
 }

@@ -34,13 +34,15 @@ public class ObjectPoolManager : MonoBehaviour
     {
         for (int i = 0; i < infos.Length; i++)
         {
+            var targetInfo = infos[i];
+
             if (objectPools.ContainsKey(infos[i].targetObject))
             {
                 Debug.LogFormat("{0} Already added", infos[i].targetObject);
                 continue;
             }
 
-            IObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => CreateObject(infos[i].targetObject), OnGetObject, OnReleasObject, OnDestroyObject,
+            IObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => CreateObject(targetInfo.targetObject), OnGetObject, OnReleasObject, OnDestroyObject,
                 true, infos[i].count);
 
             objectPools.Add(infos[i].targetObject, pool);

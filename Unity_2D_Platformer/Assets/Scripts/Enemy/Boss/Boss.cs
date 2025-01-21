@@ -8,6 +8,8 @@ public class Boss : Enemy
     private BehaviorTreeBuilder btBuilder;
     private CompositeNode root;
 
+    private FallingObjectHandler bulletDropHandler;
+
     [Space(20)]
     [Header("Boss Components")]
     public GameObject spellPrefab;
@@ -18,6 +20,7 @@ public class Boss : Enemy
     {
         base.Awake();
         btBuilder = GetComponent<BehaviorTreeBuilder>();
+        bulletDropHandler = GetComponent<FallingObjectHandler>();
     }
 
     protected override void Start()
@@ -30,6 +33,11 @@ public class Boss : Enemy
 
     void Update()
     {
+        if(target != null && isDead == false)
+        {
+            bulletDropHandler.DropBullets(new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f));
+        }
+
         root.Evaluate();
     }
     private void FixedUpdate()

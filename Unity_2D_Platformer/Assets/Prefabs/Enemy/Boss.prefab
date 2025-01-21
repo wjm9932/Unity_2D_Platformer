@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 2728898524108704113}
   - component: {fileID: 2140981173}
   - component: {fileID: 4071021380344921171}
+  - component: {fileID: 7117700999093873711}
   m_Layer: 7
   m_Name: Boss
   m_TagString: Untagged
@@ -311,6 +312,19 @@ MonoBehaviour:
   isHardAttack: 0
   spellPrefab: {fileID: 6777677984813657567, guid: 385e096f9e6cd7544bb39bd9cf0a602d, type: 3}
   bulletPrefab: {fileID: 7951800211735438291, guid: 9d8c578191509964f9789551b9b726df, type: 3}
+--- !u!114 &7117700999093873711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2728898524108704117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 989ce19207d24ea44a5a32e2a67f7cdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallingObjectPrefab: {fileID: 7999151024212528260, guid: 0182fb31e78e40d49b61e4fed4a590f0, type: 3}
 --- !u!1 &2728898524217196234
 GameObject:
   m_ObjectHideFlags: 0

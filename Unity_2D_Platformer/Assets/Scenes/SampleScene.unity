@@ -14767,6 +14767,8 @@ MonoBehaviour:
     count: 10
   - targetObject: {fileID: 7951800211735438291, guid: 9d8c578191509964f9789551b9b726df, type: 3}
     count: 10
+  - targetObject: {fileID: 7999151024212528260, guid: 0182fb31e78e40d49b61e4fed4a590f0, type: 3}
+    count: 50
 --- !u!1 &1883678375
 GameObject:
   m_ObjectHideFlags: 0

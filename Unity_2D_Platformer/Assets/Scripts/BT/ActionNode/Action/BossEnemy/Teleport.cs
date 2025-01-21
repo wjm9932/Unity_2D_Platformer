@@ -60,16 +60,4 @@ public class Teleport : IAction
 
         blackboard.GetData<Boss>("owner").transform.position = randomPos;
     }
-
-    private void Flip(bool isMovingRight)
-    {
-        if (isMovingRight && blackboard.GetData<Boss>("owner").transform.localRotation.eulerAngles.y != 0)
-        {
-            blackboard.GetData<Boss>("owner").transform.localRotation = Quaternion.Euler(0, 0, 0);
-        }
-        else if (!isMovingRight && blackboard.GetData<Boss>("owner").transform.localRotation.eulerAngles.y != 180)
-        {
-            blackboard.GetData<Boss>("owner").transform.localRotation = Quaternion.Euler(0, 180, 0);
-        }
-    }
 }
