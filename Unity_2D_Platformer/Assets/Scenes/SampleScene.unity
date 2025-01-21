@@ -2604,7 +2604,7 @@ PrefabInstance:
     - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: info.Array.data[0].targetEnemy
       value: 
-      objectReference: {fileID: 2728898524108704117, guid: a7c2f45ec5618a645b6dcf3397abcb0b, type: 3}
+      objectReference: {fileID: 2728898524108704117, guid: d44f71437bb138d458fc98a98c861132, type: 3}
     - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: info.Array.data[1].targetCount
       value: 1
@@ -14764,6 +14764,8 @@ MonoBehaviour:
   - targetObject: {fileID: 41213779625861006, guid: aa619b825e4b19e4a8b61cb40c782a33, type: 3}
     count: 10
   - targetObject: {fileID: 935369320324283961, guid: b8c5bd318701da041a4f850742a45e41, type: 3}
+    count: 10
+  - targetObject: {fileID: 7951800211735438291, guid: 9d8c578191509964f9789551b9b726df, type: 3}
     count: 10
 --- !u!1 &1883678375
 GameObject:
