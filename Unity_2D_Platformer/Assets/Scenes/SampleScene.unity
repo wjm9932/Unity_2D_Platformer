@@ -2603,7 +2603,7 @@ PrefabInstance:
     - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: info.Array.data[0].targetEnemy
       value: 
-      objectReference: {fileID: 2728898524108704117, guid: d44f71437bb138d458fc98a98c861132, type: 3}
+      objectReference: {fileID: 2728898524108704117, guid: d28e3a8703ebbaf43a3d40475ede7d6c, type: 3}
     - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: info.Array.data[1].targetCount
       value: 1

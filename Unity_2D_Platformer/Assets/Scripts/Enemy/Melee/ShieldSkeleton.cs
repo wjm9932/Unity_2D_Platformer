@@ -57,6 +57,9 @@ public class ShieldSkeleton : Enemy
         }
         else
         {
+            healthBar.gameObject.SetActive(true);
+            spriteRenderer.color = rageColor;
+
             this.isHardAttack = isHardAttack;
             isBlock = false;
             target = damager.GetComponent<Player>();
