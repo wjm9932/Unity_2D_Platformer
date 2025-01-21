@@ -65,7 +65,7 @@ public class Shoot : IAction
 
             var bullet = ObjectPoolManager.Instance.GetPoolableObject(blackboard.GetData<Boss>("owner").bulletPrefab, ownerPosition, Quaternion.identity).GetComponent<Projectile>();
             bullet.transform.right = direction;
-            bullet.SetTargetDistanceAndVelocity(100f, 30f);
+            bullet.SetTargetDistanceAndVelocity(100f, 25f);
 
             yield return new WaitForSeconds(0.5f);
         }
