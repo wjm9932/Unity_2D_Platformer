@@ -11,6 +11,7 @@ public class Boss : Enemy
     [Space(20)]
     [Header("Boss Components")]
     public GameObject spellPrefab;
+    public GameObject bulletPrefab;
 
     public bool isVulnerable { get; set; }  
     protected override void Awake()
@@ -101,6 +102,11 @@ public class Boss : Enemy
                     .AddCondition(() => canBeDamaged == false && (isHardAttack == true || btBuilder.blackboard.GetData<bool>("IsCasting") == true))
                     .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
                     .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false), btBuilder.actionManager)
+                    .AddAttackSequence()
+                        .AddCondition(()=>RandomExecute(0.5f))
+                        .AddAction(new SetUpForShooting(btBuilder.blackboard), btBuilder.actionManager)
+                        .AddAction(new Shoot(btBuilder.blackboard), btBuilder.actionManager)
+                    .EndComposite()
                 .EndComposite()
                 #endregion
                 #region Boss Pattern Sequence
@@ -113,7 +119,7 @@ public class Boss : Enemy
                             .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
                         .EndComposite()
                         #endregion
-                        #region Boss Dash Sequence
+                        #region Boss Range Attack Pattern Sequence
                         .AddAttackSequence()
                             .AddCondition(() => !IsInRange(10f))
                             .AddRandomAttackSelector()
@@ -133,7 +139,7 @@ public class Boss : Enemy
                             .EndComposite()
                         .EndComposite()
                         #endregion
-                        #region Boss Track Sword Attack Sequence
+                        #region Boss Boss Melee Attack Sequence
                         .AddSequence()
                             .AddRandomAttackSelector()
                                 .AddAttackSequence()

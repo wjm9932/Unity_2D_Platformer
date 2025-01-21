@@ -54,6 +54,7 @@ public abstract class Enemy : LivingEntity
     public Player target { get; set; }
     public float patrolPoint_1 { get; private set; }
     public float patrolPoint_2 { get; private set; }
+    public float yPos { get; private set; }
 
     public Rigidbody2D rb { get; private set; }
     public float patrolStopDistance { get; private set; }
@@ -105,10 +106,11 @@ public abstract class Enemy : LivingEntity
         Destroy(gameObject);
     }
 
-    public void SetPatrolPoints(float x1, float x2)
+    public void SetPatrolPoints(float x1, float x2, float y)
     {
         patrolPoint_1 = x1;
         patrolPoint_2 = x2;
+        yPos = y;
     }
     public override void KillInstant()
     {
