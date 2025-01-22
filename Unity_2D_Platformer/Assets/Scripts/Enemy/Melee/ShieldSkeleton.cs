@@ -44,11 +44,6 @@ public class ShieldSkeleton : Enemy
     {
         btBuilder.actionManager.OnAnimationExitEvent();
     }
-
-    public override void Die()
-    {
-        base.Die();
-    }
     public override bool TakeDamage(float dmg, GameObject damager, bool isHardAttack = false)
     {
         if (base.ApplyDamage(dmg, damager) == false)

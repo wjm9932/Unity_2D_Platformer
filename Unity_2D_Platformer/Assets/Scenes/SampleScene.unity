@@ -2983,6 +2983,7 @@ Transform:
   m_Children:
   - {fileID: 368008316}
   - {fileID: 276287448}
+  - {fileID: 1943293616}
   m_Father: {fileID: 365000380}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3456,6 +3457,14 @@ PrefabInstance:
     - target: {fileID: 5852806615148106099, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_Name
       value: PlayerUsingFSM
+      objectReference: {fileID: 0}
+    - target: {fileID: 5852806615148106102, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
+      propertyPath: m_UseColliderMask
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5852806615148106103, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
+      propertyPath: m_UsedByEffector
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
@@ -14802,6 +14811,53 @@ Transform:
   m_Father: {fileID: 653286324}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1943293615
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1943293616}
+  - component: {fileID: 1943293617}
+  m_Layer: 0
+  m_Name: ItemDropper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1943293616
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943293615}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 66.7, y: 2.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1118338875}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1943293617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943293615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 989ce19207d24ea44a5a32e2a67f7cdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpawnInterval: 1
+  maxSpawnInterval: 1.5
+  fallingObjectPrefab: {fileID: 0}
 --- !u!4 &1965436975 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 132265661153901, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}

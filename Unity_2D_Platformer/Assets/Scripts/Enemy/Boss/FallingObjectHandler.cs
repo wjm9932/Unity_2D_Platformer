@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class FallingObjectHandler : MonoBehaviour
 {
+    [SerializeField] private float minSpawnInterval;
+    [SerializeField] private float maxSpawnInterval;
+
     [SerializeField] private GameObject fallingObjectPrefab;
+
     private float timeElapsed = 0f;
     private float spawnTimer = 0f;
     private void Start()
@@ -12,25 +16,28 @@ public class FallingObjectHandler : MonoBehaviour
         spawnTimer = SetRandomSpawnTime();
     }
 
-    public void DropBullets(Vector2 spawnPosition)
+    public void DropProjectile(Vector2 spawnPosition, float velocity = 0f)
     {
         timeElapsed += Time.deltaTime;
 
         if (timeElapsed >= spawnTimer)
         {
-            SpawnBullet(spawnPosition);
+            SpawnBullet(spawnPosition, velocity);
 
             timeElapsed = 0f;
             spawnTimer = SetRandomSpawnTime();
         }
     }
-    private void SpawnBullet(Vector2 spawnPosition)
+    private void SpawnBullet(Vector2 spawnPosition, float velocity)
     {
         var bullet = ObjectPoolManager.Instance.GetPoolableObject(fallingObjectPrefab, spawnPosition, fallingObjectPrefab.transform.rotation).GetComponent<Projectile>();
-        bullet.SetTargetDistanceAndVelocity(150f, 10f);
+        if (bullet != null)
+        {
+            bullet.SetTargetDistanceAndVelocity(150f, velocity);
+        }
     }
     private float SetRandomSpawnTime()
     {
-        return Random.Range(0.1f, 0.5f);
+        return Random.Range(minSpawnInterval, maxSpawnInterval);
     }
 }

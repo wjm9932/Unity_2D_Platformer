@@ -35,7 +35,7 @@ public class Boss : Enemy
     {
         if(target != null && isDead == false)
         {
-            bulletDropHandler.DropBullets(new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f));
+            bulletDropHandler.DropProjectile(new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f), 10f);
         }
 
         root.Evaluate();

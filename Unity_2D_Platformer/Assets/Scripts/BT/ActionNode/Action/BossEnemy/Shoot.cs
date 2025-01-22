@@ -63,9 +63,19 @@ public class Shoot : IAction
             var targetPosition = blackboard.GetData<Boss>("owner").target.transform.position;
             var direction = (targetPosition - ownerPosition).normalized;
 
-            var bullet = ObjectPoolManager.Instance.GetPoolableObject(blackboard.GetData<Boss>("owner").bulletPrefab, ownerPosition, Quaternion.identity).GetComponent<Projectile>();
+            var bullet = ObjectPoolManager.Instance.GetPoolableObject(blackboard.GetData<Boss>("owner").bulletPrefab, ownerPosition, Quaternion.identity);
             bullet.transform.right = direction;
-            bullet.SetTargetDistanceAndVelocity(100f, 25f);
+
+            if(blackboard.GetData<Enemy>("owner").transform.position.x < blackboard.GetData<Enemy>("owner").target.transform.position.x)
+            {
+                bullet.GetComponent<SpriteRenderer>().flipY = false;
+            }
+            else
+            {
+                bullet.GetComponent<SpriteRenderer>().flipY = true;
+            }
+
+            bullet.GetComponent<Projectile>().SetTargetDistanceAndVelocity(100f, 25f);
 
             yield return new WaitForSeconds(0.5f);
         }

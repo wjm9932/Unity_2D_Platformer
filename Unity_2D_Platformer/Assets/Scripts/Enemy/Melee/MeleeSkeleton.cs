@@ -41,11 +41,6 @@ public class MeleeSkeleton : Enemy
     {
         btBuilder.actionManager.OnAnimationExitEvent();
     }
-
-    public override void Die()
-    {
-        base.Die();
-    }
     private void BuildBT()
     {
         btBuilder.blackboard.SetData<Enemy>("owner", this);

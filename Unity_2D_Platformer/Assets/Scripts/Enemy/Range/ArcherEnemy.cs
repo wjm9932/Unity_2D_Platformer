@@ -46,10 +46,6 @@ public class ArcherEnemy : Enemy
         btBuilder.actionManager.OnAnimationExitEvent();
     }
 
-    public override void Die()
-    {
-        base.Die();
-    }
 
     private void BuildBT()
     {
