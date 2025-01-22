@@ -5,11 +5,17 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Patrol Point")]
-    [SerializeField] private Transform[] wayPoints = new Transform[2];
+    [SerializeField] private Transform[] _wayPoints = new Transform[2];
+    public Transform[] wayPoints
+    {
+        get { return _wayPoints; }
+    }
 
     [Header("Enemy info")]
     [SerializeField] private TargetEnemiesInfo[] info;
 
+    [Header("Spawn Control")]
+    [SerializeField] private bool enableContinuousSpawn = true;
     [System.Serializable]
     private struct TargetEnemiesInfo
     {
@@ -19,32 +25,41 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < info.Length; i++)
+        if (enableContinuousSpawn == true)
         {
-            for (int j = 0; j < info[i].targetCount; j++)
+            for (int i = 0; i < info.Length; i++)
             {
-                SpawnEnemy(info[i].targetEnemy);
+                for (int j = 0; j < info[i].targetCount; j++)
+                {
+                    SpawnEnemy(info[i].targetEnemy);
+                }
             }
         }
     }
 
-    void Update()
+    public void SpawnRandomEnemy(int count)
     {
-        
-    }
+        for (int i = 0; i < count; i++)
+        {
+            Vector2 spawnPosition = GetSpawnPosition();
+            int randEnemyIndex = Random.Range(0, info.Length);
 
+            Enemy enemy = Instantiate(info[randEnemyIndex].targetEnemy, spawnPosition, Quaternion.identity).GetComponent<Enemy>();
+            enemy.SetPatrolPoints(_wayPoints[0].position.x, _wayPoints[1].position.x, transform.position.y);
+        }
+    }
     private void SpawnEnemy(GameObject enemyPrefab)
     {
         Vector2 spawnPosition = GetSpawnPosition();
 
         Enemy enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity).GetComponent<Enemy>();
-        enemy.SetPatrolPoints(wayPoints[0].position.x, wayPoints[1].position.x, transform.position.y);
+        enemy.SetPatrolPoints(_wayPoints[0].position.x, _wayPoints[1].position.x, transform.position.y);
         enemy.onDeath += () => { StartCoroutine(SpawnEnemyAfterDelay(enemyPrefab, 3f)); };
     }
 
     private Vector2 GetSpawnPosition()
     {
-        return new Vector2(Random.Range(wayPoints[0].position.x, wayPoints[1].position.x), transform.position.y);
+        return new Vector2(Random.Range(_wayPoints[0].position.x, _wayPoints[1].position.x), transform.position.y);
     }
 
 

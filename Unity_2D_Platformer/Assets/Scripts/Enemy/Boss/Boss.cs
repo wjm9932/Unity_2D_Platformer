@@ -8,19 +8,30 @@ public class Boss : Enemy
     private BehaviorTreeBuilder btBuilder;
     private CompositeNode root;
 
-    private FallingObjectHandler bulletDropHandler;
 
     [Space(20)]
     [Header("Boss Components")]
     public GameObject spellPrefab;
     public GameObject bulletPrefab;
 
+    [Header("Enemy Spwaner")]
+    [SerializeField] private GameObject enemySpawnerObject;
+    private EnemySpawner enemySpawner;
+
+    [Header("Drop Handler")]
+    [SerializeField] private GameObject bulletDropHandlerObj;
+    private FallingObjectHandler bulletDropHandler;
+    [SerializeField] private GameObject itemDropHandlerObj;
+    private FallingObjectHandler itemDropHandler;
+
     public bool isVulnerable { get; set; }  
     protected override void Awake()
     {
         base.Awake();
         btBuilder = GetComponent<BehaviorTreeBuilder>();
-        bulletDropHandler = GetComponent<FallingObjectHandler>();
+        bulletDropHandler = bulletDropHandlerObj.GetComponent<FallingObjectHandler>();
+        itemDropHandler = itemDropHandlerObj.GetComponent<FallingObjectHandler>();
+        enemySpawner = enemySpawnerObject.GetComponent<EnemySpawner>();
     }
 
     protected override void Start()
@@ -29,6 +40,8 @@ public class Boss : Enemy
         BuildBT();
         isVulnerable = false;
         trackStopDistance = patrolStopDistance + movementType.trackStopDistance * transform.localScale.x;
+
+        SetPatrolPoints(enemySpawner.wayPoints[0].position.x, enemySpawner.wayPoints[1].position.x, transform.position.y);
     }
 
     void Update()
@@ -36,6 +49,7 @@ public class Boss : Enemy
         if(target != null && isDead == false)
         {
             bulletDropHandler.DropProjectile(new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f), 10f);
+            itemDropHandler.DropProjectile(new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f));
         }
 
         root.Evaluate();
@@ -96,6 +110,7 @@ public class Boss : Enemy
         btBuilder.blackboard.SetData<Enemy>("owner", this);
         btBuilder.blackboard.SetData<Boss>("owner", this);
         btBuilder.blackboard.SetData<bool>("IsCasting", false);
+        btBuilder.blackboard.SetData<EnemySpawner>("enemySpawner", enemySpawner);
 
         root = btBuilder
             .AddSelector()

@@ -11,7 +11,7 @@ public class AnimationHandler : MonoBehaviour
     private bool isReadyToCheck; 
     private void Awake()
     {
-        entity = transform.root.GetComponent<LivingEntity>();
+        entity = transform.parent.GetComponent<LivingEntity>();
         animator = GetComponent<Animator>();
         isReadyToCheck = false;
     }

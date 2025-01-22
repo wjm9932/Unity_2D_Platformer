@@ -22,18 +22,19 @@ public class FallingObjectHandler : MonoBehaviour
 
         if (timeElapsed >= spawnTimer)
         {
-            SpawnBullet(spawnPosition, velocity);
+            SpawnProjectile(spawnPosition, velocity);
 
             timeElapsed = 0f;
             spawnTimer = SetRandomSpawnTime();
         }
     }
-    private void SpawnBullet(Vector2 spawnPosition, float velocity)
+    private void SpawnProjectile(Vector2 spawnPosition, float velocity)
     {
-        var bullet = ObjectPoolManager.Instance.GetPoolableObject(fallingObjectPrefab, spawnPosition, fallingObjectPrefab.transform.rotation).GetComponent<Projectile>();
-        if (bullet != null)
+        var bullet = ObjectPoolManager.Instance.GetPoolableObject(fallingObjectPrefab, spawnPosition, fallingObjectPrefab.transform.rotation);
+
+        if (bullet.GetComponent<Projectile>() != null)
         {
-            bullet.SetTargetDistanceAndVelocity(150f, velocity);
+            bullet.GetComponent<Projectile>().SetTargetDistanceAndVelocity(150f, velocity);
         }
     }
     private float SetRandomSpawnTime()

@@ -42,7 +42,7 @@ public class ObjectPoolManager : MonoBehaviour
                 continue;
             }
 
-            IObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => CreateObject(targetInfo.targetObject), OnGetObject, OnReleasObject, OnDestroyObject,
+            IObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => CreateObject(targetInfo.targetObject), OnGetObject, OnReleaseObject, OnDestroyObject,
                 true, infos[i].count);
 
             objectPools.Add(infos[i].targetObject, pool);
@@ -73,7 +73,7 @@ public class ObjectPoolManager : MonoBehaviour
     {
         obj.gameObject.SetActive(true);
     }
-    private void OnReleasObject(GameObject obj)
+    private void OnReleaseObject(GameObject obj)
     {
         obj.gameObject.SetActive(false);
     }
@@ -86,13 +86,13 @@ public class ObjectPoolManager : MonoBehaviour
     {
         if (objectPools.ContainsKey(targetObject) == false)
         {
-            IObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => CreateObject(targetObject), OnGetObject, OnReleasObject, OnDestroyObject, true, 10);
+            IObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => CreateObject(targetObject), OnGetObject, OnReleaseObject, OnDestroyObject, true, 10);
             objectPools.Add(targetObject, pool);
 
             for (int j = 0; j < 10; j++)
             {
                 GameObject poolObj = CreateObject(targetObject);
-                poolObj.GetComponent<IPoolableObject>().pool.Release(poolObj);
+                poolObj.GetComponent<IPoolableObject>().Release();
             }
         }
 

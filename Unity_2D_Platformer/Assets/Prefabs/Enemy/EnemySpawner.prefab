@@ -46,10 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d4f1b0fe842c764c8de6d946cfd79bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wayPoints:
+  _wayPoints:
   - {fileID: 3581633235077264486}
   - {fileID: 3581633234267938815}
   info: []
+  enableContinuousSpawn: 1
 --- !u!1 &3581633234267938814
 GameObject:
   m_ObjectHideFlags: 0
