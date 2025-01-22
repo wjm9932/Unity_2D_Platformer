@@ -2602,6 +2602,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
+      propertyPath: enableStartSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: enableContinuousSpawn
       value: 0
       objectReference: {fileID: 0}
@@ -2821,6 +2825,7 @@ MonoBehaviour:
   minSpawnInterval: 0.1
   maxSpawnInterval: 0.5
   fallingObjectPrefab: {fileID: 7999151024212528260, guid: 0182fb31e78e40d49b61e4fed4a590f0, type: 3}
+  velocity: 10
 --- !u!1 &902404687
 GameObject:
   m_ObjectHideFlags: 0
@@ -15118,6 +15123,7 @@ MonoBehaviour:
   minSpawnInterval: 5
   maxSpawnInterval: 6
   fallingObjectPrefab: {fileID: 7451784485998942658, guid: 7ed319d3b8aa81348ae80fbcc52f8245, type: 3}
+  velocity: 0
 --- !u!4 &1965436975 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 132265661153901, guid: e4a9ba65c4924434a816a82a71a3f174, type: 3}

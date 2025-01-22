@@ -15,7 +15,7 @@ public class Teleport : IAction
     public void OnEnter()
     {
         isTeleportingFinished = false;
-        blackboard.GetData<Boss>("owner").isVulnerable = true;
+        blackboard.GetData<Boss>("owner").isGraceTime = true;
         blackboard.GetData<Boss>("owner").rb.velocity = Vector2.zero;
 
         blackboard.GetData<Boss>("owner").animHandler.ResetOneFrameDelay();
@@ -37,7 +37,7 @@ public class Teleport : IAction
     }
     public void OnExit()
     {
-        blackboard.GetData<Boss>("owner").isVulnerable = false;
+        blackboard.GetData<Boss>("owner").isGraceTime = false;
     }
     public void OnAnimationEnterEvent()
     {

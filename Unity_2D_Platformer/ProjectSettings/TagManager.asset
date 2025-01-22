@@ -17,8 +17,8 @@ TagManager:
   - Enemy
   - EnemyCollisionBox
   - TopCollisionBox
-  - Obstacle
-  - 
+  - Projectile
+  - Item
   - 
   - 
   - 

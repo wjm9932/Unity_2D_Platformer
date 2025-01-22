@@ -109,8 +109,6 @@ public class Player : LivingEntity
 
     void Update()
     {
-        //Debug.Log(movementStateMachine.currentState);
-
         if (Input.GetKeyDown(KeyCode.R) == true && isDead == true)
         {
             RespawnPlayer(currentCheckpointPosition);

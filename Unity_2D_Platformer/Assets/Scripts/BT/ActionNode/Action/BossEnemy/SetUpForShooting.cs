@@ -17,7 +17,7 @@ public class SetUpForShooting : IAction
         blackboard.GetData<Boss>("owner").rb.velocity = Vector2.zero;
 
         isTeleportingFinished = false;
-        blackboard.GetData<Boss>("owner").isVulnerable = true;
+        blackboard.GetData<Boss>("owner").isGraceTime = true;
         blackboard.GetData<Boss>("owner").rb.isKinematic = true;
 
         blackboard.GetData<Boss>("owner").animHandler.animator.SetTrigger("ShootingStart");

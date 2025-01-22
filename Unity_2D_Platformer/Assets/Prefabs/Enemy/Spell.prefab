@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6777677984813657566}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 6777677985234949929}
   - component: {fileID: 6777677985234949930}
   - component: {fileID: 6998402053499950609}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

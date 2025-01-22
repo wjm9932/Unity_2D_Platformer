@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7998660859899663639}
   - component: {fileID: 4709208811324329072}
   - component: {fileID: 1979030390256636519}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HeartDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7823303154448999426}
   - component: {fileID: 6709075536981449781}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HeartCollisionBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

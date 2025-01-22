@@ -37,7 +37,7 @@ public class Shoot : IAction
     }
     public void OnExit()
     {
-        blackboard.GetData<Boss>("owner").isVulnerable = false;
+        blackboard.GetData<Boss>("owner").isGraceTime = false;
         blackboard.GetData<Boss>("owner").rb.isKinematic = false;
     }
     public void OnAnimationEnterEvent()

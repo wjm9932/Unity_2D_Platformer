@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class Boss : Enemy
 {
-    private BehaviorTreeBuilder btBuilder;
-    private CompositeNode root;
-
-
     [Space(20)]
     [Header("Boss Components")]
     public GameObject spellPrefab;
@@ -16,15 +12,19 @@ public class Boss : Enemy
 
     [Header("Enemy Spwaner")]
     [SerializeField] private GameObject enemySpawnerObject;
-    private EnemySpawner enemySpawner;
+    public EnemySpawner enemySpawner { get; private set; }
 
     [Header("Drop Handler")]
     [SerializeField] private GameObject bulletDropHandlerObj;
-    private FallingObjectHandler bulletDropHandler;
     [SerializeField] private GameObject itemDropHandlerObj;
+    private FallingObjectHandler bulletDropHandler;
     private FallingObjectHandler itemDropHandler;
 
-    public bool isVulnerable { get; set; }  
+    public bool isGraceTime { get; set; }
+
+    private BehaviorTreeBuilder btBuilder;
+    private CompositeNode root;
+
     protected override void Awake()
     {
         base.Awake();
@@ -38,7 +38,7 @@ public class Boss : Enemy
     {
         base.Start();
         BuildBT();
-        isVulnerable = false;
+        isGraceTime = false;
         trackStopDistance = patrolStopDistance + movementType.trackStopDistance * transform.localScale.x;
 
         SetPatrolPoints(enemySpawner.wayPoints[0].position.x, enemySpawner.wayPoints[1].position.x, transform.position.y);
@@ -48,7 +48,7 @@ public class Boss : Enemy
     {
         if(target != null && isDead == false)
         {
-            bulletDropHandler.DropProjectile(new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f), 10f);
+            bulletDropHandler.DropProjectile(new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f));
             itemDropHandler.DropProjectile(new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f));
         }
 
@@ -79,7 +79,7 @@ public class Boss : Enemy
 
     public override bool TakeDamage(float dmg, GameObject damager, bool isHardAttack = false)
     {
-        if (isVulnerable == true)
+        if (isGraceTime == true)
         {
             return false;
         }

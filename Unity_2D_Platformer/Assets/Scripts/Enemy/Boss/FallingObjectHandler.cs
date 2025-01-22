@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class FallingObjectHandler : MonoBehaviour
 {
+    [Header("Interval")]
     [SerializeField] private float minSpawnInterval;
     [SerializeField] private float maxSpawnInterval;
 
+    [Header("Prefab")]
     [SerializeField] private GameObject fallingObjectPrefab;
+
+    [Header("Velocity")]
+    [SerializeField] private float velocity = 0f;
+
 
     private float timeElapsed = 0f;
     private float spawnTimer = 0f;
@@ -16,7 +22,7 @@ public class FallingObjectHandler : MonoBehaviour
         spawnTimer = SetRandomSpawnTime();
     }
 
-    public void DropProjectile(Vector2 spawnPosition, float velocity = 0f)
+    public void DropProjectile(Vector2 spawnPosition)
     {
         timeElapsed += Time.deltaTime;
 

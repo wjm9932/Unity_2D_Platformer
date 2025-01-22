@@ -16,6 +16,7 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Spawn Control")]
     [SerializeField] private bool enableContinuousSpawn = true;
+    [SerializeField] private bool enableStartSpawn = true;
     [System.Serializable]
     private struct TargetEnemiesInfo
     {
@@ -25,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        if (enableContinuousSpawn == true)
+        if (enableStartSpawn == true)
         {
             for (int i = 0; i < info.Length; i++)
             {
@@ -54,7 +55,11 @@ public class EnemySpawner : MonoBehaviour
 
         Enemy enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity).GetComponent<Enemy>();
         enemy.SetPatrolPoints(_wayPoints[0].position.x, _wayPoints[1].position.x, transform.position.y);
-        enemy.onDeath += () => { StartCoroutine(SpawnEnemyAfterDelay(enemyPrefab, 3f)); };
+
+        if (enableContinuousSpawn == true)
+        {
+            enemy.onDeath += () => { StartCoroutine(SpawnEnemyAfterDelay(enemyPrefab, 3f)); };
+        }
     }
 
     private Vector2 GetSpawnPosition()
