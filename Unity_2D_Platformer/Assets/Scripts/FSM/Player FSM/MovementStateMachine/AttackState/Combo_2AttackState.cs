@@ -38,7 +38,7 @@ public class Combo_2AttackState : AttackState
         {
             if(Attack(true) == true && canChargeDash == true)
             {
-                sm.owner.dashCount++;
+                sm.owner.RecoverDashCount();
                 canChargeDash = false;
             }
         }

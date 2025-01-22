@@ -14,13 +14,14 @@ public class Boss : Enemy
     [SerializeField] private GameObject enemySpawnerObject;
     public EnemySpawner enemySpawner { get; private set; }
 
-    [Header("Drop Handler")]
-    [SerializeField] private GameObject bulletDropHandlerObj;
-    [SerializeField] private GameObject itemDropHandlerObj;
-    private FallingObjectHandler bulletDropHandler;
-    private FallingObjectHandler itemDropHandler;
+    [Header("Drop prefab")]
+    [SerializeField] private GameObject dropBulletPrefab;
+    [SerializeField] private GameObject[] dropItemPrefabs;
 
     public bool isGraceTime { get; set; }
+
+    private FallingObjectHandler bulletDropHandler;
+    private FallingObjectHandler itemDropHandler;
 
     private BehaviorTreeBuilder btBuilder;
     private CompositeNode root;
@@ -28,9 +29,10 @@ public class Boss : Enemy
     protected override void Awake()
     {
         base.Awake();
+        bulletDropHandler = new FallingObjectHandler(0.1f, 0.5f, 10f);
+        itemDropHandler = new FallingObjectHandler(5f, 6f);
+
         btBuilder = GetComponent<BehaviorTreeBuilder>();
-        bulletDropHandler = bulletDropHandlerObj.GetComponent<FallingObjectHandler>();
-        itemDropHandler = itemDropHandlerObj.GetComponent<FallingObjectHandler>();
         enemySpawner = enemySpawnerObject.GetComponent<EnemySpawner>();
     }
 
@@ -38,6 +40,7 @@ public class Boss : Enemy
     {
         base.Start();
         BuildBT();
+
         isGraceTime = false;
         trackStopDistance = patrolStopDistance + movementType.trackStopDistance * transform.localScale.x;
 
@@ -48,8 +51,10 @@ public class Boss : Enemy
     {
         if(target != null && isDead == false)
         {
-            bulletDropHandler.DropProjectile(new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f));
-            itemDropHandler.DropProjectile(new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f));
+            bulletDropHandler.TrySpawnProjectile(dropBulletPrefab, new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f));
+
+            var randItem = Random.Range(0, dropItemPrefabs.Length);
+            itemDropHandler.TrySpawnProjectile(dropItemPrefabs[randItem], new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f));
         }
 
         root.Evaluate();

@@ -261,7 +261,22 @@ public class Player : LivingEntity
 
     public bool RecoverHealth()
     {
-        return heartCount++ < maxHearts;
+        if (heartCount < maxHearts)
+        {
+            heartCount++;
+            return true;
+        }
+        return false;
+    }
+
+    public bool RecoverDashCount()
+    {
+        if (dashCount < maxDashCount)
+        {
+            dashCount++;
+            return true;
+        }
+        return false;
     }
 
     #region EDITOR METHODS

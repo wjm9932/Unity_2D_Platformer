@@ -49,6 +49,7 @@ public class EnemySpawner : MonoBehaviour
             enemy.SetPatrolPoints(_wayPoints[0].position.x, _wayPoints[1].position.x, transform.position.y);
         }
     }
+
     private void SpawnEnemy(GameObject enemyPrefab)
     {
         Vector2 spawnPosition = GetSpawnPosition();
@@ -66,7 +67,6 @@ public class EnemySpawner : MonoBehaviour
     {
         return new Vector2(Random.Range(_wayPoints[0].position.x, _wayPoints[1].position.x), transform.position.y);
     }
-
 
     private IEnumerator SpawnEnemyAfterDelay(GameObject enemyPrefab, float delay)
     {
