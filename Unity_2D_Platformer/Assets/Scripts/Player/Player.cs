@@ -135,16 +135,17 @@ public class Player : LivingEntity
             }
         }
 
-        if (movementStateMachine.jsm.currentState == movementStateMachine.jsm.jumpFallingState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpAttackState)
+        if(CanJumpAttack() == true)
         {
             var collider = Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, enemyHeadCollisionBoxLayer);
             if (collider != null)
             {
-                if (collider.transform.root.GetComponent<Enemy>().TakeDamage(Mathf.Abs(rb.velocity.y) * 0.4f, this.gameObject) == true)
+                var enemy = collider.GetComponentInParent<Enemy>();
+                if (enemy.TakeDamage(Mathf.Abs(rb.velocity.y) * 0.4f, this.gameObject) == true)
                 {
-                    if(collider.transform.root.GetComponent<Boss>() != null)
+                    if(enemy.GetComponent<Boss>() != null)
                     {
-                        collider.transform.root.GetComponent<Boss>().isHardAttack = true;
+                        enemy.GetComponent<Boss>().isHardAttack = true;
                     }
                     movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.jumpAttackState);
                 }
@@ -196,6 +197,10 @@ public class Player : LivingEntity
         movementStateMachine.ChangeState(movementStateMachine.dieState);
     }
 
+    private bool CanJumpAttack()
+    {
+        return (movementStateMachine.jsm.currentState == movementStateMachine.jsm.jumpFallingState || movementStateMachine.jsm.currentState == movementStateMachine.jsm.doubleJumpFallingState) && movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpAttackState;
+    }
     public bool TakeDamage(GameObject damager, bool isHardAttack = false)
     {
         if (!CanTakeDamage(isHardAttack))

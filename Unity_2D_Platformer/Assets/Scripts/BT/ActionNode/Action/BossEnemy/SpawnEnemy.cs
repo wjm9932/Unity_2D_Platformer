@@ -44,7 +44,7 @@ public class SpawnEnemy : IAction
     }
     public void OnAnimationEnterEvent()
     {
-        blackboard.GetData<Boss>("owner").enemySpawner.SpawnRandomEnemy(5);
+        blackboard.GetData<Boss>("owner").enemySpawner.SpawnRandomEnemy(3);
     }
     public void OnAnimationTransitionEvent()
     {

@@ -169,7 +169,7 @@ public abstract class Enemy : LivingEntity
             if (Random.Range(0f, 1f) <= chances)
             {
                 var randItemIndex = Random.Range(0, dropItem.Count);
-                ObjectPoolManager.Instance.GetPoolableObject(dropItem[randItemIndex], transform.position, transform.rotation);
+                ObjectPoolManager.Instance.GetPoolableObject(dropItem[randItemIndex], transform.position, Quaternion.identity);
             }
         }
     }

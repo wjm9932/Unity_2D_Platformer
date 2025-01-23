@@ -34,7 +34,7 @@ MonoBehaviour:
   jumpHangAccelerationMult: 1.1
   jumpHangMaxSpeedMult: 1.3
   wallJumpForce: {x: 15, y: 30}
-  doubleJumpForce: {x: 40, y: 10}
+  doubleJumpForce: {x: 20, y: 30}
   bounceHeight: 3
   bounceForce: 25.81989
   slideSpeed: -3

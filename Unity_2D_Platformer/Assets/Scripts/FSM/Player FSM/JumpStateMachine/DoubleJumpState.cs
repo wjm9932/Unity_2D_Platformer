@@ -80,13 +80,13 @@ public class DoubleJumpState : IState, IGravityModifier
     private void DobuleJump(float dir)
     {
 
-        Vector2 force = new Vector2(sm.owner.movementType.wallJumpForce.x, sm.owner.movementType.wallJumpForce.y);
+        Vector2 force = new Vector2(sm.owner.movementType.doubleJumpForce.x, sm.owner.movementType.doubleJumpForce.y);
         force.x *= dir;
 
         if (Mathf.Sign(sm.owner.rb.velocity.x) != Mathf.Sign(force.x))
             force.x -= sm.owner.rb.velocity.x;
 
-        if (sm.owner.rb.velocity.y < 0)
+        if (Mathf.Abs(sm.owner.rb.velocity.y) > 0)
             force.y -= sm.owner.rb.velocity.y;
 
         sm.owner.rb.AddForce(force, ForceMode2D.Impulse);
