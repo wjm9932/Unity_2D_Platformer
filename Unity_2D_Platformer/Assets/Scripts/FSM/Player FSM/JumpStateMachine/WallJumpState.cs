@@ -14,6 +14,8 @@ public class WallJumpState : IState, IGravityModifier
         WallJump(sm.owner.facingDir < 0 ? 1 : -1);
         sm.isJumpCut = false;
         sm.owner.animHandler.animator.SetTrigger("Jump");
+
+        ObjectPoolManager.Instance.GetPoolableObject(sm.owner.doubleJumpEffectPrefab, sm.owner.doubleJumpEffectTransform.position, sm.owner.doubleJumpEffectTransform.rotation);
     }
     public void Update()
     {

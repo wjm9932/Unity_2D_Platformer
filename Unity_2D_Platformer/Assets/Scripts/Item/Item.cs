@@ -5,6 +5,12 @@ using UnityEngine.Pool;
 
 public abstract class Item : MonoBehaviour, IPoolableObject
 {
+    public IObjectPool<GameObject> pool { get; private set; }
+
+    protected Color originColor;
+    protected const float existingTime = 10f;
+    protected float enableTime;
+    protected SpriteRenderer spriteRenderer;
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -21,14 +27,6 @@ public abstract class Item : MonoBehaviour, IPoolableObject
             }
         }
     }
-
-    public IObjectPool<GameObject> pool { get; private set; }
-
-    protected Color originColor;
-    protected const float existingTime = 10f;
-    protected float enableTime;
-    protected SpriteRenderer spriteRenderer;
-
 
     public void SetPool(IObjectPool<GameObject> pool)
     {

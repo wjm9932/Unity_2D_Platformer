@@ -14,6 +14,8 @@ public class JumpState : IState, IGravityModifier
         Jump();
         sm.isJumpCut = false;
         sm.owner.animHandler.animator.SetTrigger("Jump");
+
+        ObjectPoolManager.Instance.GetPoolableObject(sm.owner.jumpEffectPrefab, sm.owner.jumpEffectTransform.position, sm.owner.jumpEffectTransform.rotation);
     }
     public void Update()
     {

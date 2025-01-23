@@ -16,6 +16,8 @@ public class DoubleJumpState : IState, IGravityModifier
         DobuleJump(sm.owner.transform.right.x);
 
         sm.owner.animHandler.animator.SetTrigger("Jump");
+
+        ObjectPoolManager.Instance.GetPoolableObject(sm.owner.doubleJumpEffectPrefab, sm.owner.doubleJumpEffectTransform.position, sm.owner.doubleJumpEffectTransform.rotation);
     }
     public void Update()
     {

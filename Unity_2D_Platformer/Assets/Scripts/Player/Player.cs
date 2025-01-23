@@ -45,6 +45,11 @@ public class Player : LivingEntity
     [Header("Movement  Type")]
     public MovementTypeSO movementType;
 
+    [Header("Jump Effect")]
+    public GameObject jumpEffectPrefab;
+    public GameObject doubleJumpEffectPrefab;
+    public Transform jumpEffectTransform;
+    public Transform doubleJumpEffectTransform;
 
     #region LayerMask
     [Header("Layer")]
@@ -83,7 +88,7 @@ public class Player : LivingEntity
     public float playerFootOffset { get; private set; }
     private Vector2 currentCheckpointPosition;
 
-    public bool isDashing = false;
+    [HideInInspector] public bool isDashing = false;
 
     protected override void Awake()
     {
