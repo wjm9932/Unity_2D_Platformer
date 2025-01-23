@@ -47,7 +47,7 @@ public abstract class Enemy : LivingEntity
 
     #region Drop Item
     [Header("Drop Item")]
-    [SerializeField] private GameObject dropItem;
+    [SerializeField] private List<GameObject> dropItem = new List<GameObject>();
     [SerializeField] [Range(0f, 1f)] private float dropChances;
     #endregion
 
@@ -168,8 +168,14 @@ public abstract class Enemy : LivingEntity
         {
             if (Random.Range(0f, 1f) <= chances)
             {
-                ObjectPoolManager.Instance.GetPoolableObject(dropItem, transform.position, transform.rotation);
+                var randItemIndex = Random.Range(0, dropItem.Count);
+                ObjectPoolManager.Instance.GetPoolableObject(dropItem[randItemIndex], transform.position, transform.rotation);
             }
         }
+    }
+
+    public void AddDropItem(GameObject gameObject)
+    {
+        dropItem.Add(gameObject);
     }
 }

@@ -2599,7 +2599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: info.Array.size
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: enableStartSpawn
@@ -2632,7 +2632,7 @@ PrefabInstance:
     - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: info.Array.data[1].targetEnemy
       value: 
-      objectReference: {fileID: 2728898524108704117, guid: a7c2f45ec5618a645b6dcf3397abcb0b, type: 3}
+      objectReference: {fileID: 2728898524108704117, guid: d28e3a8703ebbaf43a3d40475ede7d6c, type: 3}
     - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: info.Array.data[2].targetCount
       value: 1
@@ -2641,6 +2641,14 @@ PrefabInstance:
       propertyPath: info.Array.data[2].targetEnemy
       value: 
       objectReference: {fileID: 2728898524108704117, guid: 79c181a318b251541913f77957f3ed20, type: 3}
+    - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
+      propertyPath: info.Array.data[3].targetCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
+      propertyPath: info.Array.data[3].targetEnemy
+      value: 
+      objectReference: {fileID: 2728898524108704117, guid: a7c2f45ec5618a645b6dcf3397abcb0b, type: 3}
     - target: {fileID: 3581633234267938815, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: m_LocalPosition.x
       value: 42.9
@@ -3632,6 +3640,10 @@ PrefabInstance:
     - target: {fileID: 5852806615148106102, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_UseColliderMask
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5852806615148106102, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
+      propertyPath: m_ColliderMask.m_Bits
+      value: 1599
       objectReference: {fileID: 0}
     - target: {fileID: 5852806615148106103, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_UsedByEffector

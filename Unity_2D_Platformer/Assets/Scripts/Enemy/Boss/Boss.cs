@@ -130,10 +130,17 @@ public class Boss : Enemy
                     .AddCondition(() => canBeDamaged == false && (isHardAttack == true || btBuilder.blackboard.GetData<bool>("IsCasting") == true))
                     .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
                     .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false), btBuilder.actionManager)
-                    .AddAttackSequence()
-                        .AddCondition(()=>RandomExecute(0.5f))
-                        .AddAction(new SetUpForShooting(btBuilder.blackboard), btBuilder.actionManager)
-                        .AddAction(new Shoot(btBuilder.blackboard), btBuilder.actionManager)
+                    .AddCondition(() => RandomExecute(0.5f))
+                    .AddAttackSelector()
+                        .AddAttackSequence()
+                            .AddCondition(() => RandomExecute(0.8f))
+                            .AddAction(new SetUpForShooting(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddAction(new Shoot(btBuilder.blackboard), btBuilder.actionManager)
+                        .EndComposite()
+                        .AddAttackSequence()
+                            .AddAction(new Teleport(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddAction(new SpawnEnemy(btBuilder.blackboard), btBuilder.actionManager)
+                        .EndComposite()
                     .EndComposite()
                 .EndComposite()
                 #endregion
@@ -167,7 +174,7 @@ public class Boss : Enemy
                             .EndComposite()
                         .EndComposite()
                         #endregion
-                        #region Boss Boss Melee Attack Sequence
+                        #region Boss Close Attack Sequence
                         .AddSequence()
                             .AddRandomAttackSelector()
                                 .AddAttackSequence()

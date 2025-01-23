@@ -17,6 +17,10 @@ public class EnemySpawner : MonoBehaviour
     [Header("Spawn Control")]
     [SerializeField] private bool enableContinuousSpawn = true;
     [SerializeField] private bool enableStartSpawn = true;
+
+    [Header("Drop Item (Optional)")]
+    [SerializeField] private GameObject dropItem;
+
     [System.Serializable]
     private struct TargetEnemiesInfo
     {
@@ -56,6 +60,11 @@ public class EnemySpawner : MonoBehaviour
 
         Enemy enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity).GetComponent<Enemy>();
         enemy.SetPatrolPoints(_wayPoints[0].position.x, _wayPoints[1].position.x, transform.position.y);
+
+        if(dropItem != null)
+        {
+            enemy.AddDropItem(dropItem);
+        }
 
         if (enableContinuousSpawn == true)
         {
