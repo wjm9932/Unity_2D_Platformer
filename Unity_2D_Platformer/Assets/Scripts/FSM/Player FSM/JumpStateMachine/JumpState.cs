@@ -30,7 +30,7 @@ public class JumpState : IState, IGravityModifier
             sm.isJumpCut = true;
         }
 
-        if(sm.owner.input.isJump == true)
+        if (sm.owner.lastPressJumpTime > 0f)
         {
             sm.ChangeState(sm.doubleJumpState);
             return;

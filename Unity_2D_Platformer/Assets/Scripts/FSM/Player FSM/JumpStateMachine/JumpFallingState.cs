@@ -31,7 +31,7 @@ public class JumpFallingState : IState, IGravityModifier
             return;
         }
 
-        if (sm.owner.input.isJump == true)
+        if (sm.owner.lastPressJumpTime > 0f)
         {
             sm.ChangeState(sm.doubleJumpState);
             return;
