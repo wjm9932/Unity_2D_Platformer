@@ -2618,7 +2618,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 790104475}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.76, y: 0.54, z: 0}
+  m_LocalPosition: {x: -0.622, y: 0.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3590,6 +3590,10 @@ PrefabInstance:
       propertyPath: jumpEffectTransform
       value: 
       objectReference: {fileID: 812708597}
+    - target: {fileID: 434663498, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
+      propertyPath: landingEffectPrefab
+      value: 
+      objectReference: {fileID: 1604227354005263177, guid: a3d14a9bbc4f998419822c89ced4afaa, type: 3}
     - target: {fileID: 434663498, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: doubleJumpEffectPrefab
       value: 
