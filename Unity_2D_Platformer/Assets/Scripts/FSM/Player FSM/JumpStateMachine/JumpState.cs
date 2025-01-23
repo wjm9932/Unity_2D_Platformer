@@ -28,6 +28,12 @@ public class JumpState : IState, IGravityModifier
             sm.isJumpCut = true;
         }
 
+        if(sm.owner.input.isJump == true)
+        {
+            sm.ChangeState(sm.doubleJumpState);
+            return;
+        }
+
         SetGravityScale();
     }
     public void FixedUpdate()

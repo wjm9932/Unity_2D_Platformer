@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpFallingState : IState, IGravityModifier
+public class DoubleJumpFallingState : IState, IGravityModifier
 {
     private PlayerJumpStateMachine sm;
-    public JumpFallingState(PlayerJumpStateMachine playerJumpStateMachine)
+    public DoubleJumpFallingState(PlayerJumpStateMachine playerJumpStateMachine)
     {
         sm = playerJumpStateMachine;
     }
@@ -28,12 +28,6 @@ public class JumpFallingState : IState, IGravityModifier
         else if (sm.owner.facingDir == sm.owner.input.moveInput.x && sm.owner.lastOnWallTime - sm.owner.movementType.wallJumpCoyoteTime >= 0f && sm.msm.currentState != sm.msm.hitState)
         {
             sm.ChangeState(sm.slideState);
-            return;
-        }
-
-        if (sm.owner.input.isJump == true)
-        {
-            sm.ChangeState(sm.doubleJumpState);
             return;
         }
 
@@ -64,7 +58,7 @@ public class JumpFallingState : IState, IGravityModifier
 
     public void SetGravityScale()
     {
-        if(sm.msm.currentState == sm.msm.dashState)
+        if (sm.msm.currentState == sm.msm.dashState)
         {
             sm.owner.SetGravityScale(0f);
         }

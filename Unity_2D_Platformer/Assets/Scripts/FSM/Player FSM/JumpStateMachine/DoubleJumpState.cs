@@ -2,39 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpFallingState : IState, IGravityModifier
+public class DoubleJumpState : IState, IGravityModifier
 {
     private PlayerJumpStateMachine sm;
-    public JumpFallingState(PlayerJumpStateMachine playerJumpStateMachine)
+    public DoubleJumpState(PlayerJumpStateMachine playerJumpStateMachine)
     {
         sm = playerJumpStateMachine;
     }
     public void Enter()
     {
-        //SetGravityScale();
+        sm.isJumpCut = false;
+
+        DobuleJump(sm.owner.transform.right.x);
+
+        sm.owner.animHandler.animator.SetTrigger("Jump");
     }
     public void Update()
     {
-        if (sm.owner.lastOnGroundTime > 0f)
+        if (sm.owner.rb.velocity.y < 0f)
         {
-            sm.ChangeState(sm.idleState);
-            return;
-        }
-        else if (sm.owner.lastOnWallTime > 0f && sm.owner.lastPressJumpTime > 0f)
-        {
-            sm.ChangeState(sm.wallJumpState);
-            return;
-        }
-        else if (sm.owner.facingDir == sm.owner.input.moveInput.x && sm.owner.lastOnWallTime - sm.owner.movementType.wallJumpCoyoteTime >= 0f && sm.msm.currentState != sm.msm.hitState)
-        {
-            sm.ChangeState(sm.slideState);
+            sm.ChangeState(sm.doubleJumpFallingState);
             return;
         }
 
-        if (sm.owner.input.isJump == true)
+        if (sm.owner.input.isJumpCut == true)
         {
-            sm.ChangeState(sm.doubleJumpState);
-            return;
+            sm.isJumpCut = true;
         }
 
         SetGravityScale();
@@ -49,6 +42,7 @@ public class JumpFallingState : IState, IGravityModifier
     }
     public void Exit()
     {
+
     }
 
     public virtual void OnAnimationEnterEvent()
@@ -61,14 +55,9 @@ public class JumpFallingState : IState, IGravityModifier
     public virtual void OnAnimationTransitionEvent()
     {
     }
-
     public void SetGravityScale()
     {
-        if(sm.msm.currentState == sm.msm.dashState)
-        {
-            sm.owner.SetGravityScale(0f);
-        }
-        else if (sm.owner.input.moveInput.y < 0)
+        if (sm.owner.input.moveInput.y < 0)
         {
             sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.fastFallGravityMult);
             sm.owner.rb.velocity = new Vector2(sm.owner.rb.velocity.x, Mathf.Max(sm.owner.rb.velocity.y, -sm.owner.movementType.maxFastFallSpeed));
@@ -84,8 +73,22 @@ public class JumpFallingState : IState, IGravityModifier
         }
         else
         {
-            sm.owner.SetGravityScale(sm.owner.movementType.gravityScale * sm.owner.movementType.fallGravityMult);
-            sm.owner.rb.velocity = new Vector2(sm.owner.rb.velocity.x, Mathf.Max(sm.owner.rb.velocity.y, -sm.owner.movementType.maxFallSpeed));
+            sm.owner.SetGravityScale(sm.owner.movementType.gravityScale);
         }
+    }
+
+    private void DobuleJump(float dir)
+    {
+
+        Vector2 force = new Vector2(sm.owner.movementType.wallJumpForce.x, sm.owner.movementType.wallJumpForce.y);
+        force.x *= dir;
+
+        if (Mathf.Sign(sm.owner.rb.velocity.x) != Mathf.Sign(force.x))
+            force.x -= sm.owner.rb.velocity.x;
+
+        if (sm.owner.rb.velocity.y < 0)
+            force.y -= sm.owner.rb.velocity.y;
+
+        sm.owner.rb.AddForce(force, ForceMode2D.Impulse);
     }
 }

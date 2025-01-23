@@ -45,6 +45,9 @@ public class MovementTypeSO : ScriptableObject
     [Header("Wall Jump")]
     public Vector2 wallJumpForce; //The actual force (this time set by us) applied to the player when wall jumping.
 
+    [Header("Dobule Jump")]
+    public Vector2 doubleJumpForce; //The actual force (this time set by us) applied to the player when wall jumping.
+
     [Header("Jump Attack Bounce")]
     [SerializeField] private float bounceHeight;
     [HideInInspector] public float bounceForce;
