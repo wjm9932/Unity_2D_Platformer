@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.GetComponent<LivingEntity>() != null)
+        if (collision.GetComponent<LivingEntity>() != null)
         {
-            collision.gameObject.GetComponent<LivingEntity>().KillInstant();
+            collision.GetComponent<LivingEntity>().KillInstant();
         }
     }
 }
