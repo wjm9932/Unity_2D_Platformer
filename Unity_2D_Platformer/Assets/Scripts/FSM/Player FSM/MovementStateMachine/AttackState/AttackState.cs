@@ -64,14 +64,15 @@ public abstract class AttackState : IState
     protected bool Attack(bool isHardAttack)
     {
         bool isAttackSucced = false;
-        var enemyCollider = Physics2D.OverlapCircleAll(sm.owner.attackRoot.position, sm.owner.attackRange, sm.owner.enemyLayer);
+        var targetColliders = Physics2D.OverlapCircleAll(sm.owner.attackRoot.position, sm.owner.attackRange, sm.owner.targetLayer);
 
-        foreach (var enemies in enemyCollider)
+        foreach (var target in targetColliders)
         {
-            var enemy = enemies.transform.GetComponent<Enemy>();
-            if (enemy != null)
+            if (target.transform.GetComponent<Enemy>() != null)
             {
-                if(enemy.TakeDamage(sm.owner.dmg, sm.owner.gameObject) == true)
+                var enemy = target.transform.GetComponent<Enemy>();
+
+                if (enemy.TakeDamage(sm.owner.dmg, sm.owner.gameObject) == true)
                 {
                     isAttackSucced = true;
 
@@ -80,6 +81,12 @@ public abstract class AttackState : IState
                         enemy.GetComponent<Boss>().isHardAttack = isHardAttack;
                     }
                 }
+            }
+            else if (target.transform.GetComponent<Switch>() != null)
+            {
+                var lever = target.transform.GetComponent<Switch>();
+
+                lever.TriggerSwitch();
             }
         }
 

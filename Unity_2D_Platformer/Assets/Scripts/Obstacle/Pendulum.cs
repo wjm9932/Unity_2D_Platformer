@@ -2,20 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pendulum : MonoBehaviour
+public class Pendulum : MonoBehaviour, ISwitchable
 {
     [SerializeField] private float swingAngle;
     [SerializeField] private float speed;
-    // Start is called before the first frame update
-    void Start()
-    {
+    public bool isTurnOn { get; private set; }
+    private float timeElapsed;
 
+    private void Start()
+    {
+        timeElapsed = 0f;
+        isTurnOn = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        float angle = Mathf.Cos(Time.time * speed) * swingAngle;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        if(isTurnOn)
+        {
+            timeElapsed += Time.deltaTime;
+            float angle = Mathf.Cos(timeElapsed * speed) * swingAngle;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
+    }
+    public void Trigger()
+    {
+        isTurnOn = !isTurnOn;
     }
 }

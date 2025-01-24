@@ -2,23 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Translate : MonoBehaviour
+public class Translate : MonoBehaviour, ISwitchable
 {
-    [SerializeField] private float moveDistance = 5f; // 이동 거리
-    [SerializeField] private float moveSpeed = 2f;    // 이동 속도
+    public bool isTurnOn { get; private set; }
+
+    [SerializeField] private float moveDistance = 5f;
+    [SerializeField] private float moveSpeed = 2f;
 
     private Vector3 startPos;
+    private float timeElapsed;
 
     void Start()
     {
-        // 시작 위치 저장
+        isTurnOn = true;
         startPos = transform.position;
+        timeElapsed = 0f;
     }
 
     void Update()
     {
-        // 사인 함수로 왕복 이동 계산
-        float offset = Mathf.Sin(Time.time * moveSpeed) * moveDistance;
-        transform.position = startPos + new Vector3(offset, 0, 0); // X축으로 왕복
+        if(isTurnOn)
+        {
+            timeElapsed += Time.deltaTime;
+            float offset = Mathf.Sin(timeElapsed * moveSpeed) * moveDistance;
+            transform.position = startPos + new Vector3(offset, 0, 0);
+        }
+    }
+
+    public void Trigger()
+    {
+        isTurnOn = !isTurnOn;
     }
 }

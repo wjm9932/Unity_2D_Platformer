@@ -53,7 +53,7 @@ public class Player : LivingEntity
 
     #region LayerMask
     [Header("Layer")]
-    public LayerMask enemyLayer;
+    public LayerMask targetLayer;
     public LayerMask enemyHeadCollisionBoxLayer;
     public LayerMask whatIsGround;
     #endregion

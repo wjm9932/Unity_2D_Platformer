@@ -22,7 +22,7 @@ public class Combo_2AttackState : AttackState
             FlipPlayer(sm.owner.input.moveInput.x > 0);
         }
 
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(sm.owner.rb.position.x + (sm.owner.transform.right.x * 0.525f), sm.owner.rb.position.y), sm.owner.transform.right, Utility.CalculateDashDistanceByDashForce(dashForce, decelerationFactor) + stopDistance, sm.owner.enemyLayer | sm.owner.whatIsGround);
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(sm.owner.rb.position.x + (sm.owner.transform.right.x * 0.525f), sm.owner.rb.position.y), sm.owner.transform.right, Utility.CalculateDashDistanceByDashForce(dashForce, decelerationFactor) + stopDistance, sm.owner.targetLayer | sm.owner.whatIsGround);
         if (hit.collider != null) 
         {
             dashForce = Utility.CalculateRequiredImpulseForDistance(hit.distance - stopDistance, decelerationFactor);
