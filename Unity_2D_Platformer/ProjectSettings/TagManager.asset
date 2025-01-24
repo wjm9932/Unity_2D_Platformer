@@ -19,7 +19,7 @@ TagManager:
   - TopCollisionBox
   - DamageTrigger
   - Item
-  - 
+  - PushableObject
   - 
   - 
   - 

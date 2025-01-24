@@ -90,6 +90,8 @@ public class Player : LivingEntity
 
     [HideInInspector] public bool isDashing = false;
 
+    public float speedLimit { get; private set; }
+
     protected override void Awake()
     {
         base.Awake();
@@ -104,6 +106,7 @@ public class Player : LivingEntity
     protected override void Start()
     {
         base.Start();
+        speedLimit = 1f;
         heartCount = maxHearts;
         dashCount = maxDashCount;
         currentCheckpointPosition = this.transform.position;
@@ -287,6 +290,11 @@ public class Player : LivingEntity
             return true;
         }
         return false;
+    }
+
+    public void SetSpeedLimit(float limit)
+    {
+        speedLimit = 1f - limit;
     }
 
     #region EDITOR METHODS

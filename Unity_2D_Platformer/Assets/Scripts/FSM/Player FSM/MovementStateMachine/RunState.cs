@@ -111,7 +111,7 @@ public class RunState : IState
 
     private void Run(float lerpAmount)
     {
-        float targetSpeed = sm.owner.input.moveInput.x * sm.owner.movementType.runMaxSpeed;
+        float targetSpeed = sm.owner.input.moveInput.x * sm.owner.movementType.runMaxSpeed * sm.owner.speedLimit;
         targetSpeed = Mathf.Lerp(sm.owner.rb.velocity.x, targetSpeed, lerpAmount);
 
         float accelAmount;
