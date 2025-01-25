@@ -25,6 +25,9 @@ public class Boss : Enemy
 
     private BehaviorTreeBuilder btBuilder;
     private CompositeNode root;
+    public float yPos { get; private set; }
+
+    public Transform[] bossRange { get; private set; }
 
     protected override void Awake()
     {
@@ -40,21 +43,20 @@ public class Boss : Enemy
     {
         base.Start();
         BuildBT();
-
+        yPos = transform.position.y;
         isGraceTime = false;
         trackStopDistance = patrolStopDistance + movementType.trackStopDistance * transform.localScale.x;
-
-        SetPatrolPoints(enemySpawner.wayPoints[0].position.x, enemySpawner.wayPoints[1].position.x, transform.position.y);
+        bossRange = enemySpawner.wayPoints;
     }
 
     void Update()
     {
         if(target != null && isDead == false)
         {
-            bulletDropHandler.TrySpawnProjectile(dropBulletPrefab, new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f));
+            bulletDropHandler.TrySpawnProjectile(dropBulletPrefab, new Vector2(Random.Range(bossRange[0].transform.position.x, bossRange[1].transform.position.x), target.transform.position.y + 10f));
 
             var randItem = Random.Range(0, dropItemPrefabs.Length);
-            itemDropHandler.TrySpawnProjectile(dropItemPrefabs[randItem], new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f));
+            itemDropHandler.TrySpawnProjectile(dropItemPrefabs[randItem], new Vector2(Random.Range(bossRange[0].transform.position.x, bossRange[1].transform.position.x), target.transform.position.y + 10f));
         }
 
         root.Evaluate();
@@ -199,14 +201,6 @@ public class Boss : Enemy
                 .EndComposite()
             .EndComposite()
             .Build();
-    }
-
-    private bool IsTargetOnWayPoints()
-    {
-        float minX = Mathf.Min(patrolPoint_1, patrolPoint_2);
-        float maxX = Mathf.Max(patrolPoint_1, patrolPoint_2);
-
-        return minX <= target.transform.position.x && target.transform.position.x <= maxX;
     }
 
     private bool IsInRange(float distance)

@@ -50,7 +50,6 @@ public class EnemySpawner : MonoBehaviour
             int randEnemyIndex = Random.Range(0, info.Length);
 
             Enemy enemy = Instantiate(info[randEnemyIndex].targetEnemy, spawnPosition, Quaternion.identity).GetComponent<Enemy>();
-            enemy.SetPatrolPoints(_wayPoints[0].position.x, _wayPoints[1].position.x, transform.position.y);
         }
     }
 
@@ -59,7 +58,6 @@ public class EnemySpawner : MonoBehaviour
         Vector2 spawnPosition = GetSpawnPosition();
 
         Enemy enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity).GetComponent<Enemy>();
-        enemy.SetPatrolPoints(_wayPoints[0].position.x, _wayPoints[1].position.x, transform.position.y);
 
         if(dropItem != null)
         {
