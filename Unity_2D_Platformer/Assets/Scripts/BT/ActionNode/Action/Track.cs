@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Track : IAction
@@ -33,7 +32,7 @@ public class Track : IAction
             blackboard.GetData<Enemy>("owner").target = null;
             return NodeState.Failure;
         }
-        if(Mathf.Abs(blackboard.GetData<Enemy>("owner").target.transform.position.x - blackboard.GetData<Enemy>("owner").transform.position.x) <= blackboard.GetData<Enemy>("owner").trackStopDistance)
+        if(Vector2.Distance(owner.transform.position, owner.target.transform.position) <= blackboard.GetData<Enemy>("owner").trackStopDistance)
         {
             return NodeState.Success;
         }
