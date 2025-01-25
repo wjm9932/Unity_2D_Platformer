@@ -37,6 +37,7 @@ public abstract class Enemy : LivingEntity
     #region LayerMask
     [Header("Layer")]
     public LayerMask targetLayer;
+    public LayerMask whatIsGround;
     #endregion
 
     #region Attack Root
