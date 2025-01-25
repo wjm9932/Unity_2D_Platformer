@@ -221,7 +221,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 222626858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 80.98, y: 0.039999522, z: -10}
+  m_LocalPosition: {x: 29.59, y: -4.3800006, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1153,7 +1153,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 80.98, y: 0.039999522, z: -10}
+  m_LocalPosition: {x: 29.589975, y: -4, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2775,7 +2775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3581633233502670676, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: info.Array.size
@@ -2783,7 +2783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: enableStartSpawn
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: enableContinuousSpawn
@@ -2947,6 +2947,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RotatingSaw
       objectReference: {fileID: 0}
+    - target: {fileID: 877942330188921129, guid: e93a2e2c3178e3c40bef7b9e29cc6668, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -6473745079473046481, guid: e93a2e2c3178e3c40bef7b9e29cc6668, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e93a2e2c3178e3c40bef7b9e29cc6668, type: 3}
@@ -3046,7 +3050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2728898524108704117, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2728898524217196244, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: m_Enabled
@@ -3890,11 +3894,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5852806615148106059, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 80.98
+      value: 29.59
       objectReference: {fileID: 0}
     - target: {fileID: 5852806615148106059, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04
+      value: -4.38
       objectReference: {fileID: 0}
     - target: {fileID: 5852806615148106059, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3972,6 +3976,10 @@ PrefabInstance:
     - target: {fileID: 1345937758924298, guid: aea2031baec57684c94b0cb1a902dd8b, type: 3}
       propertyPath: m_Name
       value: Switch
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345937758924298, guid: aea2031baec57684c94b0cb1a902dd8b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4859847151110624, guid: aea2031baec57684c94b0cb1a902dd8b, type: 3}
       propertyPath: m_RootOrder
@@ -4253,6 +4261,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PushableBox (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6112943054285825857, guid: 36b8f89c87341344084042fbca5c9441, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6112943054285825859, guid: 36b8f89c87341344084042fbca5c9441, type: 3}
       propertyPath: m_Mass
       value: 3
@@ -4359,7 +4371,7 @@ GameObject:
   - component: {fileID: 1804894583}
   - component: {fileID: 1804894582}
   - component: {fileID: 1804894587}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: SpikeTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16027,6 +16039,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwingingSaw
       objectReference: {fileID: 0}
+    - target: {fileID: 877942330188921129, guid: 8e5fcd4791d7a8848987ca1c187c11d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e5fcd4791d7a8848987ca1c187c11d8, type: 3}
 --- !u!1001 &3581633234734464318
@@ -16086,7 +16102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3581633233502670676, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3581633233502670677, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: info.Array.size
@@ -16156,6 +16172,10 @@ PrefabInstance:
     - target: {fileID: 9137541137798815537, guid: d82f3d4293241e847be0d3e0a6b5ed5b, type: 3}
       propertyPath: m_Name
       value: Saw (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9137541137798815537, guid: d82f3d4293241e847be0d3e0a6b5ed5b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9137541137798815694, guid: d82f3d4293241e847be0d3e0a6b5ed5b, type: 3}
       propertyPath: m_RootOrder
@@ -16286,6 +16306,10 @@ PrefabInstance:
     - target: {fileID: 6112943054285825857, guid: 36b8f89c87341344084042fbca5c9441, type: 3}
       propertyPath: m_Name
       value: PushableBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112943054285825857, guid: 36b8f89c87341344084042fbca5c9441, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6112943054285825859, guid: 36b8f89c87341344084042fbca5c9441, type: 3}
       propertyPath: m_Material

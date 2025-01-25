@@ -151,7 +151,7 @@ public class Boss : Enemy
                         #region Boss Track Sequence
                         .AddSequence()
                             .AddCondition(() => !IsInRange(20f))
-                            .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddAction(new BossTrack(btBuilder.blackboard), btBuilder.actionManager)
                         .EndComposite()
                         #endregion
                         #region Boss Range Attack Pattern Sequence
@@ -170,7 +170,7 @@ public class Boss : Enemy
                                     .AddCondition(() => !IsInRange(10f))
                                     .AddAction(new ResetNode(), btBuilder.actionManager)
                                 .EndComposite()
-                                 .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
+                                 .AddAction(new BossTrack(btBuilder.blackboard), btBuilder.actionManager)
                             .EndComposite()
                         .EndComposite()
                         #endregion
@@ -178,7 +178,7 @@ public class Boss : Enemy
                         .AddSequence()
                             .AddRandomAttackSelector()
                                 .AddAttackSequence()
-                                    .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
+                                    .AddAction(new BossTrack(btBuilder.blackboard), btBuilder.actionManager)
                                     .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
                                 .EndComposite()
                                 .AddAttackSequence()
@@ -220,7 +220,7 @@ public class Boss : Enemy
 
     private bool IsTargetValid()
     {
-        return target != null && IsTargetOnWayPoints() == true && target.isDead == false;
+        return target != null && target.isDead == false;
     }
     #region EDITOR METHODS
 #if UNITY_EDITOR

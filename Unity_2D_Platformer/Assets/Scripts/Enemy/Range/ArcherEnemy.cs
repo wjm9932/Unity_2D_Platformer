@@ -92,6 +92,9 @@ public class ArcherEnemy : Enemy
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackRoot.position, attackRange);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + patrolStopDistance * transform.right.x, transform.position.y));
     }
 #endif
     #endregion
