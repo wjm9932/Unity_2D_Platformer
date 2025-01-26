@@ -42,7 +42,7 @@ public class Track : IAction
 
     public void ExecuteInFixedUpdate()
     {
-        bool isWallHit = Physics2D.Raycast(owner.transform.position, owner.transform.right, owner.patrolStopDistance , owner.whatIsGround).collider != null;
+        bool isWallHit = Physics2D.Raycast(owner.transform.position, owner.transform.right, owner.patrolStopDistance, owner.whatIsGround).collider != null;
         bool isEdgeMissing = Physics2D.Raycast(new Vector2(owner.transform.position.x + (owner.patrolStopDistance * owner.transform.right.x), owner.transform.position.y), Vector2.down, 3f, owner.whatIsGround).collider == null;
 
         isObstructed = isWallHit || isEdgeMissing; 
