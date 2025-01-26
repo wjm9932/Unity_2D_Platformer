@@ -20,7 +20,6 @@ public class Block : IAction, ICompositionNodeResettable
     public void OnEnter()
     {
         onResetCompositionNode(parentCompositionNodeIndex);
-        blackboard.GetData<Enemy>("owner").healthBar.gameObject.SetActive(true);
 
         ApplyKnockbackForce(blackboard.GetData<Enemy>("owner").movementType.knockbackForce / 5f);
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsBlock", true);
@@ -28,7 +27,10 @@ public class Block : IAction, ICompositionNodeResettable
 
     public NodeState Execute()
     {
-        Flip(blackboard.GetData<Enemy>("owner").transform.position.x < blackboard.GetData<Enemy>("owner").target.transform.position.x);
+        if (blackboard.GetData<Enemy>("owner").target != null)
+        {
+            Flip(blackboard.GetData<Enemy>("owner").transform.position.x < blackboard.GetData<Enemy>("owner").target.transform.position.x);
+        }
 
         if (blackboard.GetData<Enemy>("owner").canBeDamaged == true)
         {
@@ -77,7 +79,7 @@ public class Block : IAction, ICompositionNodeResettable
 
     public void OnAnimationEnterEvent()
     {
-        
+
     }
     public void OnAnimationTransitionEvent()
     {
@@ -85,7 +87,7 @@ public class Block : IAction, ICompositionNodeResettable
     }
     public void OnAnimationExitEvent()
     {
-        
+
     }
 
     private void Flip(bool isMovingRight)

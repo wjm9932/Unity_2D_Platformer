@@ -124,7 +124,13 @@ public abstract class Enemy : LivingEntity
             this.isHardAttack = isHardAttack;
 
             hp -= dmg;
-            target = damager.GetComponent<Player>();
+
+            Player player = damager.GetComponent<Player>();
+
+            if (player != null)
+            {
+                target = damager.GetComponent<Player>();
+            }
 
             if (hp <= 0f)
             {

@@ -57,7 +57,14 @@ public class ShieldSkeleton : Enemy
 
             this.isHardAttack = isHardAttack;
             isBlock = false;
-            target = damager.GetComponent<Player>();
+
+            Player player = damager.GetComponent<Player>();
+
+            if (player != null)
+            {
+                target = damager.GetComponent<Player>();
+            }
+
 
             if (Random.Range(0f, 1f) <= blockChances)
             {

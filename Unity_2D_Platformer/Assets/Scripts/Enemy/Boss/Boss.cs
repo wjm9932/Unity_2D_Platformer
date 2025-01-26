@@ -50,7 +50,7 @@ public class Boss : Enemy
 
     void Update()
     {
-        if(target != null && isDead == false)
+        if (target != null && isDead == false)
         {
             bulletDropHandler.TrySpawnProjectile(dropBulletPrefab, new Vector2(Random.Range(bossRange[0].transform.position.x, bossRange[1].transform.position.x), target.transform.position.y + 10f));
 
@@ -99,7 +99,12 @@ public class Boss : Enemy
             spriteRenderer.color = rageColor;
 
             this.isHardAttack = isHardAttack;
-            target = damager.GetComponent<Player>();
+            Player player = damager.GetComponent<Player>();
+
+            if (player != null)
+            {
+                target = damager.GetComponent<Player>();
+            }
 
             hp -= dmg;
 
@@ -120,13 +125,13 @@ public class Boss : Enemy
 
         root = btBuilder
             .AddSelector()
-                #region Die Sequence
+        #region Die Sequence
                 .AddSequence()
                     .AddCondition(() => isDead == true)
                     .AddAction(new Die(btBuilder.blackboard), btBuilder.actionManager)
                 .EndComposite()
         #endregion
-                #region Hit Sequence
+        #region Hit Sequence
                 .AddAttackSequence()
                     .AddCondition(() => canBeDamaged == false && (isHardAttack == true || btBuilder.blackboard.GetData<bool>("IsCasting") == true))
                     .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
@@ -144,18 +149,18 @@ public class Boss : Enemy
                         .EndComposite()
                     .EndComposite()
                 .EndComposite()
-                #endregion
-                #region Boss Pattern Sequence
+        #endregion
+        #region Boss Pattern Sequence
                 .AddAttackSequence()
                     .AddCondition(() => IsTargetValid())
                     .AddAttackSelector()
-                        #region Boss Track Sequence
+        #region Boss Track Sequence
                         .AddSequence()
                             .AddCondition(() => !IsInRange(20f))
                             .AddAction(new BossTrack(btBuilder.blackboard), btBuilder.actionManager)
                         .EndComposite()
-                        #endregion
-                        #region Boss Range Attack Pattern Sequence
+        #endregion
+        #region Boss Range Attack Pattern Sequence
                         .AddAttackSequence()
                             .AddCondition(() => !IsInRange(10f))
                             .AddRandomAttackSelector()
@@ -174,8 +179,8 @@ public class Boss : Enemy
                                  .AddAction(new BossTrack(btBuilder.blackboard), btBuilder.actionManager)
                             .EndComposite()
                         .EndComposite()
-                        #endregion
-                        #region Boss Close Attack Sequence
+        #endregion
+        #region Boss Close Attack Sequence
                         .AddSequence()
                             .AddRandomAttackSelector()
                                 .AddAttackSequence()
@@ -190,10 +195,10 @@ public class Boss : Enemy
                                 .EndComposite()
                             .EndComposite()
                         .EndComposite()
-                        #endregion
+        #endregion
                     .EndComposite()
                 .EndComposite()
-                #endregion
+        #endregion
                 .AddAttackSequence()
                     .AddAction(new Patrol(btBuilder.blackboard), btBuilder.actionManager)
                     .AddAction(new Idle(btBuilder.blackboard), btBuilder.actionManager)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Translate : MonoBehaviour, ISwitchable
+public class Translate : MonoBehaviour, IInteractable
 {
     public bool isTurnOn { get; private set; }
 

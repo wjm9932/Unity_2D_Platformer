@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Switch : MonoBehaviour
+public class Switch : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject on;
     [SerializeField] private GameObject off;
@@ -23,11 +23,11 @@ public class Switch : MonoBehaviour
 
     private void Update()
     {
-        if(on.activeSelf == true)
+        if (on.activeSelf == true)
         {
             timeElapsed += Time.deltaTime;
 
-            if(timeElapsed >= resetTimer)
+            if (timeElapsed >= resetTimer)
             {
                 Trigger();
                 timeElapsed = 0f;
@@ -35,22 +35,22 @@ public class Switch : MonoBehaviour
         }
     }
 
-    public void TriggerSwitch()
-    {
-        if(Time.time >= lastActiveTime + timeBetActive)
-        {
-            Trigger();
-            lastActiveTime = Time.time;
-        }
-    }
-
-    private void Trigger()
+    private void TriggerSwitch()
     {
         foreach (GameObject target in targets)
         {
-            target.GetComponent<ISwitchable>().Trigger();
+            target.GetComponent<IInteractable>().Trigger();
         }
         ToggleSwitchSprite();
+    }
+
+    public void Trigger()
+    {
+        if (Time.time >= lastActiveTime + timeBetActive)
+        {
+            TriggerSwitch();
+            lastActiveTime = Time.time;
+        }
     }
 
     private void ToggleSwitchSprite()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pendulum : MonoBehaviour, ISwitchable
+public class Pendulum : MonoBehaviour, IInteractable
 {
     [SerializeField] private float swingAngle;
     [SerializeField] private float speed;
