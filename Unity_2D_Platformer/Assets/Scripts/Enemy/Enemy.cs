@@ -63,7 +63,7 @@ public abstract class Enemy : LivingEntity
     protected override void Awake()
     {
         base.Awake();
-        patrolStopDistance = (GetComponent<BoxCollider2D>().size.x / 2f) * transform.localScale.x;
+        patrolStopDistance = (GetComponent<BoxCollider2D>().size.x / 2f) * transform.localScale.x + 0.1f;
         rb = GetComponent<Rigidbody2D>();
     }
 

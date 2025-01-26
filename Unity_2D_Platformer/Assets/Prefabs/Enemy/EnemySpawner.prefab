@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3581633233502670676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.64, y: -12.41, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -49,8 +49,18 @@ MonoBehaviour:
   _wayPoints:
   - {fileID: 3581633235077264486}
   - {fileID: 3581633234267938815}
-  info: []
+  info:
+  - targetEnemy: {fileID: 2728898524108704117, guid: 7bd7ead53e6f7834b97680c391e689d3, type: 3}
+    targetCount: 0
+  - targetEnemy: {fileID: 2728898524108704117, guid: a7c2f45ec5618a645b6dcf3397abcb0b, type: 3}
+    targetCount: 0
+  - targetEnemy: {fileID: 2728898524108704117, guid: d28e3a8703ebbaf43a3d40475ede7d6c, type: 3}
+    targetCount: 0
+  - targetEnemy: {fileID: 2728898524108704117, guid: 79c181a318b251541913f77957f3ed20, type: 3}
+    targetCount: 0
   enableContinuousSpawn: 1
+  enableStartSpawn: 1
+  dropItem: {fileID: 0}
 --- !u!1 &3581633234267938814
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,7 +85,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3581633234267938814}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.18, y: 0.7600002, z: 0}
+  m_LocalPosition: {x: 5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -106,7 +116,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3581633235077264489}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.89, y: 0.7600002, z: 0.052797694}
+  m_LocalPosition: {x: -5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
