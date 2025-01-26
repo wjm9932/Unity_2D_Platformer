@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -7,6 +8,7 @@ public class PushableObject : MonoBehaviour, IPoolableObject
 {
     public IObjectPool<GameObject> pool { get; private set; }
 
+    private Rigidbody2D pushingRigidbody;
     private Rigidbody2D rb;
 
     private void Awake()
@@ -14,6 +16,14 @@ public class PushableObject : MonoBehaviour, IPoolableObject
         rb = GetComponent<Rigidbody2D>();
     }
 
+    private void Update()
+    {
+        if (pushingRigidbody != null)
+        {
+            rb.velocity = new Vector2(pushingRigidbody.velocity.x, rb.velocity.y);
+        }
+    }
+    
     public void SetPool(IObjectPool<GameObject> pool)
     {
         this.pool = pool;
@@ -31,38 +41,33 @@ public class PushableObject : MonoBehaviour, IPoolableObject
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        var player = collision.gameObject.GetComponent<Player>();
+        if (collision.gameObject.GetComponent<Player>() == null && collision.gameObject.GetComponent<PushableObject>() == null) return;
 
-        if (player != null)
-        {
-            foreach (var contact in collision.contacts)
-            {
-                if (Mathf.Abs(contact.normal.y) > 0f)
-                {
-                    rb.velocity = Vector2.zero;
-                    return;
-                }
-            }
+        if (pushingRigidbody != null) return;
 
-            rb.velocity = new Vector2(player.rb.velocity.x, rb.velocity.y);
-            player.SetSpeedLimit(0.4f);
-        }
-        else if (this.gameObject.layer == collision.gameObject.layer)
+        var otherRb = collision.gameObject.GetComponent<Rigidbody2D>();
+        if (otherRb == null) return;
+
+        if (collision.contacts.Any(contact => Mathf.Abs(contact.normal.y) > 0f))
         {
-            rb.velocity = new Vector2(collision.gameObject.GetComponent<Rigidbody2D>().velocity.x, rb.velocity.y);
+            rb.velocity = Vector2.zero;
+            return;
         }
+
+        pushingRigidbody = otherRb;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        rb.velocity = new Vector2(0f, rb.velocity.y);
+        if (collision.gameObject.GetComponent<Player>() == null && collision.gameObject.GetComponent<PushableObject>() == null) return;
 
-        var player = collision.gameObject.GetComponent<Player>();
-        
-        if (player != null)
+        var otherRb = collision.gameObject.GetComponent<Rigidbody2D>();
+        if (otherRb == null) return;
+
+        if (otherRb == pushingRigidbody)
         {
-            player.SetSpeedLimit(0f);
+            pushingRigidbody = null;
+            rb.velocity = new Vector2(0f, rb.velocity.y);
         }
     }
-
 }
