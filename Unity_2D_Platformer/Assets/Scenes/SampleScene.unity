@@ -42327,7 +42327,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -3342780329073911273, guid: d82f3d4293241e847be0d3e0a6b5ed5b, type: 3}
       propertyPath: isTurnOn
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9137541137798815537, guid: d82f3d4293241e847be0d3e0a6b5ed5b, type: 3}
       propertyPath: m_Name
