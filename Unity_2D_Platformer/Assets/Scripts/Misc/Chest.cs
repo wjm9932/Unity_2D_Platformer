@@ -41,7 +41,10 @@ public class Chest : MonoBehaviour, IInteractable
         else
         {
             int randItem = Random.Range(0, items.Length);
-            ObjectPoolManager.Instance.GetPoolableObject(items[randItem], transform.position, Quaternion.identity);
+            if(ObjectPoolManager.Instance.GetPoolableObject(items[randItem], transform.position, items[randItem].transform.rotation) == null)
+            {
+                Instantiate(items[randItem], transform.position, items[randItem].transform.rotation);
+            }
         }
     }
 

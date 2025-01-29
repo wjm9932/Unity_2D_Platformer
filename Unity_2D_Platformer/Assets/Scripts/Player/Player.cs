@@ -42,6 +42,9 @@ public class Player : LivingEntity
         }
     }
 
+    [Header("Key Indicator")]
+    [SerializeField] private IndicatorManager key;
+
     [Header("Movement  Type")]
     public MovementTypeSO movementType;
 
@@ -99,14 +102,17 @@ public class Player : LivingEntity
         input = GetComponent<PlayerInput>();
         movementStateMachine = new PlayerMovementStateMachine(this);
 
-        heartBar.SetStartCount(maxHearts);
-        dash.SetStartCount(maxDashCount);
+        heartBar.SetStartCount(maxHearts, maxHearts);
+        dash.SetStartCount(maxDashCount, maxDashCount);
+        key.SetStartCount(0, 1);
     }
 
     protected override void Start()
     {
         base.Start();
+
         speedLimit = 1f;
+
         heartCount = maxHearts;
         dashCount = maxDashCount;
         currentCheckpointPosition = this.transform.position;
@@ -295,6 +301,15 @@ public class Player : LivingEntity
     public void SetSpeedLimit(float limit)
     {
         speedLimit = 1f - limit;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Key"))
+        {
+            key.UpdateCount(1);
+            Destroy(collision.gameObject);
+        }
     }
 
     #region EDITOR METHODS
