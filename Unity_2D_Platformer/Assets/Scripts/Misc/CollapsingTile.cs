@@ -5,12 +5,14 @@ using System.Collections;
 
 public class CollapsingTile : MonoBehaviour
 {
-    private Tilemap tilemap;
     public float collapseDelay = 0.5f;
     public float respawnDelay = 3f;
 
+    [SerializeField] private bool isRespawnTile = true;
+
     private Dictionary<Vector3Int, TileBase> removedTiles = new Dictionary<Vector3Int, TileBase>();
     private HashSet<Vector3Int> activeTiles = new HashSet<Vector3Int>();
+    private Tilemap tilemap;
 
     private void Awake()
     {
@@ -51,8 +53,11 @@ public class CollapsingTile : MonoBehaviour
             tilemap.SetTile(position, null);
         }
 
-        yield return new WaitForSeconds(respawnDelay);
-        yield return StartCoroutine(RespawnTiles(connectedTiles));
+        if(isRespawnTile == true)
+        {
+            yield return new WaitForSeconds(respawnDelay);
+            yield return StartCoroutine(RespawnTiles(connectedTiles));
+        }
 
         foreach (var position in connectedTiles)
         {
