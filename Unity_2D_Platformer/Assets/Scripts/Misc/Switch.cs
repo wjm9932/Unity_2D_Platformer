@@ -9,6 +9,7 @@ public class Switch : MonoBehaviour, IInteractable
 
     [SerializeField] private GameObject[] targets;
 
+    [SerializeField] private bool resetable = true;
     [SerializeField] private float resetTimer;
 
     private float timeBetActive = 0.5f;
@@ -23,7 +24,7 @@ public class Switch : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        if (on.activeSelf == true)
+        if (on.activeSelf == true && resetable == true)
         {
             timeElapsed += Time.deltaTime;
 

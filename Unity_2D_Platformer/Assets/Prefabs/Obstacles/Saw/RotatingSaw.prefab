@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -3
+  m_SortingOrder: -6
   m_Sprite: {fileID: 21300000, guid: 5663b09055f169c4bac73985b7f2b4c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -157,7 +157,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -3
+  m_SortingOrder: -6
   m_Sprite: {fileID: 21300000, guid: 5663b09055f169c4bac73985b7f2b4c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -178,7 +178,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 877942330188921128}
-  - component: {fileID: -6473745079473046481}
   - component: {fileID: -3785233376990997771}
   m_Layer: 0
   m_Name: RotatingSaw
@@ -203,20 +202,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6473745079473046481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 877942330188921129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a83124c4f0853342898565de48cc140, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  swingAngle: 75
-  speed: 5
 --- !u!114 &-3785233376990997771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,7 +214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe2ff94fa9cec440aa654d945112fd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 10
+  rotationSpeed: 150
+  isTurnOn: 0
 --- !u!1 &877942330193171254
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,7 +262,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4140682559781072628, guid: bca320d7543592543ae3dec6efef5b60, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 4140682559781072629, guid: bca320d7543592543ae3dec6efef5b60, type: 3}
       propertyPath: m_RootOrder

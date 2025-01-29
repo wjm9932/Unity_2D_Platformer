@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Translate : MonoBehaviour, IInteractable
 {
-    public bool isTurnOn { get; private set; }
-
+    [SerializeField] private bool isTurnOn;
     [SerializeField] private float moveDistance = 5f;
     [SerializeField] private float moveSpeed = 2f;
 
@@ -14,7 +13,6 @@ public class Translate : MonoBehaviour, IInteractable
 
     void Start()
     {
-        isTurnOn = true;
         startPos = transform.position;
         timeElapsed = 0f;
     }
@@ -33,4 +31,14 @@ public class Translate : MonoBehaviour, IInteractable
     {
         isTurnOn = !isTurnOn;
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Vector3 leftPoint = transform.position - new Vector3(moveDistance, 0, 0);
+        Vector3 rightPoint = transform.position + new Vector3(moveDistance, 0, 0);
+        Gizmos.DrawLine(leftPoint, rightPoint);
+    }
+#endif
 }

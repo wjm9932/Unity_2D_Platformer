@@ -48,6 +48,11 @@ public class DashState : IState
         {
             sm.ChangeState(sm.runState);
         }
+
+        if(sm.owner.input.moveInput.y < 0)
+        {
+            sm.ChangeState(sm.runState);
+        }
     }
     public void FixedUpdate()
     {

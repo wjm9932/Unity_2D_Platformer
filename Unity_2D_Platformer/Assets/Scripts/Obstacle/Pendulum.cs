@@ -6,13 +6,12 @@ public class Pendulum : MonoBehaviour, IInteractable
 {
     [SerializeField] private float swingAngle;
     [SerializeField] private float speed;
-    public bool isTurnOn { get; private set; }
+    [SerializeField] private bool isTurnOn;
     private float timeElapsed;
 
     private void Start()
     {
         timeElapsed = 0f;
-        isTurnOn = true;
     }
 
     void Update()
