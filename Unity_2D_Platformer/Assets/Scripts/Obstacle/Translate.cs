@@ -15,18 +15,31 @@ public class Translate : MonoBehaviour, IInteractable
     {
         startPos = transform.position;
         timeElapsed = 0f;
+        StartCoroutine(Test());
     }
 
     void Update()
     {
         if(isTurnOn)
         {
-            timeElapsed += Time.deltaTime;
+            //timeElapsed += Time.deltaTime;
+            //float offset = Mathf.Sin(timeElapsed * moveSpeed) * moveDistance;
+            //transform.position = startPos + new Vector3(offset, 0, 0);
+        }
+    }
+    private IEnumerator Test()
+    {
+        YieldInstruction waitForFixedUpdate = new WaitForFixedUpdate();
+
+        while (isTurnOn == true)
+        {
+            yield return waitForFixedUpdate;
+
+            timeElapsed += Time.fixedDeltaTime;
             float offset = Mathf.Sin(timeElapsed * moveSpeed) * moveDistance;
             transform.position = startPos + new Vector3(offset, 0, 0);
         }
     }
-
     public void Trigger()
     {
         isTurnOn = !isTurnOn;

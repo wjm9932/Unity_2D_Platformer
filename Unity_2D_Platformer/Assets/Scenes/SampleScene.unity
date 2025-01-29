@@ -192,22 +192,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 484579376}
     m_Modifications:
-    - target: {fileID: 2383565667788053967, guid: 5a6e198826c265e4c9ff92d367e16bc0, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.725
-      objectReference: {fileID: 0}
-    - target: {fileID: 2383565667788053967, guid: 5a6e198826c265e4c9ff92d367e16bc0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -19.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2383565668330395727, guid: 5a6e198826c265e4c9ff92d367e16bc0, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.725
-      objectReference: {fileID: 0}
-    - target: {fileID: 2383565668330395727, guid: 5a6e198826c265e4c9ff92d367e16bc0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -19.4
-      objectReference: {fileID: 0}
     - target: {fileID: 2383565668876596877, guid: 5a6e198826c265e4c9ff92d367e16bc0, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -256,18 +240,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DungeonBackground (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 2383565668876596878, guid: 5a6e198826c265e4c9ff92d367e16bc0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2383565669183294294, guid: 5a6e198826c265e4c9ff92d367e16bc0, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.725
-      objectReference: {fileID: 0}
-    - target: {fileID: 2383565669183294294, guid: 5a6e198826c265e4c9ff92d367e16bc0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -19.4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a6e198826c265e4c9ff92d367e16bc0, type: 3}
 --- !u!1001 &72432423
@@ -284,6 +256,14 @@ PrefabInstance:
     - target: {fileID: 2383565667788053967, guid: 5a6e198826c265e4c9ff92d367e16bc0, type: 3}
       propertyPath: m_LocalPosition.y
       value: -19.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2383565668330395726, guid: 5a6e198826c265e4c9ff92d367e16bc0, type: 3}
+      propertyPath: m_SortingLayer
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2383565668330395726, guid: 5a6e198826c265e4c9ff92d367e16bc0, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 692568537
       objectReference: {fileID: 0}
     - target: {fileID: 2383565668330395727, guid: 5a6e198826c265e4c9ff92d367e16bc0, type: 3}
       propertyPath: m_LocalScale.y
@@ -30099,8 +30079,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 692568537
+  m_SortingLayer: -1
   m_SortingOrder: -6
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -40769,6 +40749,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerUsingFSM
       objectReference: {fileID: 0}
+    - target: {fileID: 5852806615148106100, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
 --- !u!4 &1528177558 stripped
@@ -42343,7 +42327,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -3342780329073911273, guid: d82f3d4293241e847be0d3e0a6b5ed5b, type: 3}
       propertyPath: isTurnOn
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9137541137798815537, guid: d82f3d4293241e847be0d3e0a6b5ed5b, type: 3}
       propertyPath: m_Name
