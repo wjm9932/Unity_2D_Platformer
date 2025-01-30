@@ -95,6 +95,8 @@ public class Player : LivingEntity
 
     public float speedLimit { get; private set; }
 
+    public Vector2 platformVelocity;
+
     protected override void Awake()
     {
         base.Awake();

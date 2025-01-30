@@ -111,7 +111,7 @@ public class RunState : IState
 
     private void Run(float lerpAmount)
     {
-        float targetSpeed = sm.owner.input.moveInput.x * sm.owner.movementType.runMaxSpeed * sm.owner.speedLimit;
+        float targetSpeed = sm.owner.input.moveInput.x * sm.owner.movementType.runMaxSpeed;
         targetSpeed = Mathf.Lerp(sm.owner.rb.velocity.x, targetSpeed, lerpAmount);
 
         float accelAmount;
@@ -132,9 +132,15 @@ public class RunState : IState
             targetSpeed *= sm.owner.movementType.jumpHangMaxSpeedMult;
         }
 
+        if(Mathf.Abs(targetSpeed) < 0.01f && Mathf.Abs(sm.owner.platformVelocity.x) > 0.01f)
+        {
+            accelAmount = 50f;
+        }
+
+        targetSpeed += sm.owner.platformVelocity.x;
+
         float speedDif = targetSpeed - sm.owner.rb.velocity.x;
         float movement = speedDif * accelAmount;
-
         sm.owner.rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
     }
 }
