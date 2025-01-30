@@ -32,7 +32,7 @@ public class RunState : IState
             FlipPlayer(sm.owner.input.moveInput.x > 0);
         }
 
-        if(sm.owner.input.isAttack == true)
+        if (sm.owner.input.isAttack == true)
         {
             attackBufferTime = sm.owner.movementType.attackBufferTime;
         }
@@ -42,19 +42,19 @@ public class RunState : IState
             sm.owner.lastPressJumpTime = sm.owner.movementType.jumpInputBufferTime;
         }
 
-        if(sm.owner.input.isDash == true)
+        if (sm.owner.input.isDash == true)
         {
 
             dashBufferTime = sm.owner.movementType.dashInputBufferTime;
         }
 
-        if(attackBufferTime > 0f && sm.jsm.currentState == sm.jsm.idleState)
+        if (attackBufferTime > 0f && sm.jsm.currentState == sm.jsm.idleState)
         {
             attackBufferTime = 0f;
             sm.ChangeState(sm.combo_1AttackState);
         }
 
-        if(dashBufferTime > 0f && sm.jsm.currentState != sm.jsm.slideState)
+        if (dashBufferTime > 0f && sm.jsm.currentState != sm.jsm.slideState)
         {
             dashBufferTime = 0f;
             sm.ChangeState(sm.dashState);
@@ -62,14 +62,15 @@ public class RunState : IState
     }
     public void FixedUpdate()
     {
-        if(sm.currentState != this)
+        if (sm.currentState != this)
         {
             return;
         }
 
+        Run(1f);
+
         if (sm.jsm.currentState != sm.jsm.slideState)
         {
-            Run(1f);
         }
     }
     public void LateUpdate()
@@ -132,7 +133,7 @@ public class RunState : IState
             targetSpeed *= sm.owner.movementType.jumpHangMaxSpeedMult;
         }
 
-        if(Mathf.Abs(targetSpeed) < 0.01f && Mathf.Abs(sm.owner.platformVelocity.x) > 0.01f)
+        if (Mathf.Abs(targetSpeed) < 0.01f && Mathf.Abs(sm.owner.platformVelocity.x) > 0.01f)
         {
             accelAmount = 50f;
         }

@@ -14,7 +14,7 @@ public class PlayerInput : MonoBehaviour
     public bool isDashCut { get; private set; }
     void Start()
     {
-        
+        Application.targetFrameRate = 144;
     }
 
     // Update is called once per frame
