@@ -144,7 +144,7 @@ public class Player : LivingEntity
                 lastOnGroundTime = movementType.coyoteTime;
             }
 
-            if (Physics2D.OverlapBox(wallCollisionChecker.position, wallCollisionCheckerSize, 0, whatIsGround))
+            if (Physics2D.OverlapBox(wallCollisionChecker.position, wallCollisionCheckerSize, 0, whatIsGround) == true)
             {
                 lastOnWallTime = movementType.wallJumpCoyoteTime;
                 facingDir = transform.localRotation.y < 0 ? -1f : 1f;
@@ -168,7 +168,6 @@ public class Player : LivingEntity
             }
         }
         #endregion
-
         movementStateMachine.Update();
         movementStateMachine.jsm.Update();
     }

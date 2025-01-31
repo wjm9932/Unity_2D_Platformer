@@ -133,7 +133,7 @@ public class RunState : IState
             targetSpeed *= sm.owner.movementType.jumpHangMaxSpeedMult;
         }
 
-        if (Mathf.Abs(targetSpeed) < 0.01f && Mathf.Abs(sm.owner.platformVelocity.x) > 0.01f)
+        if (Mathf.Abs(sm.owner.platformVelocity.x) > 0.01f && (Mathf.Abs(targetSpeed) < 0.01f || sm.jsm.currentState == sm.jsm.slideState))
         {
             accelAmount = 50f;
         }

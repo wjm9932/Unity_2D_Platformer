@@ -23,7 +23,7 @@ TagManager:
   - PushableObject
   - Interactable
   - Door
-  - 
+  - MovingPlatform
   - 
   - 
   - 

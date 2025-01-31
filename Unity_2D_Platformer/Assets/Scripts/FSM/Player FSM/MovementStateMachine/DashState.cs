@@ -37,7 +37,6 @@ public class DashState : IState
         }
 
         ApplyDashForce(dashForce);
-
         sm.owner.dashCount--;
         sm.owner.animHandler.animator.SetBool("IsDash", true);
     }
@@ -47,11 +46,17 @@ public class DashState : IState
         if (Mathf.Abs(sm.owner.rb.velocity.x) < 5f)
         {
             sm.ChangeState(sm.runState);
+            return;
         }
-
+        if(Mathf.Sign(sm.owner.rb.velocity.x) != Mathf.Sign(sm.owner.transform.right.x))
+        {
+            sm.ChangeState(sm.runState);
+            return;
+        }
         if(sm.owner.input.moveInput.y < 0)
         {
             sm.ChangeState(sm.runState);
+            return;
         }
     }
     public void FixedUpdate()

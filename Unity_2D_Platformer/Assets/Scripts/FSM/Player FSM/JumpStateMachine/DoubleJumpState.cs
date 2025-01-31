@@ -21,7 +21,7 @@ public class DoubleJumpState : IState, IGravityModifier
     }
     public void Update()
     {
-        if (sm.owner.rb.velocity.y < 0f)
+        if (sm.owner.rb.velocity.y <= 0f)
         {
             sm.ChangeState(sm.doubleJumpFallingState);
             return;

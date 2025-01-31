@@ -37,9 +37,9 @@ MonoBehaviour:
   doubleJumpForce: {x: 23, y: 23}
   bounceHeight: 3
   bounceForce: 25.81989
-  slideSpeed: 0
-  slideAccel: 0
-  slideAccelAmount: 50
+  slideSpeed: -3
+  slideAccel: 1
+  slideAccelAmount: 16.666668
   coyoteTime: 0.1
   jumpInputBufferTime: 0.1
   wallJumpCoyoteTime: 0.2

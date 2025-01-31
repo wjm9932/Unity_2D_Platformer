@@ -20,7 +20,7 @@ public class MoveTile : MonoBehaviour
         timeElapsed = 0f;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         timeElapsed += Time.deltaTime;
         float offset = Mathf.Sin(timeElapsed * moveSpeed) * moveDistance;
