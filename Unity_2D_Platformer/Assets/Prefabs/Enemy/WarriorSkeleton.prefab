@@ -306,7 +306,7 @@ MonoBehaviour:
     m_Bits: 64
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 20488
+    m_Bits: 86024
   attackRoot: {fileID: 7283769443258909757}
   attackRange: 1.5
   dropItem:

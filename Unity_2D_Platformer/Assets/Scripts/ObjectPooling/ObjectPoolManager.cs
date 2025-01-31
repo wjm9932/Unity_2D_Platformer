@@ -27,8 +27,9 @@ public class ObjectPoolManager : MonoBehaviour
         else
             Destroy(this.gameObject);
 
+        DontDestroyOnLoad(this.gameObject);
+        
         InitializeObjectPool();
-
     }
     private void InitializeObjectPool()
     {
