@@ -53,7 +53,7 @@ public class CollapsingTile : MonoBehaviour
             tilemap.SetTile(position, null);
         }
 
-        if(isRespawnTile == true)
+        if (isRespawnTile == true)
         {
             yield return new WaitForSeconds(respawnDelay);
             yield return StartCoroutine(RespawnTiles(connectedTiles));
@@ -103,7 +103,7 @@ public class CollapsingTile : MonoBehaviour
         {
             if (activeTiles.Contains(position))
             {
-                return true; 
+                return true;
             }
         }
         return false;
@@ -141,7 +141,7 @@ public class CollapsingTile : MonoBehaviour
             {
                 tilemap.SetTile(position, tile);
                 tilemap.SetTileFlags(position, TileFlags.None);
-                tilemap.SetColor(position, new Color(1f, 1f, 1f, 0f)); 
+                tilemap.SetColor(position, new Color(1f, 1f, 1f, 0f));
                 removedTiles.Remove(position);
             }
         }

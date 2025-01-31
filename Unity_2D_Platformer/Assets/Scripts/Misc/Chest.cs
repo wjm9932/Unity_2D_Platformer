@@ -36,7 +36,8 @@ public class Chest : MonoBehaviour, IInteractable
 
         if (enemySpawner != null && Random.Range(0f, 1f) <= enemySpawnChance)
         {
-            enemySpawner.GetComponent<EnemySpawner>().SpawnRandomEnemy(3);
+            //enemySpawner.GetComponent<EnemySpawner>().SpawnRandomEnemy(3);
+            enemySpawner.GetComponent<EnemySpawner>().SpawnEnemy();
         }
         else
         {

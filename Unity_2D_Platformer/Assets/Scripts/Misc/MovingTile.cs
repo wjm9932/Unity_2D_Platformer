@@ -12,6 +12,7 @@ public class MovingTile : MonoBehaviour
     private Rigidbody2D rb;
     private Player player;
 
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -32,7 +33,6 @@ public class MovingTile : MonoBehaviour
         Vector3 newPosition = startPos + new Vector3(offset, 0, 0);
 
         rb.MovePosition(newPosition);
-
 
         Vector2 platformVelocity = (newPosition - prevPosition) / Time.fixedDeltaTime;
 
