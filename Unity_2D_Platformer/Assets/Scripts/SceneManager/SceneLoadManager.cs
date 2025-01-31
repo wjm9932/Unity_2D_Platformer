@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
-using System.IO;
 
 public class SceneLoadManager : MonoBehaviour
 {
@@ -44,6 +42,15 @@ public class SceneLoadManager : MonoBehaviour
         StartCoroutine(LoadSceneCoroutine(scene));
     }
 
+    public void LoadNextScene(Action action)
+    {
+        gameObject.SetActive(true);
+        loadAtcion = action;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        StartCoroutine(LoadSceneCoroutine(nextSceneIndex));
+    }
 
     private IEnumerator LoadSceneCoroutine(string sceneName)
     {
@@ -80,9 +87,44 @@ public class SceneLoadManager : MonoBehaviour
 
     }
 
+    private IEnumerator LoadSceneCoroutine(int sceneIndex)
+    {
+        loadingBar.fillAmount = 0f;
+        yield return StartCoroutine(FadeInAndOut(true));
+
+        AsyncOperation op = SceneManager.LoadSceneAsync(sceneIndex);
+
+        op.allowSceneActivation = false;
+
+        float process = 0.0f;
+
+        while (!op.isDone)
+        {
+            yield return null;
+
+            if (op.progress < 0.9f)
+            {
+                loadingBar.fillAmount = op.progress;
+            }
+            else
+            {
+                process += Time.deltaTime * 2.0f;
+                loadingBar.fillAmount = Mathf.Lerp(0.9f, 1.0f, process);
+
+                if (process > 1.0f)
+                {
+                    op.allowSceneActivation = true;
+                    StartCoroutine(FadeInAndOut(false));
+                    yield break;
+                }
+            }
+        }
+
+    }
+
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        if (arg0.name == "GameScene")
+        if (arg0.buildIndex != 0)
         {
             StartCoroutine(LateStart());
             SceneManager.sceneLoaded -= OnSceneLoaded;
