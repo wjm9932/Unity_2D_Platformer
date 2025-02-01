@@ -184,7 +184,6 @@ public class Player : LivingEntity
         movementStateMachine.jsm.LateUpdate();
 
         animHandler.animator.SetBool("IsRun", input.moveInput.x != 0);
-        animHandler.animator.SetFloat("VelocityY", rb.velocity.y);
     }
 
     public override void OnAnimationEnterEvent()

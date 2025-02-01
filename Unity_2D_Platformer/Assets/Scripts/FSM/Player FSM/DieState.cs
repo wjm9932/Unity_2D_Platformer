@@ -12,6 +12,7 @@ public class DieState : IState
     public void Enter()
     {
         sm.owner.rb.velocity = Vector2.zero;
+        sm.jsm.ChangeState(sm.jsm.idleState);
         sm.owner.animHandler.animator.SetBool("IsDie", true);
     }
     public void Update()

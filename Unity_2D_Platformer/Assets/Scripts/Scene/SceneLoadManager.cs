@@ -10,7 +10,7 @@ public class SceneLoadManager : MonoBehaviour
     public static SceneLoadManager Instance;
 
     [SerializeField] private Image background;
-    [SerializeField] private Image loadingBar;
+    [SerializeField] private Slider loadingBar;
     [SerializeField] private GameObject loadingScene;
 
     private Action? loadAtcion;
@@ -33,13 +33,13 @@ public class SceneLoadManager : MonoBehaviour
         StartCoroutine(LoadSceneCoroutine("MainMenu"));
     }
 
-    public void LoadScene(string scene, Action action)
+    public void LoadScene(int sceneIndex, Action action)
     {
         gameObject.SetActive(true);
         loadAtcion = action;
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        StartCoroutine(LoadSceneCoroutine(scene));
+        StartCoroutine(LoadSceneCoroutine(sceneIndex));
     }
 
     public void LoadNextScene(Action action)
@@ -54,7 +54,7 @@ public class SceneLoadManager : MonoBehaviour
 
     private IEnumerator LoadSceneCoroutine(string sceneName)
     {
-        loadingBar.fillAmount = 0f;
+        loadingBar.value = 0f;
         yield return StartCoroutine(FadeInAndOut(true));
 
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
@@ -69,12 +69,12 @@ public class SceneLoadManager : MonoBehaviour
 
             if (op.progress < 0.9f)
             {
-                loadingBar.fillAmount = op.progress;
+                loadingBar.value = op.progress;
             }
             else
             {
                 process += Time.deltaTime * 2.0f;
-                loadingBar.fillAmount = Mathf.Lerp(0.9f, 1.0f, process);
+                loadingBar.value = Mathf.Lerp(0.9f, 1.0f, process);
 
                 if (process > 1.0f)
                 {
@@ -89,7 +89,7 @@ public class SceneLoadManager : MonoBehaviour
 
     private IEnumerator LoadSceneCoroutine(int sceneIndex)
     {
-        loadingBar.fillAmount = 0f;
+        loadingBar.value = 0f;
         yield return StartCoroutine(FadeInAndOut(true));
 
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneIndex);
@@ -104,12 +104,12 @@ public class SceneLoadManager : MonoBehaviour
 
             if (op.progress < 0.9f)
             {
-                loadingBar.fillAmount = op.progress;
+                loadingBar.value = op.progress;
             }
             else
             {
                 process += Time.deltaTime * 2.0f;
-                loadingBar.fillAmount = Mathf.Lerp(0.9f, 1.0f, process);
+                loadingBar.value = Mathf.Lerp(0.9f, 1.0f, process);
 
                 if (process > 1.0f)
                 {
@@ -124,7 +124,7 @@ public class SceneLoadManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        if (arg0.buildIndex != 0)
+        if (arg0.buildIndex > 1)
         {
             StartCoroutine(LateStart());
             SceneManager.sceneLoaded -= OnSceneLoaded;
