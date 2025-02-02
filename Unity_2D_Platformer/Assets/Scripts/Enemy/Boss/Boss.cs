@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss : Enemy
+public class Boss : Enemy, ITargetHandler
 {
     [Space(20)]
     [Header("Boss Components")]
@@ -220,6 +220,12 @@ public class Boss : Enemy
     {
         return target != null && target.isDead == false;
     }
+
+    public void SetTarget(Player target)
+    {
+        this.target = target;
+    }
+
     #region EDITOR METHODS
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()

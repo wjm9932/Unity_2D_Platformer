@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chasing : MonoBehaviour
+public class Chasing : MonoBehaviour, ITargetHandler
 {
     private CircleCollider2D circleCollider;
-    private Player player;
+    public Player player { get; private set; }
 
     private float radius;
     private float minY;
@@ -14,6 +14,7 @@ public class Chasing : MonoBehaviour
     private float maxVelocity = 10f;
     public float currentVelocity { get; private set; } = 8.5f; 
     private float velocityLerpSpeed = 2f;
+
 
     private void Awake()
     {
@@ -28,12 +29,11 @@ public class Chasing : MonoBehaviour
 
     void Start()
     {
-        player = FindObjectOfType<Player>();
     }
 
     void Update()
     {
-        if (player == null) return;
+        if (player == null || player.isDead == true) return;
 
         float distance = Vector2.Distance(transform.position, player.transform.position);
 
@@ -59,5 +59,10 @@ public class Chasing : MonoBehaviour
         {
             collision.GetComponent<Player>().KillInstant();
         }
+    }
+
+    public void SetTarget(Player target)
+    {
+        player = target;
     }
 }
