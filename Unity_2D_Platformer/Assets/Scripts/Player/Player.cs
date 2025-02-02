@@ -83,6 +83,8 @@ public class Player : LivingEntity
     [HideInInspector] public float lastOnGroundTime;
     [HideInInspector] public float lastPressJumpTime;
     [HideInInspector] public float lastOnWallTime;
+    [HideInInspector] public float lastPressDashTime;
+    [HideInInspector] public float lastPressAttackTime;
     #endregion
 
     public Rigidbody2D rb { get; private set; }
@@ -134,7 +136,19 @@ public class Player : LivingEntity
         lastOnGroundTime -= Time.deltaTime;
         lastOnWallTime -= Time.deltaTime;
         lastPressJumpTime -= Time.deltaTime;
+        lastPressDashTime -= Time.deltaTime;
+        lastPressAttackTime -= Time.deltaTime;
         #endregion
+
+
+        if (input.isAttack == true)
+        {
+            lastPressAttackTime = movementType.attackBufferTime;
+        }
+        if (input.isDash == true)
+        {
+            lastPressDashTime = movementType.dashInputBufferTime;
+        }
 
         #region Collision Check
         if (movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpState && movementStateMachine.jsm.currentState != movementStateMachine.jsm.wallJumpState)

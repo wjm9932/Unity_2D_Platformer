@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Chasing : MonoBehaviour, ITargetHandler
 {
+    [SerializeField] private PolygonCollider2D mapCollider;
+
     private CircleCollider2D circleCollider;
     public Player player { get; private set; }
 
@@ -12,7 +14,7 @@ public class Chasing : MonoBehaviour, ITargetHandler
     private float maxY;
     private float minVelocity = 8.5f;
     private float maxVelocity = 10f;
-    public float currentVelocity { get; private set; } = 8.5f; 
+    public float currentVelocity { get; private set; } = 8.5f;
     private float velocityLerpSpeed = 2f;
 
 
@@ -20,11 +22,14 @@ public class Chasing : MonoBehaviour, ITargetHandler
     {
         circleCollider = GetComponent<CircleCollider2D>();
         radius = circleCollider.radius * transform.localScale.x;
+        minY = mapCollider.points[0].y;
+        maxY = mapCollider.points[0].y;
 
-        Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0));
-        Vector3 topRight = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0));
-        minY = bottomLeft.y;
-        maxY = topRight.y;
+        foreach (Vector2 point in mapCollider.points)
+        {
+            if (point.y < minY) minY = point.y;
+            if (point.y > maxY) maxY = point.y;
+        }
     }
 
     void Start()
@@ -46,7 +51,7 @@ public class Chasing : MonoBehaviour, ITargetHandler
 
         float playerY = player.transform.position.y;
         float currentY = transform.position.y;
-        float targetY = Mathf.Lerp(currentY, playerY, 1.5f * Time.deltaTime);
+        float targetY = Mathf.Lerp(currentY, playerY, 2.5f * Time.deltaTime);
 
         targetY = Mathf.Clamp(targetY, minY + radius, maxY - radius);
 
@@ -55,7 +60,7 @@ public class Chasing : MonoBehaviour, ITargetHandler
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.GetComponent<Player>() != null)
+        if (collision.GetComponent<Player>() != null)
         {
             collision.GetComponent<Player>().KillInstant();
         }

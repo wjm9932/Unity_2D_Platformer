@@ -34,7 +34,7 @@ public class ChasingEnemy : MonoBehaviour
 
         root = btBuilder
             .AddSelector()
-                .AddSequence()
+                .AddAttackSequence()
                     .AddCondition(() => chasing.player != null && chasing.player.isDead == false)
                     .AddAttackSequence()
                         .AddAction(new Wait(2f), btBuilder.actionManager)

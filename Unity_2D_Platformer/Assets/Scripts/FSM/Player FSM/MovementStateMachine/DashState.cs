@@ -15,7 +15,9 @@ public class DashState : IState
     }
     public void Enter()
     {
-        if(sm.owner.dashCount <= 0)
+        sm.owner.lastPressDashTime = 0f;
+
+        if (sm.owner.dashCount <= 0)
         {
             sm.ChangeState(sm.runState);
             return;
@@ -35,7 +37,6 @@ public class DashState : IState
 
             dashForce = CalculateRequiredImpulseForDistance(hit.distance);
         }
-
         ApplyDashForce(dashForce);
         sm.owner.dashCount--;
         sm.owner.animHandler.animator.SetBool("IsDash", true);
@@ -55,13 +56,14 @@ public class DashState : IState
         }
         if(sm.owner.input.moveInput.y < 0)
         {
+            DeaccelPlayerVelocity(0.6f);
             sm.ChangeState(sm.runState);
             return;
         }
     }
     public void FixedUpdate()
     {
-        DeaccelPlayerVelocity();
+        DeaccelPlayerVelocity(decelerationFactor);
     }
     public void LateUpdate()
     {
@@ -86,6 +88,8 @@ public class DashState : IState
 
     private void ApplyDashForce(float force)
     {
+        sm.owner.SetGravityScale(0f);
+        
         Vector2 finalForce = new Vector2(force, 0f);
         finalForce.x *= sm.owner.transform.right.x;
 
@@ -100,7 +104,7 @@ public class DashState : IState
         }
         sm.owner.rb.AddForce(finalForce, ForceMode2D.Impulse);
     }
-    private void DeaccelPlayerVelocity()
+    private void DeaccelPlayerVelocity(float decelerationFactor)
     {
         float speedDiff = 0f - sm.owner.rb.velocity.x;
         float movement = speedDiff * ((1 / Time.fixedDeltaTime) * decelerationFactor);

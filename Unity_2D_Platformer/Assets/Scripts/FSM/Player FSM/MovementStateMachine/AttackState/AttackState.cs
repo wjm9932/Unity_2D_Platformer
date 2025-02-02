@@ -19,6 +19,7 @@ public abstract class AttackState : IState
     {
         canAttack = false;
         canComboAttack = false;
+        sm.owner.lastPressAttackTime = 0f;
     }
     public virtual void Update()
     {

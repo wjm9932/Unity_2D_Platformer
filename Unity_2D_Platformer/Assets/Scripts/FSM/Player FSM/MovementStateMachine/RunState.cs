@@ -8,8 +8,6 @@ public class RunState : IState
     private bool isFacingRight;
 
     #region Buffer Time
-    private float attackBufferTime;
-    private float dashBufferTime;
     #endregion
 
     public RunState(PlayerMovementStateMachine playerMovementStateMachine)
@@ -18,23 +16,14 @@ public class RunState : IState
     }
     public void Enter()
     {
-        attackBufferTime = 0f;
         isFacingRight = sm.owner.transform.localRotation.y >= 0f;
     }
 
     public void Update()
     {
-        attackBufferTime -= Time.deltaTime;
-        dashBufferTime -= Time.deltaTime;
-
         if (sm.owner.input.moveInput.x != 0)
         {
             FlipPlayer(sm.owner.input.moveInput.x > 0);
-        }
-
-        if (sm.owner.input.isAttack == true)
-        {
-            attackBufferTime = sm.owner.movementType.attackBufferTime;
         }
 
         if (sm.owner.input.isJump == true)
@@ -42,21 +31,13 @@ public class RunState : IState
             sm.owner.lastPressJumpTime = sm.owner.movementType.jumpInputBufferTime;
         }
 
-        if (sm.owner.input.isDash == true)
+        if (sm.owner.lastPressAttackTime > 0f && sm.jsm.currentState == sm.jsm.idleState)
         {
-
-            dashBufferTime = sm.owner.movementType.dashInputBufferTime;
-        }
-
-        if (attackBufferTime > 0f && sm.jsm.currentState == sm.jsm.idleState)
-        {
-            attackBufferTime = 0f;
             sm.ChangeState(sm.combo_1AttackState);
         }
 
-        if (dashBufferTime > 0f && sm.jsm.currentState != sm.jsm.slideState)
+        if (sm.owner.lastPressDashTime > 0f && sm.jsm.currentState != sm.jsm.slideState)
         {
-            dashBufferTime = 0f;
             sm.ChangeState(sm.dashState);
         }
     }
