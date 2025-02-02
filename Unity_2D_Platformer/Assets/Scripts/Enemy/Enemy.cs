@@ -37,6 +37,7 @@ public abstract class Enemy : LivingEntity
     #region LayerMask
     [Header("Layer")]
     public LayerMask targetLayer;
+    public LayerMask whatIsGround;
     #endregion
 
     #region Attack Root
@@ -52,9 +53,6 @@ public abstract class Enemy : LivingEntity
     #endregion
 
     public Player target { get; set; }
-    public float patrolPoint_1 { get; private set; }
-    public float patrolPoint_2 { get; private set; }
-    public float yPos { get; private set; }
 
     public Rigidbody2D rb { get; private set; }
     public float patrolStopDistance { get; private set; }
@@ -65,7 +63,7 @@ public abstract class Enemy : LivingEntity
     protected override void Awake()
     {
         base.Awake();
-        patrolStopDistance = (GetComponent<BoxCollider2D>().size.x / 2f) * transform.localScale.x;
+        patrolStopDistance = (GetComponent<BoxCollider2D>().size.x / 2f) * transform.localScale.x + 0.1f;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -106,12 +104,6 @@ public abstract class Enemy : LivingEntity
         Destroy(gameObject);
     }
 
-    public void SetPatrolPoints(float x1, float x2, float y)
-    {
-        patrolPoint_1 = x1;
-        patrolPoint_2 = x2;
-        yPos = y;
-    }
     public override void KillInstant()
     {
         hp = 0;
@@ -132,7 +124,13 @@ public abstract class Enemy : LivingEntity
             this.isHardAttack = isHardAttack;
 
             hp -= dmg;
-            target = damager.GetComponent<Player>();
+
+            Player player = damager.GetComponent<Player>();
+
+            if (player != null)
+            {
+                target = damager.GetComponent<Player>();
+            }
 
             if (hp <= 0f)
             {

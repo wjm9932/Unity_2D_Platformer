@@ -42,6 +42,9 @@ public class Player : LivingEntity
         }
     }
 
+    [Header("Key Indicator")]
+    [SerializeField] private IndicatorManager key;
+
     [Header("Movement  Type")]
     public MovementTypeSO movementType;
 
@@ -92,6 +95,8 @@ public class Player : LivingEntity
 
     public float speedLimit { get; private set; }
 
+    public Vector2 platformVelocity;
+
     protected override void Awake()
     {
         base.Awake();
@@ -99,14 +104,17 @@ public class Player : LivingEntity
         input = GetComponent<PlayerInput>();
         movementStateMachine = new PlayerMovementStateMachine(this);
 
-        heartBar.SetStartCount(maxHearts);
-        dash.SetStartCount(maxDashCount);
+        heartBar.SetStartCount(maxHearts, maxHearts);
+        dash.SetStartCount(maxDashCount, maxDashCount);
+        key.SetStartCount(0, 1);
     }
 
     protected override void Start()
     {
         base.Start();
+
         speedLimit = 1f;
+
         heartCount = maxHearts;
         dashCount = maxDashCount;
         currentCheckpointPosition = this.transform.position;
@@ -136,7 +144,7 @@ public class Player : LivingEntity
                 lastOnGroundTime = movementType.coyoteTime;
             }
 
-            if (Physics2D.OverlapBox(wallCollisionChecker.position, wallCollisionCheckerSize, 0, whatIsGround))
+            if (Physics2D.OverlapBox(wallCollisionChecker.position, wallCollisionCheckerSize, 0, whatIsGround) == true)
             {
                 lastOnWallTime = movementType.wallJumpCoyoteTime;
                 facingDir = transform.localRotation.y < 0 ? -1f : 1f;
@@ -160,7 +168,6 @@ public class Player : LivingEntity
             }
         }
         #endregion
-
         movementStateMachine.Update();
         movementStateMachine.jsm.Update();
     }
@@ -177,7 +184,6 @@ public class Player : LivingEntity
         movementStateMachine.jsm.LateUpdate();
 
         animHandler.animator.SetBool("IsRun", input.moveInput.x != 0);
-        animHandler.animator.SetFloat("VelocityY", rb.velocity.y);
     }
 
     public override void OnAnimationEnterEvent()
@@ -295,6 +301,15 @@ public class Player : LivingEntity
     public void SetSpeedLimit(float limit)
     {
         speedLimit = 1f - limit;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Key"))
+        {
+            key.UpdateCount(1);
+            Destroy(collision.gameObject);
+        }
     }
 
     #region EDITOR METHODS

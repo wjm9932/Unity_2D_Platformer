@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Boss : Enemy
@@ -25,6 +24,9 @@ public class Boss : Enemy
 
     private BehaviorTreeBuilder btBuilder;
     private CompositeNode root;
+    public float yPos { get; private set; }
+
+    public Transform[] bossRange { get; private set; }
 
     protected override void Awake()
     {
@@ -40,21 +42,20 @@ public class Boss : Enemy
     {
         base.Start();
         BuildBT();
-
+        yPos = transform.position.y;
         isGraceTime = false;
         trackStopDistance = patrolStopDistance + movementType.trackStopDistance * transform.localScale.x;
-
-        SetPatrolPoints(enemySpawner.wayPoints[0].position.x, enemySpawner.wayPoints[1].position.x, transform.position.y);
+        bossRange = enemySpawner.wayPoints;
     }
 
     void Update()
     {
-        if(target != null && isDead == false)
+        if (target != null && isDead == false)
         {
-            bulletDropHandler.TrySpawnProjectile(dropBulletPrefab, new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f));
+            bulletDropHandler.TrySpawnProjectile(dropBulletPrefab, new Vector2(Random.Range(bossRange[0].transform.position.x, bossRange[1].transform.position.x), target.transform.position.y + 10f));
 
             var randItem = Random.Range(0, dropItemPrefabs.Length);
-            itemDropHandler.TrySpawnProjectile(dropItemPrefabs[randItem], new Vector2(Random.Range(patrolPoint_1, patrolPoint_2), target.transform.position.y + 10f));
+            itemDropHandler.TrySpawnProjectile(dropItemPrefabs[randItem], new Vector2(Random.Range(bossRange[0].transform.position.x, bossRange[1].transform.position.x), target.transform.position.y + 10f));
         }
 
         root.Evaluate();
@@ -98,7 +99,12 @@ public class Boss : Enemy
             spriteRenderer.color = rageColor;
 
             this.isHardAttack = isHardAttack;
-            target = damager.GetComponent<Player>();
+            Player player = damager.GetComponent<Player>();
+
+            if (player != null)
+            {
+                target = damager.GetComponent<Player>();
+            }
 
             hp -= dmg;
 
@@ -119,13 +125,13 @@ public class Boss : Enemy
 
         root = btBuilder
             .AddSelector()
-                #region Die Sequence
+        #region Die Sequence
                 .AddSequence()
                     .AddCondition(() => isDead == true)
                     .AddAction(new Die(btBuilder.blackboard), btBuilder.actionManager)
                 .EndComposite()
         #endregion
-                #region Hit Sequence
+        #region Hit Sequence
                 .AddAttackSequence()
                     .AddCondition(() => canBeDamaged == false && (isHardAttack == true || btBuilder.blackboard.GetData<bool>("IsCasting") == true))
                     .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
@@ -143,18 +149,18 @@ public class Boss : Enemy
                         .EndComposite()
                     .EndComposite()
                 .EndComposite()
-                #endregion
-                #region Boss Pattern Sequence
+        #endregion
+        #region Boss Pattern Sequence
                 .AddAttackSequence()
                     .AddCondition(() => IsTargetValid())
                     .AddAttackSelector()
-                        #region Boss Track Sequence
+        #region Boss Track Sequence
                         .AddSequence()
                             .AddCondition(() => !IsInRange(20f))
-                            .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddAction(new BossTrack(btBuilder.blackboard), btBuilder.actionManager)
                         .EndComposite()
-                        #endregion
-                        #region Boss Range Attack Pattern Sequence
+        #endregion
+        #region Boss Range Attack Pattern Sequence
                         .AddAttackSequence()
                             .AddCondition(() => !IsInRange(10f))
                             .AddRandomAttackSelector()
@@ -170,15 +176,15 @@ public class Boss : Enemy
                                     .AddCondition(() => !IsInRange(10f))
                                     .AddAction(new ResetNode(), btBuilder.actionManager)
                                 .EndComposite()
-                                 .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
+                                 .AddAction(new BossTrack(btBuilder.blackboard), btBuilder.actionManager)
                             .EndComposite()
                         .EndComposite()
-                        #endregion
-                        #region Boss Close Attack Sequence
+        #endregion
+        #region Boss Close Attack Sequence
                         .AddSequence()
                             .AddRandomAttackSelector()
                                 .AddAttackSequence()
-                                    .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
+                                    .AddAction(new BossTrack(btBuilder.blackboard), btBuilder.actionManager)
                                     .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
                                 .EndComposite()
                                 .AddAttackSequence()
@@ -189,24 +195,16 @@ public class Boss : Enemy
                                 .EndComposite()
                             .EndComposite()
                         .EndComposite()
-                        #endregion
+        #endregion
                     .EndComposite()
                 .EndComposite()
-                #endregion
+        #endregion
                 .AddAttackSequence()
                     .AddAction(new Patrol(btBuilder.blackboard), btBuilder.actionManager)
                     .AddAction(new Idle(btBuilder.blackboard), btBuilder.actionManager)
                 .EndComposite()
             .EndComposite()
             .Build();
-    }
-
-    private bool IsTargetOnWayPoints()
-    {
-        float minX = Mathf.Min(patrolPoint_1, patrolPoint_2);
-        float maxX = Mathf.Max(patrolPoint_1, patrolPoint_2);
-
-        return minX <= target.transform.position.x && target.transform.position.x <= maxX;
     }
 
     private bool IsInRange(float distance)
@@ -220,7 +218,7 @@ public class Boss : Enemy
 
     private bool IsTargetValid()
     {
-        return target != null && IsTargetOnWayPoints() == true && target.isDead == false;
+        return target != null && target.isDead == false;
     }
     #region EDITOR METHODS
 #if UNITY_EDITOR

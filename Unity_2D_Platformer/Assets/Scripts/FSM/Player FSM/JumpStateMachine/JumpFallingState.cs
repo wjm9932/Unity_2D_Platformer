@@ -12,6 +12,7 @@ public class JumpFallingState : IState, IGravityModifier
     public void Enter()
     {
         //SetGravityScale();
+        sm.owner.animHandler.animator.SetBool("IsFalling", true);
     }
     public void Update()
     {
@@ -49,6 +50,7 @@ public class JumpFallingState : IState, IGravityModifier
     }
     public void Exit()
     {
+        sm.owner.animHandler.animator.SetBool("IsFalling", false);
     }
 
     public virtual void OnAnimationEnterEvent()

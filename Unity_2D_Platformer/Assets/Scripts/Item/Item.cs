@@ -16,7 +16,11 @@ public abstract class Item : MonoBehaviour, IPoolableObject
         spriteRenderer = GetComponent<SpriteRenderer>();
         originColor = spriteRenderer.color;
     }
-
+    private void OnEnable()
+    {
+        enableTime = Time.time;
+        spriteRenderer.color = originColor;
+    }
     protected virtual void Update()
     {
         if (pool != null)
@@ -33,12 +37,6 @@ public abstract class Item : MonoBehaviour, IPoolableObject
         this.pool = pool;
     }
 
-    public void Initialize(Vector2 position, Quaternion rotation, Transform parent = null)
-    {
-        spriteRenderer.color = originColor;
-        transform.position = position;
-        transform.rotation = rotation;
-    }
     public void Release()
     {
         pool.Release(gameObject);

@@ -32,7 +32,7 @@ public class RunState : IState
             FlipPlayer(sm.owner.input.moveInput.x > 0);
         }
 
-        if(sm.owner.input.isAttack == true)
+        if (sm.owner.input.isAttack == true)
         {
             attackBufferTime = sm.owner.movementType.attackBufferTime;
         }
@@ -42,19 +42,19 @@ public class RunState : IState
             sm.owner.lastPressJumpTime = sm.owner.movementType.jumpInputBufferTime;
         }
 
-        if(sm.owner.input.isDash == true)
+        if (sm.owner.input.isDash == true)
         {
 
             dashBufferTime = sm.owner.movementType.dashInputBufferTime;
         }
 
-        if(attackBufferTime > 0f && sm.jsm.currentState == sm.jsm.idleState)
+        if (attackBufferTime > 0f && sm.jsm.currentState == sm.jsm.idleState)
         {
             attackBufferTime = 0f;
             sm.ChangeState(sm.combo_1AttackState);
         }
 
-        if(dashBufferTime > 0f && sm.jsm.currentState != sm.jsm.slideState)
+        if (dashBufferTime > 0f && sm.jsm.currentState != sm.jsm.slideState)
         {
             dashBufferTime = 0f;
             sm.ChangeState(sm.dashState);
@@ -62,14 +62,15 @@ public class RunState : IState
     }
     public void FixedUpdate()
     {
-        if(sm.currentState != this)
+        if (sm.currentState != this)
         {
             return;
         }
 
+        Run(1f);
+
         if (sm.jsm.currentState != sm.jsm.slideState)
         {
-            Run(1f);
         }
     }
     public void LateUpdate()
@@ -111,7 +112,7 @@ public class RunState : IState
 
     private void Run(float lerpAmount)
     {
-        float targetSpeed = sm.owner.input.moveInput.x * sm.owner.movementType.runMaxSpeed * sm.owner.speedLimit;
+        float targetSpeed = sm.owner.input.moveInput.x * sm.owner.movementType.runMaxSpeed;
         targetSpeed = Mathf.Lerp(sm.owner.rb.velocity.x, targetSpeed, lerpAmount);
 
         float accelAmount;
@@ -132,9 +133,15 @@ public class RunState : IState
             targetSpeed *= sm.owner.movementType.jumpHangMaxSpeedMult;
         }
 
+        if (Mathf.Abs(sm.owner.platformVelocity.x) > 0.01f && (Mathf.Abs(targetSpeed) < 0.01f || sm.jsm.currentState == sm.jsm.slideState))
+        {
+            accelAmount = 50f;
+        }
+
+        targetSpeed += sm.owner.platformVelocity.x;
+
         float speedDif = targetSpeed - sm.owner.rb.velocity.x;
         float movement = speedDif * accelAmount;
-
         sm.owner.rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
     }
 }

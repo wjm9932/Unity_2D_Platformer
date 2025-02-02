@@ -75,7 +75,7 @@ public class Shoot : IAction
                 bullet.GetComponent<SpriteRenderer>().flipY = true;
             }
 
-            bullet.GetComponent<Projectile>().SetTargetDistanceAndVelocity(100f, 25f);
+            bullet.GetComponent<Projectile>().SetTargetDistanceAndVelocity(ownerPosition, 100f, 25f);
 
             yield return new WaitForSeconds(0.5f);
         }
@@ -87,7 +87,7 @@ public class Shoot : IAction
     {
         Vector2 randomPos = blackboard.GetData<Boss>("owner").transform.position;
 
-        randomPos.x = Random.Range(blackboard.GetData<Boss>("owner").patrolPoint_1, blackboard.GetData<Boss>("owner").patrolPoint_2);
+        randomPos.x = Random.Range(blackboard.GetData<Boss>("owner").bossRange[0].transform.position.x, blackboard.GetData<Boss>("owner").bossRange[1].transform.position.x);
         randomPos.y = blackboard.GetData<Boss>("owner").yPos;
 
         blackboard.GetData<Boss>("owner").transform.position = randomPos;

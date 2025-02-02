@@ -23,7 +23,7 @@ public class Shooter : MonoBehaviour
         if(currentCoolDownTime >= targetCoolDownTime)
         {
             var weapon = ObjectPoolManager.Instance.GetPoolableObject(rangedPrefabs, this.transform.position, this.transform.rotation).GetComponent<Projectile>();
-            weapon.SetTargetDistanceAndVelocity(targetDistance, targetVelocity);
+            weapon.SetTargetDistanceAndVelocity(this.transform.position, targetDistance, targetVelocity);
             currentCoolDownTime = 0f;
         }
     }

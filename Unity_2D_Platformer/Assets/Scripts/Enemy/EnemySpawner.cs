@@ -32,13 +32,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enableStartSpawn == true)
         {
-            for (int i = 0; i < info.Length; i++)
-            {
-                for (int j = 0; j < info[i].targetCount; j++)
-                {
-                    SpawnEnemy(info[i].targetEnemy);
-                }
-            }
+            SpawnEnemy();
         }
     }
 
@@ -50,18 +44,27 @@ public class EnemySpawner : MonoBehaviour
             int randEnemyIndex = Random.Range(0, info.Length);
 
             Enemy enemy = Instantiate(info[randEnemyIndex].targetEnemy, spawnPosition, Quaternion.identity).GetComponent<Enemy>();
-            enemy.SetPatrolPoints(_wayPoints[0].position.x, _wayPoints[1].position.x, transform.position.y);
         }
     }
 
-    private void SpawnEnemy(GameObject enemyPrefab)
+    public void SpawnEnemy()
+    {
+        for (int i = 0; i < info.Length; i++)
+        {
+            for (int j = 0; j < info[i].targetCount; j++)
+            {
+                InstantiateEnemy(info[i].targetEnemy);
+            }
+        }
+    }
+
+    private void InstantiateEnemy(GameObject enemyPrefab)
     {
         Vector2 spawnPosition = GetSpawnPosition();
 
         Enemy enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity).GetComponent<Enemy>();
-        enemy.SetPatrolPoints(_wayPoints[0].position.x, _wayPoints[1].position.x, transform.position.y);
 
-        if(dropItem != null)
+        if (dropItem != null)
         {
             enemy.AddDropItem(dropItem);
         }
@@ -80,6 +83,6 @@ public class EnemySpawner : MonoBehaviour
     private IEnumerator SpawnEnemyAfterDelay(GameObject enemyPrefab, float delay)
     {
         yield return new WaitForSeconds(delay);
-        SpawnEnemy(enemyPrefab);
+        InstantiateEnemy(enemyPrefab);
     }
 }

@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pendulum : MonoBehaviour, ISwitchable
+public class Pendulum : MonoBehaviour, IInteractable
 {
     [SerializeField] private float swingAngle;
     [SerializeField] private float speed;
-    public bool isTurnOn { get; private set; }
+    [SerializeField] private bool isTurnOn;
     private float timeElapsed;
 
     private void Start()
     {
         timeElapsed = 0f;
-        isTurnOn = true;
     }
 
     void Update()

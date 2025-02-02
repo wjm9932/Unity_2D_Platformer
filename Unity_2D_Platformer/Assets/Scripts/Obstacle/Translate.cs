@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Translate : MonoBehaviour, ISwitchable
+public class Translate : MonoBehaviour, IInteractable
 {
-    public bool isTurnOn { get; private set; }
-
+    [SerializeField] private bool isTurnOn;
     [SerializeField] private float moveDistance = 5f;
     [SerializeField] private float moveSpeed = 2f;
 
@@ -14,9 +13,9 @@ public class Translate : MonoBehaviour, ISwitchable
 
     void Start()
     {
-        isTurnOn = true;
         startPos = transform.position;
         timeElapsed = 0f;
+        //StartCoroutine(Test());
     }
 
     void Update()
@@ -28,9 +27,31 @@ public class Translate : MonoBehaviour, ISwitchable
             transform.position = startPos + new Vector3(offset, 0, 0);
         }
     }
+    private IEnumerator Test()
+    {
+        YieldInstruction waitForFixedUpdate = new WaitForFixedUpdate();
 
+        while (isTurnOn == true)
+        {
+            yield return waitForFixedUpdate;
+
+            timeElapsed += Time.fixedDeltaTime;
+            float offset = Mathf.Sin(timeElapsed * moveSpeed) * moveDistance;
+            transform.position = startPos + new Vector3(offset, 0, 0);
+        }
+    }
     public void Trigger()
     {
         isTurnOn = !isTurnOn;
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Vector3 leftPoint = transform.position - new Vector3(moveDistance, 0, 0);
+        Vector3 rightPoint = transform.position + new Vector3(moveDistance, 0, 0);
+        Gizmos.DrawLine(leftPoint, rightPoint);
+    }
+#endif
 }

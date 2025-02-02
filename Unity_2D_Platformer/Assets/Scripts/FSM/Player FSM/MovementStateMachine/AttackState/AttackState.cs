@@ -82,11 +82,11 @@ public abstract class AttackState : IState
                     }
                 }
             }
-            else if (target.transform.GetComponent<Switch>() != null)
+            else if (target.transform.GetComponent<IInteractable>() != null)
             {
-                var lever = target.transform.GetComponent<Switch>();
+                var interactable = target.transform.GetComponent<IInteractable>();
 
-                lever.TriggerSwitch();
+                interactable.Trigger();
             }
         }
 

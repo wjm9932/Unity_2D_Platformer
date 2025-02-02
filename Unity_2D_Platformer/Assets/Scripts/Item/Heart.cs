@@ -5,11 +5,6 @@ using UnityEngine.Pool;
 
 public class Heart : Item
 {
-    private void OnEnable()
-    {
-        enableTime = Time.time;
-    }
-
     protected override void Update()
     {
         base.Update();

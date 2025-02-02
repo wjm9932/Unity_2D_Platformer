@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ISwitchable
+public interface IInteractable
 {
-    public bool isTurnOn { get; }
     public void Trigger();
 }

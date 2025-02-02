@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tile
   - HealthSprite
+  - Key
   layers:
   - Default
   - TransparentFX
@@ -20,10 +21,10 @@ TagManager:
   - DamageTrigger
   - Item
   - PushableObject
-  - Switch
-  - 
-  - 
-  - 
+  - Interactable
+  - Door
+  - MovingPlatform
+  - MapBoundary
   - 
   - 
   - 
@@ -40,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 692568537
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

@@ -56,7 +56,7 @@ public class Teleport : IAction
     {
         Vector2 randomPos = blackboard.GetData<Boss>("owner").transform.position;
 
-        randomPos.x = Random.Range(blackboard.GetData<Boss>("owner").patrolPoint_1, blackboard.GetData<Boss>("owner").patrolPoint_2);
+        randomPos.x = Random.Range(blackboard.GetData<Boss>("owner").bossRange[0].transform.position.x, blackboard.GetData<Boss>("owner").bossRange[1].transform.position.x);
 
         blackboard.GetData<Boss>("owner").transform.position = randomPos;
     }

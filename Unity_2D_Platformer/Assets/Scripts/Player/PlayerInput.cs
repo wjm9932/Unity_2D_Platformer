@@ -11,9 +11,10 @@ public class PlayerInput : MonoBehaviour
     public bool isJumpCut { get; private set; }
     public bool isAttack { get; private set; }
     public bool isDash { get; private set; }
+    public bool isDashCut { get; private set; }
     void Start()
     {
-        
+        Application.targetFrameRate = 144;
     }
 
     // Update is called once per frame
@@ -27,5 +28,6 @@ public class PlayerInput : MonoBehaviour
         isJumpCut = Input.GetKeyUp(KeyCode.Space);
         isAttack = Input.GetKeyDown(KeyCode.LeftControl);
         isDash = Input.GetKeyDown(KeyCode.X);
+        isDashCut = Input.GetKeyUp(KeyCode.X);
     }
 }
