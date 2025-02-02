@@ -57,7 +57,6 @@ public class BossTrack : IAction
     {
         float targetSpeed = blackboard.GetData<Enemy>("owner").transform.right.x * blackboard.GetData<Enemy>("owner").movementType.trackMaxSpeed;
 
-
         float speedDif = targetSpeed - blackboard.GetData<Enemy>("owner").rb.velocity.x;
         float accelAmount = (targetSpeed > Mathf.Abs(blackboard.GetData<Enemy>("owner").rb.velocity.x)) ? blackboard.GetData<Enemy>("owner").movementType.trackAccelAmount : blackboard.GetData<Enemy>("owner").movementType.trackDeccelAmount;
         float movement = speedDif * accelAmount;

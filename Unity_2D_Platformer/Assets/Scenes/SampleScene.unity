@@ -69440,22 +69440,6 @@ PrefabInstance:
       propertyPath: heartBar
       value: 
       objectReference: {fileID: 1555821554}
-    - target: {fileID: 434663498, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
-      propertyPath: maxDashCount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 434663498, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
-      propertyPath: groundCheckSize.x
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 434663498, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
-      propertyPath: whatIsGround.m_Bits
-      value: 36872
-      objectReference: {fileID: 0}
-    - target: {fileID: 4569358755192303826, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.65
-      objectReference: {fileID: 0}
     - target: {fileID: 5852806615148106059, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -69503,14 +69487,6 @@ PrefabInstance:
     - target: {fileID: 5852806615148106099, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
       propertyPath: m_Name
       value: PlayerUsingFSM
-      objectReference: {fileID: 0}
-    - target: {fileID: 5852806615148106100, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5852806615148106100, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}
-      propertyPath: m_Interpolate
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1abfaa200e60a42975700f99da27c2, type: 3}

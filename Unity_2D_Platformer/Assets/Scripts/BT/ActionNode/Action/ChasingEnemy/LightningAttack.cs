@@ -75,6 +75,6 @@ public class LightningAttack : IAction
         if (meshRenderer == null) return;
 
         Material material = meshRenderer.material;
-        material.SetFloat("_Fllipbook_Opacity", Mathf.Clamp01(alpha)); // 0~1 범위로 제한하여 적용
+        material.SetFloat("_Fllipbook_Opacity", Mathf.Clamp01(alpha));
     }
 }

@@ -98,7 +98,6 @@ public class DashState : IState
         {
             finalForce.x -= sm.owner.rb.velocity.x;
         }
-
         sm.owner.rb.AddForce(finalForce, ForceMode2D.Impulse);
     }
     private void DeaccelPlayerVelocity()
