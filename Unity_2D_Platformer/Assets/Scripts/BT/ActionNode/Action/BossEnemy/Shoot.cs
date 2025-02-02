@@ -75,7 +75,7 @@ public class Shoot : IAction
                 bullet.GetComponent<SpriteRenderer>().flipY = true;
             }
 
-            bullet.GetComponent<Projectile>().SetTargetDistanceAndVelocity(100f, 25f);
+            bullet.GetComponent<Projectile>().SetTargetDistanceAndVelocity(ownerPosition, 100f, 25f);
 
             yield return new WaitForSeconds(0.5f);
         }

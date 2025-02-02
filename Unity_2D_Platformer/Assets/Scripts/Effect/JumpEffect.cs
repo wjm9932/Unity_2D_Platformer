@@ -32,11 +32,6 @@ public class JumpEffect : MonoBehaviour, IPoolableObject
         this.pool = pool;
     }
 
-    public void Initialize(Vector2 position, Quaternion rotation, Transform parent = null)
-    {
-        transform.position = position;
-        transform.rotation = rotation;
-    }
     public void Release()
     {
         pool.Release(gameObject);

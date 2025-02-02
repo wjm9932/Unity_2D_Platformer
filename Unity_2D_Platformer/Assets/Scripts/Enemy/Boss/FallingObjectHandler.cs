@@ -39,7 +39,7 @@ public class FallingObjectHandler
 
         if (bullet.GetComponent<Projectile>() != null)
         {
-            bullet.GetComponent<Projectile>().SetTargetDistanceAndVelocity(150f, velocity);
+            bullet.GetComponent<Projectile>().SetTargetDistanceAndVelocity(spawnPosition, 100f, velocity);
         }
     }
 

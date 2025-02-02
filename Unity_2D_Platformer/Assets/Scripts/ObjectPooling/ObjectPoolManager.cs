@@ -27,8 +27,6 @@ public class ObjectPoolManager : MonoBehaviour
         else
             Destroy(this.gameObject);
 
-        DontDestroyOnLoad(this.gameObject);
-        
         InitializeObjectPool();
     }
     private void InitializeObjectPool()
@@ -100,7 +98,9 @@ public class ObjectPoolManager : MonoBehaviour
         }
 
         GameObject returnObj = objectPools[targetObject].Get();
-        returnObj.GetComponent<IPoolableObject>().Initialize(pos, rotation, parent);
+        returnObj.transform.position = pos;
+        returnObj.transform.rotation = rotation;
+        returnObj.transform.parent = parent;
         return returnObj;
     }
 }

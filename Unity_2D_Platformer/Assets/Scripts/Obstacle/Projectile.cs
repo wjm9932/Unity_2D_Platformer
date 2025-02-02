@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour, IPoolableObject
 {
     public IObjectPool<GameObject> pool { get; private set; }
 
-    private float velocity;
     private float targetDistance;
     private Rigidbody2D rb;
     private Vector2 startPosition;
@@ -31,15 +31,9 @@ public class Projectile : MonoBehaviour, IPoolableObject
         this.pool = pool;
     }
 
-    public void Initialize(Vector2 position, Quaternion rotation, Transform parent = null)
+    public void SetTargetDistanceAndVelocity(Vector2 startPosition, float distance, float velocity)
     {
-        startPosition = position;
-        transform.position = position;
-        transform.rotation = rotation;
-    }
-
-    public void SetTargetDistanceAndVelocity(float distance, float velocity)
-    {
+        this.startPosition = startPosition;
         targetDistance = distance;
         rb.velocity = velocity * transform.right;
     }

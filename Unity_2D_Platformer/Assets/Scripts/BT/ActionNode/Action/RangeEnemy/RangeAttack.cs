@@ -49,7 +49,7 @@ public class RangeAttack : IAction
     public void OnAnimationEnterEvent()
     {
         var arrow = ObjectPoolManager.Instance.GetPoolableObject(blackboard.GetData<GameObject>("arrow"), blackboard.GetData<Enemy>("owner").attackRoot.position, blackboard.GetData<Enemy>("owner").transform.rotation).GetComponent<Projectile>();
-        arrow.SetTargetDistanceAndVelocity(25f, 25f);
+        arrow.SetTargetDistanceAndVelocity(blackboard.GetData<Enemy>("owner").attackRoot.position, 25f, 25f);
         blackboard.SetData<float>("attackCoolTime", 0f);
     }
     public void OnAnimationTransitionEvent()
