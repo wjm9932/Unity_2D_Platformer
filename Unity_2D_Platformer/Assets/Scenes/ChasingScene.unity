@@ -724,8 +724,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 7951800211735438291, guid: a4f54e7f03083344eb8c788ee86e9ee8, type: 3}
-  lightningAttackPrefab: {fileID: 0}
-  lightningAttackReadyPrefab: {fileID: 0}
+  lightningAttackPrefab: {fileID: 116169641229071473, guid: a741aacd0cdf1044c827fcd5f4438830, type: 3}
+  lightningAttackReadyPrefab: {fileID: 1219884946047150491, guid: 012f8f227973ff148a375d030bfe9821, type: 3}
 --- !u!1 &1249162679
 GameObject:
   m_ObjectHideFlags: 0

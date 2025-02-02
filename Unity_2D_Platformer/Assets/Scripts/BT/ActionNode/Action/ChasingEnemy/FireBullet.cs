@@ -20,7 +20,7 @@ public class FireBullet : IAction
     {
         bulletCount = Random.Range(3, 6);
         currentFireBulletCount = 0;
-        timeElapsed = 0f;
+        timeElapsed = fireInterval;
     }
 
     public NodeState Execute()
