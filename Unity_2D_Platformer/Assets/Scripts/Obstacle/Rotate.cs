@@ -5,7 +5,7 @@ using UnityEngine;
 public class Rotate : MonoBehaviour, IInteractable
 {
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private bool isTurnOn;
+    [SerializeField] private bool isTurnOn = true;
 
     private void Start()
     {

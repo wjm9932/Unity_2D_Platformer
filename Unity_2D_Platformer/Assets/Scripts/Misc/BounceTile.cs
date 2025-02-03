@@ -5,11 +5,21 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BounceTile : MonoBehaviour
 {
+    private float validYpos;
+
+    private void Awake()
+    {
+        validYpos = (GetComponent<BoxCollider2D>().offset.y + GetComponent<BoxCollider2D>().size.y / 2) * transform.localScale.y;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.GetComponent<Player>() != null)
+        var player = collision.gameObject.GetComponent<Player>();
+        if (player != null)
         {
-            BouncePlayer(collision.gameObject.GetComponent<Player>());
+            if (player.transform.position.y - player.playerFootOffset >= transform.position.y + validYpos)
+            {
+                BouncePlayer(collision.gameObject.GetComponent<Player>());
+            }
         }
     }
 

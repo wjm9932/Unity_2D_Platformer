@@ -56,7 +56,7 @@ public abstract class AttackState : IState
     }
     protected void DeaccelPlayerVelocity()
     {
-        float speedDiff = 0f - sm.owner.rb.velocity.x;
+        float speedDiff = 0f + sm.owner.platformVelocity.x - sm.owner.rb.velocity.x;
         float movement = speedDiff * ((1 / Time.fixedDeltaTime) * decelerationFactor);
 
         sm.owner.rb.AddForce(movement * Vector2.right);

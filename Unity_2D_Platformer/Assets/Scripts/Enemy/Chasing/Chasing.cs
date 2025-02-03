@@ -51,7 +51,7 @@ public class Chasing : MonoBehaviour, ITargetHandler
 
         float playerY = player.transform.position.y;
         float currentY = transform.position.y;
-        float targetY = Mathf.Lerp(currentY, playerY, 2.5f * Time.deltaTime);
+        float targetY = Mathf.Lerp(currentY, playerY, 1.5f * Time.deltaTime);
 
         targetY = Mathf.Clamp(targetY, minY + radius, maxY - radius);
 

@@ -120,7 +120,7 @@ public class Player : LivingEntity
         heartCount = maxHearts;
         dashCount = maxDashCount;
         currentCheckpointPosition = this.transform.position;
-        playerFootOffset = (GetComponent<BoxCollider2D>().size.y / 2) * transform.lossyScale.y;
+        playerFootOffset = (GetComponent<BoxCollider2D>().size.y / 2) * transform.localScale.y;
         movementStateMachine.ChangeState(movementStateMachine.runState);
         movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.idleState);
     }
@@ -131,6 +131,7 @@ public class Player : LivingEntity
         {
             RespawnPlayer(currentCheckpointPosition);
         }
+
 
         #region Timer
         lastOnGroundTime -= Time.deltaTime;

@@ -8,11 +8,13 @@ public class Shooter : MonoBehaviour
     [SerializeField] private float targetCoolDownTime;
     [SerializeField] private float targetDistance;
     [SerializeField] private float targetVelocity;
+    [SerializeField] private float startDelay;
 
     private float currentCoolDownTime;
     // Start is called before the first frame update
     void Start()
     {
+        currentCoolDownTime -= startDelay;
     }
 
     // Update is called once per frame

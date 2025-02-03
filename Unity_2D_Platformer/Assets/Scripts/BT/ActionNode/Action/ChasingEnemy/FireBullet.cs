@@ -13,12 +13,12 @@ public class FireBullet : IAction
     public FireBullet(Blackboard blackBoard)
     {
         this.blackboard = blackBoard;
-        fireInterval = 0.8f;
+        fireInterval = 1.5f;
     }
 
     public void OnEnter()
     {
-        bulletCount = Random.Range(3, 6);
+        bulletCount = Random.Range(1, 4);
         currentFireBulletCount = 0;
         timeElapsed = fireInterval;
     }
@@ -62,6 +62,6 @@ public class FireBullet : IAction
 
         var transform = blackboard.GetData<ChasingEnemy>("owner").transform;
         var bullet = ObjectPoolManager.Instance.GetPoolableObject(blackboard.GetData<ChasingEnemy>("owner").bulletPrefab, transform.position, Quaternion.identity).GetComponent<Projectile>();
-        bullet.SetTargetDistanceAndVelocity(blackboard.GetData<ChasingEnemy>("owner").transform.position, 100f, blackboard.GetData<ChasingEnemy>("owner").chasing.currentVelocity + 15f);
+        bullet.SetTargetDistanceAndVelocity(blackboard.GetData<ChasingEnemy>("owner").transform.position, 100f, blackboard.GetData<ChasingEnemy>("owner").chasing.currentVelocity + 35f);
     }
 }

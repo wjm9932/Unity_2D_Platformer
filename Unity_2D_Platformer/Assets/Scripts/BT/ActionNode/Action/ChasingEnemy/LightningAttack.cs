@@ -9,18 +9,19 @@ public class LightningAttack : IAction
     private float targetTime;
     private float timeElapsed;
 
-    private float fadeDuration = 0.3f;
+    private float fadeDuration = 0.1f;
     private bool isFading = false; 
 
     public LightningAttack(Blackboard blackBoard)
     {
         this.blackboard = blackBoard;
-        targetTime = 0.5f;
+        targetTime = 0.25f;
     }
 
     public void OnEnter()
     {
         timeElapsed = 0f;
+        isFading = false;
         Fire();
     }
 
@@ -28,13 +29,11 @@ public class LightningAttack : IAction
     {
         timeElapsed += Time.deltaTime;
 
-        // 0.2초가 지나면 투명화 시작
         if (!isFading && timeElapsed >= targetTime - fadeDuration)
         {
             isFading = true;
         }
 
-        // 투명화 진행
         if (isFading)
         {
             float alpha = Mathf.Lerp(1f, 0f, (timeElapsed - (targetTime - fadeDuration)) / fadeDuration);
