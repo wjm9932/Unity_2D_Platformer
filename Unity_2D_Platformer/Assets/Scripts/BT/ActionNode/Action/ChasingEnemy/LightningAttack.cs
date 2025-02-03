@@ -15,7 +15,7 @@ public class LightningAttack : IAction
     public LightningAttack(Blackboard blackBoard)
     {
         this.blackboard = blackBoard;
-        targetTime = 0.25f;
+        targetTime = 0.2f;
     }
 
     public void OnEnter()
@@ -31,6 +31,7 @@ public class LightningAttack : IAction
 
         if (!isFading && timeElapsed >= targetTime - fadeDuration)
         {
+            targetPrefab.GetComponent<Collider2D>().enabled = false;
             isFading = true;
         }
 

@@ -25,7 +25,7 @@ public class BounceTile : MonoBehaviour
 
     private void BouncePlayer(Player player)
     {
-        var forceDir = (Vector2)transform.right * 50f + Vector2.up * 30f;
+        var forceDir = (Vector2)transform.right * 30f + Vector2.up * 75f;
         if (Mathf.Abs(player.rb.velocity.y) > 0)
             forceDir.y -= player.rb.velocity.y;
 

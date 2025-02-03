@@ -19,7 +19,7 @@ public class JumpState : IState, IGravityModifier
     }
     public void Update()
     {
-        if (sm.owner.rb.velocity.y <= 0.1f)
+        if (sm.owner.rb.velocity.y <= 0.5f)
         {
             sm.ChangeState(sm.jumpFallingState);
             return;
