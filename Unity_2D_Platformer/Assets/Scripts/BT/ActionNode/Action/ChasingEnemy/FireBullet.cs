@@ -61,7 +61,8 @@ public class FireBullet : IAction
         ++currentFireBulletCount;
 
         var transform = blackboard.GetData<ChasingEnemy>("owner").transform;
-        var bullet = ObjectPoolManager.Instance.GetPoolableObject(blackboard.GetData<ChasingEnemy>("owner").bulletPrefab, transform.position, Quaternion.identity).GetComponent<Projectile>();
-        bullet.SetTargetDistanceAndVelocity(blackboard.GetData<ChasingEnemy>("owner").transform.position, 100f, blackboard.GetData<ChasingEnemy>("owner").chasing.currentVelocity + 35f);
+        var playerPos = new Vector2(transform.position.x, blackboard.GetData<ChasingEnemy>("owner").chasing.player.transform.position.y);
+        var bullet = ObjectPoolManager.Instance.GetPoolableObject(blackboard.GetData<ChasingEnemy>("owner").bulletPrefab, playerPos, Quaternion.identity).GetComponent<Projectile>();
+        bullet.SetTargetDistanceAndVelocity(playerPos, 100f, blackboard.GetData<ChasingEnemy>("owner").chasing.currentVelocity + 30f);
     }
 }

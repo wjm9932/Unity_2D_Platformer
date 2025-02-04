@@ -5,8 +5,8 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BounceTile : MonoBehaviour
 {
+    [SerializeField] Vector2 bounceForce;
     private float validYpos;
-
     private void Awake()
     {
         validYpos = (GetComponent<BoxCollider2D>().offset.y + GetComponent<BoxCollider2D>().size.y / 2) * transform.localScale.y;
@@ -25,7 +25,7 @@ public class BounceTile : MonoBehaviour
 
     private void BouncePlayer(Player player)
     {
-        var forceDir = (Vector2)transform.right * 30f + Vector2.up * 75f;
+        var forceDir = Vector2.right * bounceForce.x + Vector2.up * bounceForce.y;
         if (Mathf.Abs(player.rb.velocity.y) > 0)
             forceDir.y -= player.rb.velocity.y;
 
