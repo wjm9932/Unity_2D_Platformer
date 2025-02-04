@@ -34,10 +34,10 @@ public class IndicatorManager : MonoBehaviour
         currentCount = count;
     }
 
-    public void SetStartCount(int count, int maxCount)
+    public void SetMaxCount(int maxCount)
     {
         indicator = new Indicator[maxCount];
-        currentCount = count;
+        currentCount = maxCount;
         this.maxCount = maxCount;
 
         for(int i = 0; i < maxCount; i++)

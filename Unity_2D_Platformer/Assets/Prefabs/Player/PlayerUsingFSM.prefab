@@ -320,6 +320,7 @@ GameObject:
   - component: {fileID: 5852806615148106102}
   - component: {fileID: 5852806615148106097}
   - component: {fileID: 434663498}
+  - component: {fileID: 2076169011}
   m_Layer: 6
   m_Name: PlayerUsingFSM
   m_TagString: Player
@@ -467,8 +468,22 @@ MonoBehaviour:
   lastOnGroundTime: 0
   lastPressJumpTime: 0
   lastOnWallTime: 0
+  lastPressDashTime: 0
+  lastPressAttackTime: 0
   isDashing: 0
   platformVelocity: {x: 0, y: 0}
+--- !u!114 &2076169011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5852806615148106099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb96f815dab6c34cbfc929c3e222819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5852806615582060068
 GameObject:
   m_ObjectHideFlags: 0

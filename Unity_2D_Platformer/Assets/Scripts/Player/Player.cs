@@ -36,15 +36,26 @@ public class Player : LivingEntity
             _dashCount = Mathf.Clamp(value, 0, maxDashCount);
             dash.UpdateCount(_dashCount);
         }
-        get 
+        get
         {
-            return _dashCount; 
+            return _dashCount;
         }
     }
 
     [Header("Key Indicator")]
     [SerializeField] private IndicatorManager key;
-
+    private int _keyCount;
+    public int keyCount {
+        set
+        {
+            _keyCount = Mathf.Clamp(value, 0, 1);
+            key.UpdateCount(_keyCount);
+        }
+        get
+        {
+            return _keyCount;
+        }
+    }
     [Header("Movement  Type")]
     public MovementTypeSO movementType;
 
@@ -106,9 +117,9 @@ public class Player : LivingEntity
         input = GetComponent<PlayerInput>();
         movementStateMachine = new PlayerMovementStateMachine(this);
 
-        heartBar.SetStartCount(maxHearts, maxHearts);
-        dash.SetStartCount(maxDashCount, maxDashCount);
-        key.SetStartCount(0, 1);
+        heartBar.SetMaxCount(maxHearts);
+        dash.SetMaxCount(maxDashCount);
+        key.SetMaxCount(1);
     }
 
     protected override void Start()
@@ -117,6 +128,7 @@ public class Player : LivingEntity
 
         speedLimit = 1f;
 
+        keyCount = 0;
         heartCount = maxHearts;
         dashCount = maxDashCount;
         currentCheckpointPosition = this.transform.position;
@@ -166,7 +178,7 @@ public class Player : LivingEntity
             }
         }
 
-        if(CanJumpAttack() == true)
+        if (CanJumpAttack() == true)
         {
             var collider = Physics2D.OverlapBox(groundChecker.position, groundCheckSize, 0, enemyHeadCollisionBoxLayer);
             if (collider != null)
@@ -174,7 +186,7 @@ public class Player : LivingEntity
                 var enemy = collider.GetComponentInParent<Enemy>();
                 if (enemy.TakeDamage(Mathf.Abs(rb.velocity.y) * 0.4f, this.gameObject) == true)
                 {
-                    if(enemy.GetComponent<Boss>() != null)
+                    if (enemy.GetComponent<Boss>() != null)
                     {
                         enemy.GetComponent<Boss>().isHardAttack = true;
                     }
@@ -320,12 +332,24 @@ public class Player : LivingEntity
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Key"))
+        AcquireKey(collision);
+    }
+
+    private void AcquireKey(Collider2D collision)
+    {
+        if (collision.CompareTag("Key"))
         {
-            key.UpdateCount(1);
+            key.UpdateCount(++keyCount);
             Destroy(collision.gameObject);
         }
     }
+
+    public void StopPlayer()
+    {
+        rb.isKinematic = true;
+        GetComponent<Collider2D>().enabled = false;
+    }
+    
 
     #region EDITOR METHODS
 #if UNITY_EDITOR
