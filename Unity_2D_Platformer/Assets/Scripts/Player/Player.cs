@@ -157,7 +157,6 @@ public class Player : LivingEntity
         lastPressAttackTime -= Time.deltaTime;
         #endregion
 
-
         if (input.isAttack == true)
         {
             lastPressAttackTime = movementType.attackBufferTime;

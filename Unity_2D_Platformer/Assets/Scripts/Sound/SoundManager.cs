@@ -19,11 +19,12 @@ public class SoundManager : MonoBehaviour
     }
 
     [SerializeField] private InGameSoundEffectInfo[] effectInfos;
-
-    private HashSet<InGameSoundEffectType> currentFramePlayedEffects = new HashSet<InGameSoundEffectType>();
-
     private Dictionary<InGameSoundEffectType, List<AudioClip>> inGameAudioClips = new Dictionary<InGameSoundEffectType, List<AudioClip>>();
 
+    private Dictionary<InGameSoundEffectType, int> lastPlayedFrame = new Dictionary<InGameSoundEffectType, int>();
+
+    private int fixedUpdateFrameCount = 0;
+    private const int FIXED_FRAME_RESET_INTERVAL = 5;
 
     private void Awake()
     {
@@ -45,16 +46,18 @@ public class SoundManager : MonoBehaviour
             }
 
             inGameAudioClips.Add(effectInfos[i].effectType, clips);
+            lastPlayedFrame.Add(effectInfos[i].effectType, -FIXED_FRAME_RESET_INTERVAL); 
         }
     }
 
     public void PlaySoundEffect(InGameSoundEffectType type, float volume)
     {
-        if (currentFramePlayedEffects.Contains(type))
+        if (fixedUpdateFrameCount - lastPlayedFrame[type] < FIXED_FRAME_RESET_INTERVAL)
         {
             return;
         }
-        currentFramePlayedEffects.Add(type);
+
+        lastPlayedFrame[type] = fixedUpdateFrameCount;
 
         var audio = ObjectPoolManager.Instance.GetPoolableObject(audioSourcePrefab).GetComponent<AudioSource>();
         audio.volume = volume;
@@ -70,8 +73,8 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
-        currentFramePlayedEffects.Clear();
+        fixedUpdateFrameCount++;
     }
 }

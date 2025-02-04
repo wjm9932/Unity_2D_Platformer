@@ -62916,7 +62916,6 @@ MonoBehaviour:
     audioClips:
     - {fileID: 8300000, guid: fcdef3b23a06ae8438316582967518d0, type: 3}
     - {fileID: 8300000, guid: 855ebaf478fc7c244886190a8c0963aa, type: 3}
-    - {fileID: 8300000, guid: 8294a0a881e9073488a8536141c02c2b, type: 3}
     - {fileID: 8300000, guid: d7905e77f6a11214194961642fcf1186, type: 3}
 --- !u!4 &1174180293
 Transform:
