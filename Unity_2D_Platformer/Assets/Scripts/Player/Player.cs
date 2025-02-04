@@ -105,10 +105,10 @@ public class Player : LivingEntity
     private Vector2 currentCheckpointPosition;
 
     [HideInInspector] public bool isDashing = false;
+    [HideInInspector] public Vector2 platformVelocity;
 
     public float speedLimit { get; private set; }
 
-    public Vector2 platformVelocity;
 
     protected override void Awake()
     {
@@ -144,6 +144,10 @@ public class Player : LivingEntity
             RespawnPlayer(currentCheckpointPosition);
         }
 
+        //if (Input.GetKeyDown(KeyCode.R) == true && isDead == true)
+        //{
+        //    SceneLoadManager.Instance.ReloadCurrentScene();
+        //}
 
         #region Timer
         lastOnGroundTime -= Time.deltaTime;

@@ -12,9 +12,15 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: e7f052aa65f97014b8518308360ffe00
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/DungeonEnter.unity
+    guid: a46af563ac9df774db0017a4487273a0
+  - enabled: 1
+    path: Assets/Scenes/Dungeon1.unity
+    guid: d7b7630f40208e646a987bce0121d805
   - enabled: 1
     path: Assets/Scenes/ChasingScene.unity
     guid: 1869600db51412646b5c338031957f60
+  - enabled: 1
+    path: Assets/Scenes/Dungeon2.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

@@ -81,7 +81,7 @@ public class ObjectPoolManager : MonoBehaviour
         Destroy(obj);
     }
 
-    public GameObject GetPoolableObject(GameObject targetObject, Vector2 pos, Quaternion rotation, Transform parent = null)
+    public GameObject GetPoolableObject(GameObject targetObject, Vector2? pos = null, Quaternion? rotation = null, Transform parent = null)
     {
         if (objectPools.ContainsKey(targetObject) == false)
         {
@@ -98,8 +98,9 @@ public class ObjectPoolManager : MonoBehaviour
         }
 
         GameObject returnObj = objectPools[targetObject].Get();
-        returnObj.transform.position = pos;
-        returnObj.transform.rotation = rotation;
+
+        returnObj.transform.position = pos ?? Vector2.zero;
+        returnObj.transform.rotation = rotation ?? Quaternion.identity;
         returnObj.transform.parent = parent;
         return returnObj;
     }

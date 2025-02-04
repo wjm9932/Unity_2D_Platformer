@@ -23,6 +23,8 @@ public class Hit : IAction, ICompositionNodeResettable
         ApplyKnockbackForce(blackboard.GetData<Enemy>("owner").movementType.knockbackForce);
 
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsHit", true);
+
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.ENEMY_HIT, 0.5f);
     }
 
     public NodeState Execute()

@@ -19,10 +19,10 @@ public class ReachGoalPoint : MonoBehaviour
 
     void Update()
     {
-        if(owner.input.moveInput.y < 0 && isGoalPoint == true && owner.keyCount > 0)
+        if(owner.input.moveInput.y > 0 && isGoalPoint == true && owner.keyCount > 0)
         {
             owner.StopPlayer();
-            SceneLoadManager.Instance.LoadNextScene(null);
+            SceneLoadManager.Instance.LoadNextScene();
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)

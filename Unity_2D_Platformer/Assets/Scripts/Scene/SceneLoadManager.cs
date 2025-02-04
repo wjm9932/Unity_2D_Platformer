@@ -42,11 +42,24 @@ public class SceneLoadManager : MonoBehaviour
         StartCoroutine(LoadSceneCoroutine(sceneIndex));
     }
 
-    public void LoadNextScene(Action action)
+    public void ReloadCurrentScene()
+    {
+        gameObject.SetActive(true);
+        StartCoroutine(LoadSceneCoroutine(SceneManager.GetActiveScene().buildIndex));
+    }
+
+    public void LoadSavedScene(Action action, int savedSceneIndex)
     {
         gameObject.SetActive(true);
         loadAtcion = action;
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        StartCoroutine(LoadSceneCoroutine(savedSceneIndex));
+    }
+
+    public void LoadNextScene()
+    {
+        gameObject.SetActive(true);
 
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         StartCoroutine(LoadSceneCoroutine(nextSceneIndex));
