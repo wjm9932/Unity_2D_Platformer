@@ -63073,7 +63073,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: f11db4559b3ffff45b62e9327fc5535d, type: 3}
   - effectType: 1
     audioClips:
-    - {fileID: 8300000, guid: c523eacb9b055c641a5f34ba6e9bbdf5, type: 3}
+    - {fileID: 8300000, guid: a822f230d894f4148b75da93a39cd668, type: 3}
   - effectType: 2
     audioClips:
     - {fileID: 8300000, guid: 6012c7fa105612e45b2f54b66aa738d6, type: 3}

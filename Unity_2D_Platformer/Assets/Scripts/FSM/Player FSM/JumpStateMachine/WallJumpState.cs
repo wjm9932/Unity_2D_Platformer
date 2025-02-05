@@ -16,7 +16,7 @@ public class WallJumpState : IState, IGravityModifier
         sm.owner.animHandler.animator.SetTrigger("Jump");
 
         ObjectPoolManager.Instance.GetPoolableObject(sm.owner.doubleJumpEffectPrefab, sm.owner.doubleJumpEffectTransform.position, sm.owner.doubleJumpEffectTransform.rotation);
-        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.PLAYER_DOUBLE_JUMP, 0.2f);
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.PLAYER_DOUBLE_JUMP, 0.25f);
     }
     public void Update()
     {
