@@ -63063,10 +63063,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 6012c7fa105612e45b2f54b66aa738d6, type: 3}
   - effectType: 3
     audioClips:
-    - {fileID: 8300000, guid: fcdef3b23a06ae8438316582967518d0, type: 3}
-    - {fileID: 8300000, guid: 855ebaf478fc7c244886190a8c0963aa, type: 3}
     - {fileID: 8300000, guid: 8b23b175a78d6b5458322e3a6c9905d0, type: 3}
-    - {fileID: 8300000, guid: d7905e77f6a11214194961642fcf1186, type: 3}
 --- !u!4 &1174180293
 Transform:
   m_ObjectHideFlags: 0
@@ -63280,7 +63277,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -63377,9 +63374,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   footStepClips:
-  - {fileID: 8300000, guid: df7087e4d8a8bb546bc08ce68632903f, type: 3}
-  - {fileID: 8300000, guid: 023ea3ddeaa8dd146b7633a0800e5a0e, type: 3}
-  - {fileID: 8300000, guid: 2352822feb4caa14ebdbc0c713289f8d, type: 3}
+  - {fileID: 8300000, guid: 4d11813f5983ce047873c94858e6a6c1, type: 3}
+  - {fileID: 8300000, guid: 6154d2d90f91ac743a30a16a58f9fa32, type: 3}
+  - {fileID: 8300000, guid: 4544cd1f9b0d00a498e3602ecfffcacc, type: 3}
+  - {fileID: 8300000, guid: 2921c47b0bdded540b5b813c1e60001c, type: 3}
+  - {fileID: 8300000, guid: 825d688f717750646b0a05cb2db4ae16, type: 3}
+  - {fileID: 8300000, guid: df0f02816989a0348b801669beb67362, type: 3}
+  - {fileID: 8300000, guid: 90f0af26cb589f64eaae4a27d022a1d3, type: 3}
 --- !u!4 &1294737090 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8080448598071116560, guid: 03250cb1349996448bda2a452d3b13a6, type: 3}
