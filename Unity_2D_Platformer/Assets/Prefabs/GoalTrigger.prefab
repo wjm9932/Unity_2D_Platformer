@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6930661952856993382}
   - component: {fileID: 6930661952856993381}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: GoalTrigger
   m_TagString: Goal
   m_Icon: {fileID: 0}

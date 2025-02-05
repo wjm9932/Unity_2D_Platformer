@@ -16,7 +16,6 @@ public class SlideState : IState, IGravityModifier
         
         sm.owner.animHandler.animator.SetBool("IsSlide", true);
 
-        slidingAudio = SoundManager.Instance.PlayLoopSoundEffect(SoundManager.InGameSoundEffectType.PLAYER_SLIDE, 0.3f);
     }
     public void Update()
     {
@@ -51,7 +50,6 @@ public class SlideState : IState, IGravityModifier
     }
     public void Exit()
     {
-        slidingAudio.loop = false;
         sm.owner.animHandler.animator.SetBool("IsSlide", false);
     }
 

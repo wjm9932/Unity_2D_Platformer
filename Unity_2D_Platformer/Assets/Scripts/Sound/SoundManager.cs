@@ -14,6 +14,9 @@ public class SoundManager : MonoBehaviour
         PLAYER_DASH,
         PLAYER_LAND,
         PLAYER_SLIDE,
+        PLAYER_ATTACK_1,
+        PLAYER_ATTACK_2,
+        PLAYER_HIT,
         ENEMY_HIT,
     }
 

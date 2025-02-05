@@ -31,6 +31,7 @@ public class Combo_2AttackState : AttackState
 
         sm.owner.dmg = 20f;
         sm.owner.animHandler.animator.SetTrigger("Combo_2");
+
     }
     public override void Update()
     {
@@ -71,6 +72,7 @@ public class Combo_2AttackState : AttackState
     }
     public override void OnAnimationEnterEvent()
     {
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.PLAYER_ATTACK_2, 0.15f);
         canAttack = true;
     }
     public override void OnAnimationExitEvent()

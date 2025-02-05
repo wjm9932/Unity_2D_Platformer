@@ -63,6 +63,7 @@ public class Combo_1AttackState : AttackState
     public override void OnAnimationEnterEvent()
     {
         canAttack = true;
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.PLAYER_ATTACK_1, 0.15f);
     }
     public override void OnAnimationExitEvent()
     {

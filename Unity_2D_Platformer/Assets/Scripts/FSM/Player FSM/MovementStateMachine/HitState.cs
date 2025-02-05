@@ -25,6 +25,7 @@ public class HitState : IState
         }
         sm.owner.animHandler.animator.ResetTrigger("ResetCombo");
         sm.owner.animHandler.animator.SetBool("IsHit", true);
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.PLAYER_HIT, 0.1f);
     }
     public void Update()
     {
