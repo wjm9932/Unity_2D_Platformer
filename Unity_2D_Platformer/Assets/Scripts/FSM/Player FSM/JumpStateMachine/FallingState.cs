@@ -5,13 +5,17 @@ using UnityEngine;
 public class FallingState : IState, IGravityModifier
 {
     private PlayerJumpStateMachine sm;
+    private float yPos;
+    private readonly float playLandSoundDeadLine;
     public FallingState(PlayerJumpStateMachine playerJumpStateMachine)
     {
         sm = playerJumpStateMachine;
+        playLandSoundDeadLine = 1f;
     }
     public void Enter()
     {
         sm.owner.animHandler.animator.SetBool("IsFalling", true);
+        yPos = sm.owner.transform.position.y;
     }
     public void Update()
     {
@@ -44,6 +48,11 @@ public class FallingState : IState, IGravityModifier
     public void Exit()
     {
         sm.owner.animHandler.animator.SetBool("IsFalling", false);
+
+        if (Mathf.Abs(sm.owner.transform.position.y - yPos) > playLandSoundDeadLine)
+        {
+            SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.PLAYER_LAND, 0.1f);
+        }
     }
 
     public virtual void OnAnimationEnterEvent()

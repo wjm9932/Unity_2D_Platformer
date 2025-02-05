@@ -24,7 +24,7 @@ public class Hit : IAction, ICompositionNodeResettable
 
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsHit", true);
 
-        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.ENEMY_HIT, 0.5f);
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.ENEMY_HIT, 0.7f);
     }
 
     public NodeState Execute()

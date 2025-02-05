@@ -63063,6 +63063,9 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 6012c7fa105612e45b2f54b66aa738d6, type: 3}
   - effectType: 3
     audioClips:
+    - {fileID: 8300000, guid: 190e6d03529beeb4185c80a8327869b5, type: 3}
+  - effectType: 4
+    audioClips:
     - {fileID: 8300000, guid: 8b23b175a78d6b5458322e3a6c9905d0, type: 3}
 --- !u!4 &1174180293
 Transform:
@@ -63277,7 +63280,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.15
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0

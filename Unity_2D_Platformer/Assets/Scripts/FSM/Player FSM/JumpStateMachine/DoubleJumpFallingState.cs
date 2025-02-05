@@ -44,6 +44,7 @@ public class DoubleJumpFallingState : IState, IGravityModifier
     public void Exit()
     {
         sm.owner.animHandler.animator.SetBool("IsFalling", false);
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.PLAYER_LAND, 0.1f);
     }
 
     public virtual void OnAnimationEnterEvent()

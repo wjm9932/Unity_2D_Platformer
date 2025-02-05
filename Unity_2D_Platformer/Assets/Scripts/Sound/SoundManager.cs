@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour
         PLAYER_JUMP,
         PLAYER_DOUBLE_JUMP,
         PLAYER_DASH,
+        PLAYER_LAND,
         ENEMY_HIT,
     }
 
@@ -34,10 +35,7 @@ public class SoundManager : MonoBehaviour
             Instance = this;
         else
             Destroy(this.gameObject);
-    }
 
-    private void Start()
-    {
         for (int i = 0; i < effectInfos.Length; i++)
         {
             List<AudioClip> clips = new List<AudioClip>(effectInfos[i].audioClips.Length);
@@ -48,7 +46,7 @@ public class SoundManager : MonoBehaviour
             }
 
             inGameAudioClips.Add(effectInfos[i].effectType, clips);
-            lastPlayedTime.Add(effectInfos[i].effectType, -TIME_INTERVAL); 
+            lastPlayedTime.Add(effectInfos[i].effectType, -TIME_INTERVAL);
         }
     }
 

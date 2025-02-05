@@ -11,13 +11,14 @@ public class JumpFallingState : IState, IGravityModifier
     }
     public void Enter()
     {
-        //SetGravityScale();
         sm.owner.animHandler.animator.SetBool("IsFalling", true);
     }
     public void Update()
     {
         if (sm.owner.lastOnGroundTime > 0f)
         {
+            SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.PLAYER_LAND, 0.1f);
+
             sm.ChangeState(sm.idleState);
             return;
         }
@@ -66,7 +67,7 @@ public class JumpFallingState : IState, IGravityModifier
 
     public void SetGravityScale()
     {
-        if(sm.msm.currentState == sm.msm.dashState)
+        if (sm.msm.currentState == sm.msm.dashState)
         {
             sm.owner.SetGravityScale(0f);
         }
