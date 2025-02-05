@@ -16,7 +16,7 @@ public class JumpState : IState, IGravityModifier
         sm.owner.animHandler.animator.SetTrigger("Jump");
 
         ObjectPoolManager.Instance.GetPoolableObject(sm.owner.jumpEffectPrefab, sm.owner.jumpEffectTransform.position, sm.owner.jumpEffectTransform.rotation);
-        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.PLAYER_JUMP, 0.05f);
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.PLAYER_JUMP, 0.2f);
 
     }
     public void Update()
