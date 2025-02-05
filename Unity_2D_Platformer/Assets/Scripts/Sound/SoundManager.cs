@@ -8,6 +8,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private GameObject audioSourcePrefab;
     public enum InGameSoundEffectType
     {
+        PLAYER_JUMP,
+        PLAYER_DOUBLE_JUMP,
+        PLAYER_DASH,
         ENEMY_HIT,
     }
 
@@ -21,10 +24,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private InGameSoundEffectInfo[] effectInfos;
     private Dictionary<InGameSoundEffectType, List<AudioClip>> inGameAudioClips = new Dictionary<InGameSoundEffectType, List<AudioClip>>();
 
-    private Dictionary<InGameSoundEffectType, int> lastPlayedFrame = new Dictionary<InGameSoundEffectType, int>();
+    private Dictionary<InGameSoundEffectType, float> lastPlayedTime = new Dictionary<InGameSoundEffectType, float>();
 
-    private int fixedUpdateFrameCount = 0;
-    private const int FIXED_FRAME_RESET_INTERVAL = 5;
+    private const float TIME_INTERVAL = 0.1f;
 
     private void Awake()
     {
@@ -46,18 +48,18 @@ public class SoundManager : MonoBehaviour
             }
 
             inGameAudioClips.Add(effectInfos[i].effectType, clips);
-            lastPlayedFrame.Add(effectInfos[i].effectType, -FIXED_FRAME_RESET_INTERVAL); 
+            lastPlayedTime.Add(effectInfos[i].effectType, -TIME_INTERVAL); 
         }
     }
 
     public void PlaySoundEffect(InGameSoundEffectType type, float volume)
     {
-        if (fixedUpdateFrameCount - lastPlayedFrame[type] < FIXED_FRAME_RESET_INTERVAL)
+        if (Time.time - lastPlayedTime[type] < TIME_INTERVAL)
         {
             return;
         }
 
-        lastPlayedFrame[type] = fixedUpdateFrameCount;
+        lastPlayedTime[type] = Time.time;
 
         var audio = ObjectPoolManager.Instance.GetPoolableObject(audioSourcePrefab).GetComponent<AudioSource>();
         audio.volume = volume;
@@ -71,10 +73,5 @@ public class SoundManager : MonoBehaviour
             int index = Random.Range(0, inGameAudioClips[type].Count);
             audio.PlayOneShot(inGameAudioClips[type][index]);
         }
-    }
-
-    private void FixedUpdate()
-    {
-        fixedUpdateFrameCount++;
     }
 }
