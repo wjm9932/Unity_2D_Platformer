@@ -5,14 +5,18 @@ using UnityEngine;
 public class SlideState : IState, IGravityModifier
 {
     private PlayerJumpStateMachine sm;
+    private AudioSource slidingAudio;
     public SlideState(PlayerJumpStateMachine playerJumpStateMachine)
     {
         sm = playerJumpStateMachine;
     }
     public void Enter()
     {
-        sm.owner.animHandler.animator.SetBool("IsSlide", true);
         SetGravityScale();
+        
+        sm.owner.animHandler.animator.SetBool("IsSlide", true);
+
+        slidingAudio = SoundManager.Instance.PlayLoopSoundEffect(SoundManager.InGameSoundEffectType.PLAYER_SLIDE, 0.3f);
     }
     public void Update()
     {
@@ -47,6 +51,7 @@ public class SlideState : IState, IGravityModifier
     }
     public void Exit()
     {
+        slidingAudio.loop = false;
         sm.owner.animHandler.animator.SetBool("IsSlide", false);
     }
 

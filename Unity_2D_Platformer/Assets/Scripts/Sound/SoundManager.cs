@@ -6,12 +6,14 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
     [SerializeField] private GameObject audioSourcePrefab;
+    [SerializeField] private GameObject loopAudioSourcePrefab;
     public enum InGameSoundEffectType
     {
         PLAYER_JUMP,
         PLAYER_DOUBLE_JUMP,
         PLAYER_DASH,
         PLAYER_LAND,
+        PLAYER_SLIDE,
         ENEMY_HIT,
     }
 
@@ -71,5 +73,26 @@ public class SoundManager : MonoBehaviour
             int index = Random.Range(0, inGameAudioClips[type].Count);
             audio.PlayOneShot(inGameAudioClips[type][index]);
         }
+    }
+
+    public AudioSource PlayLoopSoundEffect(InGameSoundEffectType type, float volume)
+    {
+        var audio = ObjectPoolManager.Instance.GetPoolableObject(loopAudioSourcePrefab).GetComponent<AudioSource>();
+
+        if (inGameAudioClips[type].Count == 1)
+        {
+            audio.clip = inGameAudioClips[type][0];
+        }
+        else
+        {
+            int index = Random.Range(0, inGameAudioClips[type].Count);
+            audio.clip = inGameAudioClips[type][index];
+        }
+        
+        audio.loop = true;
+        audio.volume = volume;
+        audio.Play();
+
+        return audio;
     }
 }

@@ -41,7 +41,7 @@ public class DashState : IState
 
         sm.owner.dashCount--;
         sm.owner.animHandler.animator.SetBool("IsDash", true);
-        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.PLAYER_DASH, 0.2f);
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.PLAYER_DASH, 0.1f);
     }
 
     public void Update()

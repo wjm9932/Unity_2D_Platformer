@@ -40858,13 +40858,25 @@ CompositeCollider2D:
         Y: 140000000
       - X: 450000000
         Y: 140000000
-    - - X: -140000000
+    - - X: -330000100
+        Y: 70000041
+      - X: -330000041
+        Y: 70000100
+      - X: -309999959
+        Y: 70000100
+      - X: -309999900
+        Y: 70000041
+      - X: -309999900
+        Y: 70000000
+      - X: -140000000
+        Y: 70000000
+      - X: -140000000
         Y: 170000000
       - X: -390000000
         Y: 170000000
       - X: -390000000
         Y: 70000000
-      - X: -140000000
+      - X: -330000100
         Y: 70000000
     - - X: 450000000
         Y: 50000000
@@ -40891,6 +40903,18 @@ CompositeCollider2D:
       - X: -130000000
         Y: -30000000
     - - X: -200000000
+        Y: -20000000
+      - X: -309999900
+        Y: -20000000
+      - X: -309999900
+        Y: -20000041
+      - X: -309999959
+        Y: -20000100
+      - X: -330000041
+        Y: -20000100
+      - X: -330000100
+        Y: -20000041
+      - X: -330000100
         Y: -20000000
       - X: -390000000
         Y: -20000000
@@ -63051,6 +63075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSourcePrefab: {fileID: 7844509828394711563, guid: 82e240bc2a7456a4c81e245e96e13e5a, type: 3}
+  loopAudioSourcePrefab: {fileID: 7844509828394711563, guid: 8ea1df2d1b374fe42b35e8ea43b6c4d1, type: 3}
   effectInfos:
   - effectType: 0
     audioClips:
@@ -63065,6 +63090,9 @@ MonoBehaviour:
     audioClips:
     - {fileID: 8300000, guid: 190e6d03529beeb4185c80a8327869b5, type: 3}
   - effectType: 4
+    audioClips:
+    - {fileID: 8300000, guid: 805acc5e0b50b7b418326d0c0e537932, type: 3}
+  - effectType: 5
     audioClips:
     - {fileID: 8300000, guid: 8b23b175a78d6b5458322e3a6c9905d0, type: 3}
 --- !u!4 &1174180293
@@ -63280,7 +63308,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -78970,16 +78998,24 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1426588732118449668, guid: 21d704291c5a91a40adeffa3f0726e68, type: 3}
       propertyPath: infos.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1426588732118449668, guid: 21d704291c5a91a40adeffa3f0726e68, type: 3}
       propertyPath: infos.Array.data[7].count
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1426588732118449668, guid: 21d704291c5a91a40adeffa3f0726e68, type: 3}
+      propertyPath: infos.Array.data[8].count
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426588732118449668, guid: 21d704291c5a91a40adeffa3f0726e68, type: 3}
       propertyPath: infos.Array.data[7].targetObject
       value: 
       objectReference: {fileID: 7844509828394711563, guid: 82e240bc2a7456a4c81e245e96e13e5a, type: 3}
+    - target: {fileID: 1426588732118449668, guid: 21d704291c5a91a40adeffa3f0726e68, type: 3}
+      propertyPath: infos.Array.data[8].targetObject
+      value: 
+      objectReference: {fileID: 7844509828394711563, guid: 8ea1df2d1b374fe42b35e8ea43b6c4d1, type: 3}
     - target: {fileID: 1426588732118449669, guid: 21d704291c5a91a40adeffa3f0726e68, type: 3}
       propertyPath: m_RootOrder
       value: 5
