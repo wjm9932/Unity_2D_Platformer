@@ -17,7 +17,7 @@ public class Die : IAction
         blackboard.GetData<Enemy>("owner").healthBar.gameObject.SetActive(false);
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetTrigger("Die");
 
-        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.ENEMY_HIT, 0.5f);
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.ENEMY_DIE, blackboard.GetData<Enemy>("owner").audioSource);
     }
 
     public NodeState Execute()

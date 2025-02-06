@@ -24,8 +24,10 @@ public class SoundManager : MonoBehaviour
         ENEMY_SHIELD_BLOCK = 12,
         ENEMY_SHIELD_ATTACK = 13,
         ENEMY_RANGE_ATTACK = 14,
-        CHEST_OPEN = 15,
-        ITEM_ACQUIRE = 16,
+        ENEMY_DIE = 15,
+        CHEST_OPEN = 16,
+        ITEM_ACQUIRE = 17,
+        SWITCH_TRIGGER = 18,
     }
 
     [System.Serializable]

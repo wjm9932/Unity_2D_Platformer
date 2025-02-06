@@ -42,6 +42,9 @@ public class Switch : MonoBehaviour, IInteractable
         {
             target.GetComponent<IInteractable>().Trigger();
         }
+
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.SWITCH_TRIGGER, 0.35f);
+
         ToggleSwitchSprite();
     }
 

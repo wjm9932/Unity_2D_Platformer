@@ -193,9 +193,9 @@ GameObject:
   - component: {fileID: 2728898524108704116}
   - component: {fileID: 2728898524108704118}
   - component: {fileID: 2728898524108704113}
-  - component: {fileID: 1704736540203522716}
   - component: {fileID: 2140981173}
   - component: {fileID: 2140981174}
+  - component: {fileID: 1704736540203522716}
   m_Layer: 7
   m_Name: WarriorSkeleton
   m_TagString: Untagged
@@ -269,6 +269,53 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2, y: 3}
   m_EdgeRadius: 0
+--- !u!114 &2140981173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2728898524108704117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c578ec1d87473474fb63deac864316ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2140981174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2728898524108704117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a3a4cdebf419ac46b0088c798d30316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBetDamaged: 0.5
+  spriteRenderer: {fileID: 2728898522730726249}
+  _animHandler: {fileID: 2728898522730726251}
+  healthBar: {fileID: 4091192189617970375}
+  _hp: 50
+  maxHp: 50
+  movementType: {fileID: 11400000, guid: 232fa58f7c2c9e44cb1114566741ca3e, type: 2}
+  collisionBox: {fileID: 2728898523777886955}
+  rageColor: {r: 0.6509434, g: 0.35924706, b: 0.35924706, a: 1}
+  attackSoundEffect: 10
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 86024
+  attackRoot: {fileID: 7283769443258909757}
+  attackRange: 1.5
+  dropItem:
+  - {fileID: 935369320324283961, guid: b8c5bd318701da041a4f850742a45e41, type: 3}
+  - {fileID: 7451784485998942658, guid: cce255d4b2f6ccc41ac119b9e5bbc1bc, type: 3}
+  dropChances: 0.5
+  isHardAttack: 0
 --- !u!82 &1704736540203522716
 AudioSource:
   m_ObjectHideFlags: 0
@@ -300,8 +347,8 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.43274435
-      value: 0.21492767
+      time: 0.44162497
+      value: 0.25421906
       inSlope: -0.13865606
       outSlope: -0.13865606
       tangentMode: 0
@@ -365,53 +412,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2140981173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2728898524108704117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c578ec1d87473474fb63deac864316ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2140981174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2728898524108704117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a3a4cdebf419ac46b0088c798d30316, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeBetDamaged: 0.5
-  spriteRenderer: {fileID: 2728898522730726249}
-  _animHandler: {fileID: 2728898522730726251}
-  healthBar: {fileID: 4091192189617970375}
-  _hp: 50
-  maxHp: 50
-  movementType: {fileID: 11400000, guid: 232fa58f7c2c9e44cb1114566741ca3e, type: 2}
-  collisionBox: {fileID: 2728898523777886955}
-  rageColor: {r: 0.6509434, g: 0.35924706, b: 0.35924706, a: 1}
-  attackSoundEffect: 10
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 86024
-  attackRoot: {fileID: 7283769443258909757}
-  attackRange: 1.5
-  dropItem:
-  - {fileID: 935369320324283961, guid: b8c5bd318701da041a4f850742a45e41, type: 3}
-  - {fileID: 7451784485998942658, guid: cce255d4b2f6ccc41ac119b9e5bbc1bc, type: 3}
-  dropChances: 0.5
-  isHardAttack: 0
 --- !u!1 &2728898524217196234
 GameObject:
   m_ObjectHideFlags: 0

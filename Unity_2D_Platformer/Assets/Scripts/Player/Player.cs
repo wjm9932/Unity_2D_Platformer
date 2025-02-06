@@ -334,18 +334,10 @@ public class Player : LivingEntity
         speedLimit = 1f - limit;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        AcquireKey(collision);
-    }
 
-    private void AcquireKey(Collider2D collision)
+    public void AcquireKey()
     {
-        if (collision.CompareTag("Key"))
-        {
-            key.UpdateCount(++keyCount);
-            Destroy(collision.gameObject);
-        }
+        key.UpdateCount(++keyCount);
     }
 
     public void StopPlayer()
