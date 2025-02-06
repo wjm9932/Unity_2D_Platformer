@@ -243,7 +243,8 @@ public class Player : LivingEntity
 
     private bool CanJumpAttack()
     {
-        return (movementStateMachine.jsm.currentState == movementStateMachine.jsm.jumpFallingState || movementStateMachine.jsm.currentState == movementStateMachine.jsm.doubleJumpFallingState) && movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpAttackState;
+        return (movementStateMachine.jsm.currentState == movementStateMachine.jsm.jumpFallingState || movementStateMachine.jsm.currentState == movementStateMachine.jsm.doubleJumpFallingState) 
+            && movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpAttackState && movementStateMachine.currentState != movementStateMachine.dashState;
     }
     public bool TakeDamage(GameObject damager, bool isHardAttack = false)
     {

@@ -17,7 +17,13 @@ public class SoundManager : MonoBehaviour
         PLAYER_ATTACK_1,
         PLAYER_ATTACK_2,
         PLAYER_HIT,
+        PLAYER_DIE,
         ENEMY_HIT,
+        ENEMY_WARRIOR_ATTACK,
+        ENEMY_SPEAR_ATTACK,
+        ENEMY_SHIELD_BLOCK,
+        ENEMY_SHIELD_ATTACK,
+        ENEMY_RANGE_ATTACK,
     }
 
     [System.Serializable]
@@ -78,6 +84,26 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void PlaySoundEffect(InGameSoundEffectType type, AudioSource audioSource)
+    {
+        if (Time.time - lastPlayedTime[type] < TIME_INTERVAL)
+        {
+            return;
+        }
+
+        lastPlayedTime[type] = Time.time;
+
+        if (inGameAudioClips[type].Count == 1)
+        {
+            audioSource.PlayOneShot(inGameAudioClips[type][0]);
+        }
+        else
+        {
+            int index = Random.Range(0, inGameAudioClips[type].Count);
+            audioSource.PlayOneShot(inGameAudioClips[type][index]);
+        }
+    }
+
     public AudioSource PlayLoopSoundEffect(InGameSoundEffectType type, float volume)
     {
         var audio = ObjectPoolManager.Instance.GetPoolableObject(loopAudioSourcePrefab).GetComponent<AudioSource>();
@@ -91,11 +117,12 @@ public class SoundManager : MonoBehaviour
             int index = Random.Range(0, inGameAudioClips[type].Count);
             audio.clip = inGameAudioClips[type][index];
         }
-        
+
         audio.loop = true;
         audio.volume = volume;
         audio.Play();
 
         return audio;
     }
+
 }

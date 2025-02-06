@@ -65,6 +65,8 @@ public class SwordAttack : IAction
 
     public void OnAnimationEnterEvent()
     {
+        SoundManager.Instance.PlaySoundEffect(blackboard.GetData<Enemy>("owner").attackSoundEffect, blackboard.GetData<Enemy>("owner").audioSource);
+
         canAttack = true;
     }
     public void OnAnimationTransitionEvent()

@@ -44,6 +44,7 @@ public class Hit : IAction, ICompositionNodeResettable
     public void OnExit()
     {
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsHit", false);
+        blackboard.GetData<Enemy>("owner").rb.velocity = Vector2.zero;
     }
 
     private void DeaccelEnemyVelocity()

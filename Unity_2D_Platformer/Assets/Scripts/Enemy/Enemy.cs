@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public abstract class Enemy : LivingEntity
 {
     [Space(20)]
@@ -33,6 +34,8 @@ public abstract class Enemy : LivingEntity
     [Header("Track Color")]
     [SerializeField] public Color rageColor;
 
+    [Header("Attack Sound Tyle")]
+    public SoundManager.InGameSoundEffectType attackSoundEffect;
 
     #region LayerMask
     [Header("Layer")]
@@ -55,6 +58,7 @@ public abstract class Enemy : LivingEntity
     public Player target { get; set; }
 
     public Rigidbody2D rb { get; private set; }
+    public AudioSource audioSource { get; private set; }
     public float patrolStopDistance { get; private set; }
     public float trackStopDistance { get; protected set; }
     [HideInInspector] public bool isHardAttack;
@@ -65,6 +69,7 @@ public abstract class Enemy : LivingEntity
         base.Awake();
         patrolStopDistance = (GetComponent<BoxCollider2D>().size.x / 2f) * transform.localScale.x + 0.1f;
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     protected override void Start()

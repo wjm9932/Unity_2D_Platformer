@@ -51,6 +51,8 @@ public class RangeAttack : IAction
         var arrow = ObjectPoolManager.Instance.GetPoolableObject(blackboard.GetData<GameObject>("arrow"), blackboard.GetData<Enemy>("owner").attackRoot.position, blackboard.GetData<Enemy>("owner").transform.rotation).GetComponent<Projectile>();
         arrow.SetTargetDistanceAndVelocity(blackboard.GetData<Enemy>("owner").attackRoot.position, 25f, 25f);
         blackboard.SetData<float>("attackCoolTime", 0f);
+
+        SoundManager.Instance.PlaySoundEffect(blackboard.GetData<Enemy>("owner").attackSoundEffect, blackboard.GetData<Enemy>("owner").audioSource);
     }
     public void OnAnimationTransitionEvent()
     {

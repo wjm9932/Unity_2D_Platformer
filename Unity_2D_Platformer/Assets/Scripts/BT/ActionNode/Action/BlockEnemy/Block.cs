@@ -23,6 +23,8 @@ public class Block : IAction, ICompositionNodeResettable
 
         ApplyKnockbackForce(blackboard.GetData<Enemy>("owner").movementType.knockbackForce / 5f);
         blackboard.GetData<Enemy>("owner").animHandler.animator.SetBool("IsBlock", true);
+
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.ENEMY_SHIELD_BLOCK, 0.15f);
     }
 
     public NodeState Execute()
