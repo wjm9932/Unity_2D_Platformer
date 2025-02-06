@@ -302,7 +302,7 @@ MonoBehaviour:
   movementType: {fileID: 11400000, guid: 6abfebbf91c243442b6e60c03cee1bff, type: 2}
   collisionBox: {fileID: 2728898523777886955}
   rageColor: {r: 0.6509804, g: 0.36078432, b: 0.36078432, a: 1}
-  attackSoundEffect: 13
+  attackSoundEffect: 14
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -339,7 +339,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 15
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -349,14 +349,14 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.29961145
-      value: 0.3327942
-      inSlope: -0.13865606
-      outSlope: -0.13865606
+      time: 0.6546377
+      value: 0.2149353
+      inSlope: -0.1554669
+      outSlope: -0.1554669
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.25130975
+      outWeight: 0.42603782
     - serializedVersion: 3
       time: 1
       value: 0

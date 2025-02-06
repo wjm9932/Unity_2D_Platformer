@@ -9,21 +9,23 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private GameObject loopAudioSourcePrefab;
     public enum InGameSoundEffectType
     {
-        PLAYER_JUMP,
-        PLAYER_DOUBLE_JUMP,
-        PLAYER_DASH,
-        PLAYER_LAND,
-        PLAYER_SLIDE,
-        PLAYER_ATTACK_1,
-        PLAYER_ATTACK_2,
-        PLAYER_HIT,
-        PLAYER_DIE,
-        ENEMY_HIT,
-        ENEMY_WARRIOR_ATTACK,
-        ENEMY_SPEAR_ATTACK,
-        ENEMY_SHIELD_BLOCK,
-        ENEMY_SHIELD_ATTACK,
-        ENEMY_RANGE_ATTACK,
+        PLAYER_JUMP = 0,
+        PLAYER_DOUBLE_JUMP = 1,
+        PLAYER_DASH = 2,
+        PLAYER_LAND = 3,
+        PLAYER_SLIDE = 4,
+        PLAYER_ATTACK_1 = 5,
+        PLAYER_ATTACK_2 = 6,
+        PLAYER_HIT = 7,
+        PLAYER_DIE = 8,
+        ENEMY_HIT = 9,
+        ENEMY_WARRIOR_ATTACK = 10,
+        ENEMY_SPEAR_ATTACK = 11,
+        ENEMY_SHIELD_BLOCK = 12,
+        ENEMY_SHIELD_ATTACK = 13,
+        ENEMY_RANGE_ATTACK = 14,
+        CHEST_OPEN = 15,
+        ITEM_ACQUIRE = 16,
     }
 
     [System.Serializable]

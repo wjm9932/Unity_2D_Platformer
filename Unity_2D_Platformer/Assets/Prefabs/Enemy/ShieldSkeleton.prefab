@@ -302,7 +302,7 @@ MonoBehaviour:
   movementType: {fileID: 11400000, guid: 840ecdd7142dd1a44bff9aab64999277, type: 2}
   collisionBox: {fileID: 2728898523777886955}
   rageColor: {r: 0.6509804, g: 0.36078432, b: 0.36078432, a: 1}
-  attackSoundEffect: 12
+  attackSoundEffect: 13
   targetLayer:
     serializedVersion: 2
     m_Bits: 64

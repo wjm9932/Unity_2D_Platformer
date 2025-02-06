@@ -25,6 +25,7 @@ public class Heart : Item
                 {
                     Destroy(gameObject);
                 }
+                SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.ITEM_ACQUIRE, 0.4f);
             }
         }
     }
