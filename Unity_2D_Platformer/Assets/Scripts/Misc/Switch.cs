@@ -56,7 +56,9 @@ public class Switch : MonoBehaviour, IInteractable
 
     public void Trigger()
     {
-        if (Time.time >= lastActiveTime + timeBetActive && resetable == true && on.activeSelf == false)
+        if (Time.time < lastActiveTime + timeBetActive) return;
+
+        if (resetable == false || (resetable == true && on.activeSelf == false))
         {
             TriggerSwitch();
             lastActiveTime = Time.time;
@@ -70,8 +72,6 @@ public class Switch : MonoBehaviour, IInteractable
         {
             on.SetActive(false);
             off.SetActive(true);
-
-            timeElapsed = 0f;
         }
         else
         {
@@ -80,4 +80,12 @@ public class Switch : MonoBehaviour, IInteractable
         }
     }
 
+
+    private void OnValidate()
+    {
+        if(resetable == false)
+        {
+            resetFunction = false;
+        }
+    }
 }
