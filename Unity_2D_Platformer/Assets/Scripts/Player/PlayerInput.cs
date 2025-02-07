@@ -29,5 +29,7 @@ public class PlayerInput : MonoBehaviour
         isAttack = Input.GetKeyDown(KeyCode.LeftControl);
         isDash = Input.GetKeyDown(KeyCode.X);
         isDashCut = Input.GetKeyUp(KeyCode.X);
+
+        
     }
 }

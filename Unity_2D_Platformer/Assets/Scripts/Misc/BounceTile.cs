@@ -19,6 +19,7 @@ public class BounceTile : MonoBehaviour
             if (player.transform.position.y - player.playerFootOffset >= transform.position.y + validYpos)
             {
                 BouncePlayer(collision.gameObject.GetComponent<Player>());
+                SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.BOUNCE_PAD, 0.3f);
             }
         }
     }

@@ -139,15 +139,20 @@ public class Player : LivingEntity
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) == true && isDead == true)
-        {
-            RespawnPlayer(currentCheckpointPosition);
-        }
-
         //if (Input.GetKeyDown(KeyCode.R) == true && isDead == true)
         //{
-        //    SceneLoadManager.Instance.ReloadCurrentScene();
+        //    RespawnPlayer(currentCheckpointPosition);
         //}
+
+        if (Input.GetKeyDown(KeyCode.R) == true && isDead == true)
+        {
+            SceneLoadManager.Instance.ReloadCurrentScene();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape) == true && isDead == false)
+        {
+            MenuManager.Instance.PauseOrResume();
+        }
 
         #region Timer
         lastOnGroundTime -= Time.deltaTime;
@@ -200,6 +205,7 @@ public class Player : LivingEntity
         #endregion
         movementStateMachine.Update();
         movementStateMachine.jsm.Update();
+
     }
 
     private void FixedUpdate()
@@ -239,6 +245,8 @@ public class Player : LivingEntity
         rb.isKinematic = true;
         GetComponent<Collider2D>().enabled = false;
         movementStateMachine.ChangeState(movementStateMachine.dieState);
+
+        MenuManager.Instance.ActiveDieScreen(true);
     }
 
     private bool CanJumpAttack()
@@ -296,6 +304,8 @@ public class Player : LivingEntity
         GetComponent<Collider2D>().enabled = true;
         movementStateMachine.ChangeState(movementStateMachine.runState);
         movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.idleState);
+
+        MenuManager.Instance.ActiveDieScreen(false);
     }
 
     public override void KillInstant()
@@ -342,6 +352,7 @@ public class Player : LivingEntity
 
     public void StopPlayer()
     {
+        rb.velocity = Vector2.zero;
         rb.isKinematic = true;
         GetComponent<Collider2D>().enabled = false;
     }

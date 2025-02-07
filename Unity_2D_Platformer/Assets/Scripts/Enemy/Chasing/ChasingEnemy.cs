@@ -38,7 +38,7 @@ public class ChasingEnemy : MonoBehaviour
                 .AddAttackSequence()
                     .AddCondition(() => chasing.player != null && chasing.player.isDead == false)
                     .AddAttackSequence()
-                        .AddAction(new Wait(3f), btBuilder.actionManager)
+                        .AddAction(new Wait(5f), btBuilder.actionManager)
                         .AddRandomAttackSelector()
                             .AddAttackSequence()
                                 .AddAction(new ReadyToAttack(btBuilder.blackboard, 1.4f), btBuilder.actionManager)

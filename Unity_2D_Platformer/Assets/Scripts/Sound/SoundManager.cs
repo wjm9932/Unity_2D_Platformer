@@ -31,6 +31,7 @@ public class SoundManager : MonoBehaviour
         ENEMY_CHASING_READY = 19,
         ENEMY_CHASING_BULLET = 20,
         ENEMY_CHASING_LIGHNING = 21,
+        BOUNCE_PAD,
     }
 
     [System.Serializable]
