@@ -21,10 +21,10 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Player>() != null)
-        {
-            collision.GetComponent<Player>().SetCheckPoint(checkPointPosition.position);
-            flag.transform.position = conqueredFlagPosition.position;
-        }
+        //if (collision.GetComponent<Player>() != null)
+        //{
+        //    collision.GetComponent<Player>().SetCheckPoint(checkPointPosition.position);
+        //    flag.transform.position = conqueredFlagPosition.position;
+        //}
     }
 }

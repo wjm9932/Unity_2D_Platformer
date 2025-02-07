@@ -87,7 +87,7 @@ public class Player : LivingEntity
     #endregion
 
     #region State Machine
-    private PlayerMovementStateMachine movementStateMachine;
+    public PlayerMovementStateMachine movementStateMachine { get; private set; }
     #endregion
 
     #region Timer
@@ -102,7 +102,6 @@ public class Player : LivingEntity
     public PlayerInput input { get; private set; }
     public float facingDir { get; private set; }
     public float playerFootOffset { get; private set; }
-    private Vector2 currentCheckpointPosition;
 
     [HideInInspector] public bool isDashing = false;
     [HideInInspector] public Vector2 platformVelocity;
@@ -131,7 +130,6 @@ public class Player : LivingEntity
         keyCount = 0;
         heartCount = maxHearts;
         dashCount = maxDashCount;
-        currentCheckpointPosition = this.transform.position;
         playerFootOffset = (GetComponent<BoxCollider2D>().size.y / 2) * transform.localScale.y;
         movementStateMachine.ChangeState(movementStateMachine.runState);
         movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.idleState);
@@ -314,10 +312,6 @@ public class Player : LivingEntity
         base.KillInstant();
     }
 
-    public void SetCheckPoint(Vector2 pos)
-    {
-        currentCheckpointPosition = pos;
-    }
 
     public bool RecoverHealth()
     {

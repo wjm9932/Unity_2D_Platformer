@@ -10,6 +10,7 @@ public class Switch : MonoBehaviour, IInteractable
     [SerializeField] private GameObject[] targets;
 
     [SerializeField] private bool resetable = true;
+    [SerializeField] private bool resetFunction = true;
     [SerializeField] private float resetTimer;
 
     private float timeBetActive = 0.5f;
@@ -30,7 +31,14 @@ public class Switch : MonoBehaviour, IInteractable
 
             if (timeElapsed >= resetTimer)
             {
-                Trigger();
+                if (resetFunction == true)
+                {
+                    TriggerSwitch();
+                }
+                else
+                {
+                    ToggleSwitchSprite();
+                }
                 timeElapsed = 0f;
             }
         }
@@ -43,17 +51,16 @@ public class Switch : MonoBehaviour, IInteractable
             target.GetComponent<IInteractable>().Trigger();
         }
 
-        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.SWITCH_TRIGGER, 0.35f);
-
         ToggleSwitchSprite();
     }
 
     public void Trigger()
     {
-        if (Time.time >= lastActiveTime + timeBetActive)
+        if (Time.time >= lastActiveTime + timeBetActive && resetable == true && on.activeSelf == false)
         {
             TriggerSwitch();
             lastActiveTime = Time.time;
+            SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.SWITCH_TRIGGER, 0.35f);
         }
     }
 

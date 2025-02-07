@@ -59,5 +59,9 @@ public class Projectile : MonoBehaviour, IPoolableObject
                 pool.Release(gameObject);
             }
         }
+        else if(collision.GetComponent<PushableObject>() != null)
+        {
+            pool.Release(gameObject);
+        }
     }
 }
