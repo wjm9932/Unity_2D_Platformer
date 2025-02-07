@@ -9,6 +9,7 @@ public class ReadyToAttack : IAction
     private float timeElapsed;
 
     private GameObject readyEffect;
+    private AudioSource audioSource;
 
     public ReadyToAttack(Blackboard blackBoard, float readyTime)
     {
@@ -20,8 +21,10 @@ public class ReadyToAttack : IAction
     {
         timeElapsed = 0f;
         var transform = blackboard.GetData<ChasingEnemy>("owner").transform;
-        var targetPrefab = blackboard.GetData<ChasingEnemy>("owner").lightningAttackReadyPrefab;
+        var targetPrefab = blackboard.GetData<ChasingEnemy>("owner").attackReadyPrefab;
         readyEffect = Object.Instantiate(targetPrefab, transform.position + targetPrefab.transform.position, targetPrefab.transform.rotation, transform);
+
+        audioSource = SoundManager.Instance.PlayLoopSoundEffect(SoundManager.InGameSoundEffectType.ENEMY_CHASING_READY, 0.1f);
     }
 
     public NodeState Execute()
@@ -42,6 +45,7 @@ public class ReadyToAttack : IAction
     public void OnExit()
     {
         Object.Destroy(readyEffect);
+        audioSource.loop = false;
     }
 
     public void OnAnimationEnterEvent()

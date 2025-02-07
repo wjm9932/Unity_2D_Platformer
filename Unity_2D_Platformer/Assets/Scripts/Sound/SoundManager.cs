@@ -28,6 +28,9 @@ public class SoundManager : MonoBehaviour
         CHEST_OPEN = 16,
         ITEM_ACQUIRE = 17,
         SWITCH_TRIGGER = 18,
+        ENEMY_CHASING_READY = 19,
+        ENEMY_CHASING_BULLET = 20,
+        ENEMY_CHASING_LIGHNING = 21,
     }
 
     [System.Serializable]

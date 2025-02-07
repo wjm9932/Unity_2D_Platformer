@@ -1,52 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 public class LightningAttack : IAction
 {
     private Blackboard blackboard;
     private GameObject targetPrefab;
-    private float targetTime;
-    private float timeElapsed;
+    private GameObject effectPrefab;
 
     private float fadeDuration = 0.3f;
-    private bool isFading = false; 
+    private float totalDuration = 0.4f;
+
+    private NodeState currentState;
 
     public LightningAttack(Blackboard blackBoard)
     {
         this.blackboard = blackBoard;
-        targetTime = 0.4f;
     }
 
     public void OnEnter()
     {
-        timeElapsed = 0f;
-        isFading = false;
-        Fire();
+        currentState = NodeState.Running;
+        blackboard.GetData<ChasingEnemy>("owner").StartCoroutine(AttackSequence());
     }
 
     public NodeState Execute()
     {
-        timeElapsed += Time.deltaTime;
-
-        if (!isFading && timeElapsed >= targetTime - fadeDuration)
-        {
-            targetPrefab.GetComponentInChildren<Collider2D>().enabled = false;
-            isFading = true;
-        }
-
-        if (isFading)
-        {
-            float alpha = Mathf.Lerp(1f, 0f, (timeElapsed - (targetTime - fadeDuration)) / fadeDuration);
-            SetAlpha(alpha);
-        }
-
-        if (timeElapsed >= targetTime)
-        {
-            return NodeState.Success;
-        }
-
-        return NodeState.Running;
+        return currentState;
     }
 
     public void ExecuteInFixedUpdate() { }
@@ -60,22 +41,51 @@ public class LightningAttack : IAction
     public void OnAnimationTransitionEvent() { }
     public void OnAnimationExitEvent() { }
 
-    private void Fire()
+    private IEnumerator AttackSequence()
     {
-        var transform = blackboard.GetData<ChasingEnemy>("owner").transform;
-        var target = blackboard.GetData<ChasingEnemy>("owner").lightningAttackPrefab;
-        var playerPos = new Vector2(transform.position.x, blackboard.GetData<ChasingEnemy>("owner").chasing.player.transform.position.y);
-        targetPrefab = Object.Instantiate(target, playerPos, target.transform.rotation);
+        var owner = blackboard.GetData<ChasingEnemy>("owner");
+        var spawnPos = GetSpawnPosition(owner);
+
+        // Ready Effect 持失
+        effectPrefab = Object.Instantiate(owner.lightningAttackReadyPrefab, spawnPos, owner.lightningAttackReadyPrefab.transform.rotation);
+        yield return FadeOut(effectPrefab, 0.5f);
+
+        Object.Destroy(effectPrefab);
+
+        // Lightning Effect 持失
+        effectPrefab = Object.Instantiate(owner.lightningAttackPrefab, spawnPos, owner.lightningAttackPrefab.transform.rotation);
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.ENEMY_CHASING_LIGHNING, 0.2f);
+
+        yield return new WaitForSeconds(totalDuration - fadeDuration);
+
+        // Lightning Fade Out
+        effectPrefab.GetComponentInChildren<Collider2D>().enabled = false;
+        yield return FadeOut(effectPrefab, fadeDuration);
+
+        Object.Destroy(effectPrefab);
+
+        currentState = NodeState.Success;
     }
 
-    private void SetAlpha(float alpha)
+    private IEnumerator FadeOut(GameObject obj, float duration)
     {
-        if (targetPrefab == null) return;
+        if (obj == null) yield break;
+        var meshRenderer = obj.GetComponentInChildren<MeshRenderer>();
+        if (meshRenderer == null) yield break;
 
-        MeshRenderer meshRenderer = targetPrefab.GetComponentInChildren<MeshRenderer>();
-        if (meshRenderer == null) return;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+            meshRenderer.material.SetFloat("_Fllipbook_Opacity", alpha);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        meshRenderer.material.SetFloat("_Fllipbook_Opacity", 0f);
+    }
 
-        Material material = meshRenderer.material;
-        material.SetFloat("_Fllipbook_Opacity", Mathf.Clamp01(alpha));
+    private Vector2 GetSpawnPosition(ChasingEnemy owner)
+    {
+        return new Vector2(owner.transform.position.x, owner.chasing.player.transform.position.y);
     }
 }

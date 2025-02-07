@@ -256,6 +256,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 877942328865200060}
     m_Modifications:
+    - target: {fileID: 1965221595077225958, guid: bca320d7543592543ae3dec6efef5b60, type: 3}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965221595077225958, guid: bca320d7543592543ae3dec6efef5b60, type: 3}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.data[0].value
+      value: 0.99998474
+      objectReference: {fileID: 0}
     - target: {fileID: 4140682559781072394, guid: bca320d7543592543ae3dec6efef5b60, type: 3}
       propertyPath: m_Name
       value: Saw
