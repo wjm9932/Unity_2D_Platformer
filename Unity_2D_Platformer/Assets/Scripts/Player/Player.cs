@@ -45,7 +45,8 @@ public class Player : LivingEntity
     [Header("Key Indicator")]
     [SerializeField] private IndicatorManager key;
     private int _keyCount;
-    public int keyCount {
+    public int keyCount
+    {
         set
         {
             _keyCount = Mathf.Clamp(value, 0, 1);
@@ -103,7 +104,6 @@ public class Player : LivingEntity
     public float facingDir { get; private set; }
     public float playerFootOffset { get; private set; }
 
-    [HideInInspector] public bool isDashing = false;
     [HideInInspector] public Vector2 platformVelocity;
 
     public float speedLimit { get; private set; }
@@ -249,12 +249,12 @@ public class Player : LivingEntity
 
     private bool CanJumpAttack()
     {
-        return (movementStateMachine.jsm.currentState == movementStateMachine.jsm.jumpFallingState || movementStateMachine.jsm.currentState == movementStateMachine.jsm.doubleJumpFallingState) 
+        return (movementStateMachine.jsm.currentState == movementStateMachine.jsm.jumpFallingState || movementStateMachine.jsm.currentState == movementStateMachine.jsm.doubleJumpFallingState)
             && movementStateMachine.jsm.currentState != movementStateMachine.jsm.jumpAttackState && movementStateMachine.currentState != movementStateMachine.dashState;
     }
-    public bool TakeDamage(GameObject damager, bool isHardAttack = false)
+    public bool TakeDamage(GameObject damager, bool isHardAttack = false, bool canDashEvade = true)
     {
-        if (!CanTakeDamage(isHardAttack))
+        if (!CanTakeDamage(isHardAttack, canDashEvade))
         {
             return false;
         }
@@ -278,10 +278,21 @@ public class Player : LivingEntity
         return true;
     }
 
-    private bool CanTakeDamage(bool isHardAttack)
+    private bool CanTakeDamage(bool isHardAttack, bool canDashEvade)
     {
-        if (movementStateMachine.currentState == movementStateMachine.hitState || isDashing)
+        if (movementStateMachine.currentState == movementStateMachine.hitState)
         {
+
+            return false;
+        }
+
+        if(movementStateMachine.currentState == movementStateMachine.dashState)
+        {
+            if (canDashEvade == false)
+            {
+                return true;
+            }
+
             return false;
         }
 
@@ -350,7 +361,7 @@ public class Player : LivingEntity
         rb.isKinematic = true;
         GetComponent<Collider2D>().enabled = false;
     }
-    
+
 
     #region EDITOR METHODS
 #if UNITY_EDITOR

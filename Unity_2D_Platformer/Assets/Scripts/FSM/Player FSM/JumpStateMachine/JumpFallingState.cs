@@ -29,8 +29,11 @@ public class JumpFallingState : IState, IGravityModifier
         }
         else if (sm.owner.facingDir == sm.owner.input.moveInput.x && sm.owner.lastOnWallTime - sm.owner.movementType.wallJumpCoyoteTime >= 0f && sm.msm.currentState != sm.msm.hitState)
         {
-            sm.ChangeState(sm.slideState);
-            return;
+            if (sm.msm.currentState != sm.msm.dashState)
+            {
+                sm.ChangeState(sm.slideState);
+                return;
+            }
         }
 
         if (sm.owner.lastPressJumpTime > 0f)

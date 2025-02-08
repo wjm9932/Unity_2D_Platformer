@@ -23,7 +23,6 @@ public class DashState : IState
             return;
         }
 
-        sm.owner.isDashing = true;
         dashForce = sm.owner.movementType.dashForce;
 
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(sm.owner.rb.position.x + (sm.owner.transform.right.x * 0.525f), sm.owner.rb.position.y), sm.owner.transform.right, CalculateDashDistanceByDashForce(dashForce), sm.owner.whatIsGround);
@@ -80,7 +79,6 @@ public class DashState : IState
     }
     public void Exit()
     {
-        sm.owner.isDashing = false;
         sm.owner.animHandler.animator.SetBool("IsDash", false);
     }
 

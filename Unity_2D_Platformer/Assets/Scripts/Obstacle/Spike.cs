@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
+    [SerializeField] private bool isKillInstant = true;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<LivingEntity>() != null)
+        if (collision.gameObject.GetComponent<LivingEntity>() != null)
         {
-            collision.GetComponent<LivingEntity>().KillInstant();
+            if (isKillInstant == true || collision.gameObject.GetComponent<Player>() == null)
+            {
+                collision.gameObject.GetComponent<LivingEntity>().KillInstant();
+            }
+            else
+            {
+                collision.gameObject.GetComponent<Player>().TakeDamage(gameObject, true, false);
+            }
         }
     }
 
@@ -16,7 +24,14 @@ public class Spike : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<LivingEntity>() != null)
         {
-            collision.gameObject.GetComponent<LivingEntity>().KillInstant();
+            if (isKillInstant == true || collision.gameObject.GetComponent<Player>() == null)
+            {
+                collision.gameObject.GetComponent<LivingEntity>().KillInstant();
+            }
+            else
+            {
+                collision.gameObject.GetComponent<Player>().TakeDamage(gameObject, true, false);
+            }
         }
     }
 }

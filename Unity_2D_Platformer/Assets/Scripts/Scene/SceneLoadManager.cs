@@ -24,6 +24,11 @@ public class SceneLoadManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         SceneManager.LoadScene("MainMenu");
         gameObject.SetActive(false);
+
+
+        Application.targetFrameRate = 144;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void GoToMainMenu()

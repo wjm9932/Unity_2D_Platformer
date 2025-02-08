@@ -6,7 +6,6 @@ public class Chest : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject[] items;
     [SerializeField] private GameObject enemySpawner;
-    [SerializeField][Range(0f, 1f)] private float enemySpawnChance = 0.5f;
 
     private Animator animator;
     private bool isTriggered = false;
@@ -35,14 +34,15 @@ public class Chest : MonoBehaviour, IInteractable
 
         yield return new WaitUntil(() => IsAnimationFinished());
 
-        if (enemySpawner != null && Random.Range(0f, 1f) <= enemySpawnChance)
+        if (enemySpawner != null)
         {
             enemySpawner.GetComponent<EnemySpawner>().SpawnEnemy();
         }
-        else
+
+        if(items.Length > 0)
         {
             int randItem = Random.Range(0, items.Length);
-            if(ObjectPoolManager.Instance.GetPoolableObject(items[randItem], transform.position, items[randItem].transform.rotation) == null)
+            if (ObjectPoolManager.Instance.GetPoolableObject(items[randItem], transform.position, items[randItem].transform.rotation) == null)
             {
                 Instantiate(items[randItem], transform.position, items[randItem].transform.rotation);
             }
