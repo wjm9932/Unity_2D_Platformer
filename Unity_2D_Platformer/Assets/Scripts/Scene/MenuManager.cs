@@ -22,6 +22,7 @@ public class MenuManager : MonoBehaviour
     public void Quit()
     {
         Time.timeScale = 1f;
+        GameDataSaveLoadManager.Instance.SaveGameData();
         SceneLoadManager.Instance.GoToMainMenu();
     }
     public void Resume()

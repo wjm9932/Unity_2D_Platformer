@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PreventDeselectOnClick : MonoBehaviour, IPointerDownHandler
+public class PreventDeselectOnClick : MonoBehaviour
 {
     private GameObject lastSelected;
 
@@ -11,11 +11,7 @@ public class PreventDeselectOnClick : MonoBehaviour, IPointerDownHandler
         {
             lastSelected = EventSystem.current.currentSelectedGameObject;
         }
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (EventSystem.current.currentSelectedGameObject == null && lastSelected != null)
+        else
         {
             EventSystem.current.SetSelectedGameObject(lastSelected);
         }

@@ -53,7 +53,7 @@ public class SceneLoadManager : MonoBehaviour
         StartCoroutine(LoadSceneCoroutine(SceneManager.GetActiveScene().buildIndex));
     }
 
-    public void LoadSavedScene(Action action, int savedSceneIndex)
+    public void LoadSavedScene(int savedSceneIndex, Action action)
     {
         gameObject.SetActive(true);
         loadAtcion = action;
