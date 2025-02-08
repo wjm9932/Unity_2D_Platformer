@@ -11,7 +11,7 @@ public class Bomb : MonoBehaviour, IInteractable
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private float timeElapsed;
-    private bool isTrigger;
+    private bool isTriggered;
 
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class Bomb : MonoBehaviour, IInteractable
     }
     private void Start()
     {
-        isTrigger = false;
+        isTriggered = false;
         timeElapsed = 0f;
     }
 
@@ -31,7 +31,7 @@ public class Bomb : MonoBehaviour, IInteractable
 
     public void Trigger()
     {
-        if(isTrigger == true)
+        if(isTriggered == true)
         {
             return;
         }
@@ -40,7 +40,7 @@ public class Bomb : MonoBehaviour, IInteractable
 
     private IEnumerator ActivateBomb()
     {
-        isTrigger = true;
+        isTriggered = true;
         while (timeElapsed < timer)
         {
             timeElapsed += Time.deltaTime;
@@ -50,6 +50,7 @@ public class Bomb : MonoBehaviour, IInteractable
         }
 
         Explode();
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.EXPLODE, GetComponent<AudioSource>());
         spriteRenderer.color = Color.white;
         animator.enabled = true;
 
@@ -66,7 +67,7 @@ public class Bomb : MonoBehaviour, IInteractable
         {
             if(collider.GetComponent<Enemy>() != null)
             {
-                collider.GetComponent<Enemy>().TakeDamage(10f, this.gameObject);
+                collider.GetComponent<Enemy>().TakeDamage(25f, this.gameObject);
             }
             else
             {
