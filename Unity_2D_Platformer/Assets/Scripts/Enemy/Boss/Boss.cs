@@ -112,6 +112,9 @@ public class Boss : Enemy, ITargetHandler
             {
                 Die();
             }
+
+            SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.ENEMY_HIT, 0.7f);
+
             return true;
         }
     }

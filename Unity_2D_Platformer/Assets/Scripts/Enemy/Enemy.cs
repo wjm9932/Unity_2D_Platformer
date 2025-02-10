@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Timeline.Actions.MenuPriority;
 
 
 public abstract class Enemy : LivingEntity
@@ -172,7 +173,10 @@ public abstract class Enemy : LivingEntity
             if (Random.Range(0f, 1f) <= chances)
             {
                 var randItemIndex = Random.Range(0, dropItem.Count);
-                ObjectPoolManager.Instance.GetPoolableObject(dropItem[randItemIndex], transform.position, Quaternion.identity);
+                if (ObjectPoolManager.Instance.GetPoolableObject(dropItem[randItemIndex], transform.position, transform.rotation) == null)
+                {
+                    Instantiate(dropItem[randItemIndex], transform.position, transform.rotation);
+                }
             }
         }
     }
