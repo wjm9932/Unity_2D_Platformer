@@ -134,7 +134,7 @@ public class Boss : Enemy, ITargetHandler
                     .AddCondition(() => RandomExecute(0.5f))
                     .AddAttackSelector()
                         .AddAttackSequence()
-                            .AddCondition(() => RandomExecute(0.8f))
+                            .AddCondition(() => RandomExecute(0.7f))
                             .AddAction(new SetUpForShooting(btBuilder.blackboard), btBuilder.actionManager)
                             .AddAction(new Shoot(btBuilder.blackboard), btBuilder.actionManager)
                         .EndComposite()
