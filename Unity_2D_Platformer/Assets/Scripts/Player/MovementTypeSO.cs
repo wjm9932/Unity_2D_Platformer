@@ -78,11 +78,15 @@ public class MovementTypeSO : ScriptableObject
     //Unity Callback, called when the inspector updates
     private void OnValidate()
     {
+        jumpTimeToApex = Mathf.Clamp(jumpTimeToApex, 0.1f, jumpTimeToApex);
         //Calculate gravity strength using the formula (gravity = 2 * jumpHeight / timeToJumpApex^2) 
         gravityStrength = -(2 * jumpHeight) / (jumpTimeToApex * jumpTimeToApex);
 
         //Calculate the rigidbody's gravity scale (ie: gravity strength relative to unity's gravity value, see project settings/Physics2D)
         gravityScale = gravityStrength / Physics2D.gravity.y;
+
+        runAcceleration = Mathf.Clamp(runAcceleration, 0.01f, runMaxSpeed);
+        runDecceleration = Mathf.Clamp(runDecceleration, 0.01f, runMaxSpeed);
 
         //Calculate are run acceleration & deceleration forces using formula: amount = ((1 / Time.fixedDeltaTime) * acceleration) / runMaxSpeed
         runAccelAmount = ((1 / Time.fixedDeltaTime) * runAcceleration) / runMaxSpeed;
@@ -91,10 +95,6 @@ public class MovementTypeSO : ScriptableObject
         //Calculate jumpForce using the formula (initialJumpVelocity = gravity * timeToJumpApex)
         jumpForce = Mathf.Abs(gravityStrength) * jumpTimeToApex;
         bounceForce = Mathf.Sqrt(2 * Mathf.Abs(gravityStrength) * bounceHeight);
-
-        #region Variable Ranges
-        runAcceleration = Mathf.Clamp(runAcceleration, 0.01f, runMaxSpeed);
-        runDecceleration = Mathf.Clamp(runDecceleration, 0.01f, runMaxSpeed);
 
         slideAccel = Mathf.Clamp(slideAccel, 1f, Mathf.Abs(slideSpeed));
 
@@ -106,6 +106,5 @@ public class MovementTypeSO : ScriptableObject
         {
             slideAccelAmount = ((1 / Time.fixedDeltaTime) * slideAccel) / Mathf.Abs(slideSpeed);
         }
-        #endregion
     }
 }

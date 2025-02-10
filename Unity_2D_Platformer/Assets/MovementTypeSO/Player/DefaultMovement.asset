@@ -21,8 +21,8 @@ MonoBehaviour:
   runMaxSpeed: 11
   runAcceleration: 2.5
   runAccelAmount: 11.363637
-  runDecceleration: 5
-  runDeccelAmount: 22.727274
+  runDecceleration: 4.5
+  runDeccelAmount: 20.454546
   accelInAir: 0.65
   deccelInAir: 0.2
   jumpHeight: 5
@@ -40,7 +40,7 @@ MonoBehaviour:
   slideSpeed: -3
   slideAccel: 1
   slideAccelAmount: 16.666668
-  coyoteTime: 0.1
+  coyoteTime: 0.2
   jumpInputBufferTime: 0.1
   wallJumpCoyoteTime: 0.2
   attackBufferTime: 0.2

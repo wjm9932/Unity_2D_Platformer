@@ -123,6 +123,7 @@ public class RunState : IState
 
         float speedDif = targetSpeed - sm.owner.rb.velocity.x;
         float movement = speedDif * accelAmount;
+
         sm.owner.rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
     }
 }
