@@ -12,6 +12,7 @@ public class SetTargetTrigger : MonoBehaviour
         if(collision.GetComponent<Player>() != null)
         {
             enemy.GetComponent<ITargetHandler>().SetTarget(collision.GetComponent<Player>());
+            gameObject.SetActive(false);
         }
     }
 

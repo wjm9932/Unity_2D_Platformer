@@ -20,6 +20,8 @@ public class SpawnEnemy : IAction
 
         blackboard.GetData<Boss>("owner").animHandler.ResetOneFrameDelay();
         blackboard.GetData<Boss>("owner").animHandler.animator.SetBool("IsCast", true);
+
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.BOSS_CAST_SPELL, 0.3f);
     }
 
     public NodeState Execute()

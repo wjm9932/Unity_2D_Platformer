@@ -32,7 +32,11 @@ public class SoundManager : MonoBehaviour
         ENEMY_CHASING_BULLET = 20,
         ENEMY_CHASING_LIGHNING = 21,
         BOUNCE_PAD,
-        EXPLODE
+        EXPLODE,
+        BOSS_DASH,
+        BOSS_CAST_SPELL,
+        BOSS_TELEPORT,
+        BOSS_SHOOT,
     }
 
     [System.Serializable]

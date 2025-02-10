@@ -87,6 +87,9 @@ public class Dash : IAction
         float speed;
         float relativeDistance = Mathf.Abs(blackboard.GetData<Enemy>("owner").transform.position.x - blackboard.GetData<Enemy>("owner").target.transform.position.x);
 
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.BOSS_DASH, 0.2f);
+
+
         if (relativeDistance <= blackboard.GetData<Enemy>("owner").trackStopDistance)
         {
             targetPositionX = blackboard.GetData<Enemy>("owner").transform.position.x;

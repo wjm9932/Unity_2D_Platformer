@@ -95,16 +95,8 @@ public class Boss : Enemy, ITargetHandler
         }
         else
         {
-            healthBar.gameObject.SetActive(true);
             spriteRenderer.color = rageColor;
-
             this.isHardAttack = isHardAttack;
-            Player player = damager.GetComponent<Player>();
-
-            if (player != null)
-            {
-                target = damager.GetComponent<Player>();
-            }
 
             hp -= dmg;
 
@@ -227,6 +219,7 @@ public class Boss : Enemy, ITargetHandler
     public void SetTarget(Player target)
     {
         this.target = target;
+        healthBar.gameObject.SetActive(true);
     }
 
     #region EDITOR METHODS

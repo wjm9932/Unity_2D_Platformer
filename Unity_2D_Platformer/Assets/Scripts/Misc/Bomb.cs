@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
-public class Bomb : MonoBehaviour, IInteractable
+public class Bomb : MonoBehaviour, IInteractable, IPoolableObject
 {
     [SerializeField] private float timer;
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask target;
+
+    public IObjectPool<GameObject> pool { get; private set; }
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -26,12 +29,12 @@ public class Bomb : MonoBehaviour, IInteractable
 
     void Update()
     {
-        
+
     }
 
     public void Trigger()
     {
-        if(isTriggered == true)
+        if (isTriggered == true)
         {
             return;
         }
@@ -46,7 +49,7 @@ public class Bomb : MonoBehaviour, IInteractable
             timeElapsed += Time.deltaTime;
             float progress = timeElapsed / timer;
             spriteRenderer.color = Color.Lerp(Color.white, Color.red, progress);
-            yield return null; 
+            yield return null;
         }
 
         Explode();
@@ -56,16 +59,23 @@ public class Bomb : MonoBehaviour, IInteractable
 
         yield return new WaitUntil(() => IsAnimationFinished());
 
-        Destroy(gameObject);
+        if (pool == null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Release();
+        }
     }
 
     private void Explode()
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, attackRange, target);
 
-        foreach(var collider in hitColliders)
+        foreach (var collider in hitColliders)
         {
-            if(collider.GetComponent<Enemy>() != null)
+            if (collider.GetComponent<Enemy>() != null)
             {
                 collider.GetComponent<Enemy>().TakeDamage(25f, this.gameObject);
             }
@@ -81,6 +91,16 @@ public class Bomb : MonoBehaviour, IInteractable
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         return stateInfo.normalizedTime >= 1f && !animator.IsInTransition(0);
+    }
+
+    public void SetPool(IObjectPool<GameObject> pool)
+    {
+        this.pool = pool;
+    }
+
+    public void Release()
+    {
+        pool.Release(gameObject);
     }
 
 #if UNITY_EDITOR

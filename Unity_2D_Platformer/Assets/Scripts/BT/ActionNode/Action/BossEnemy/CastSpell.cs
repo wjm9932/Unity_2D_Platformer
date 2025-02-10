@@ -48,6 +48,8 @@ public class CastSpell : IAction
         position.y -= blackboard.GetData<Boss>("owner").target.playerFootOffset;
 
         Object.Instantiate(blackboard.GetData<Boss>("owner").spellPrefab, position, Quaternion.identity);
+
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.BOSS_CAST_SPELL, 0.3f);
     }
     public void OnAnimationTransitionEvent()
     {

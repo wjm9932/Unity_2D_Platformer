@@ -20,6 +20,8 @@ public class Teleport : IAction
 
         blackboard.GetData<Boss>("owner").animHandler.ResetOneFrameDelay();
         blackboard.GetData<Boss>("owner").animHandler.animator.SetTrigger("TeleportStart");
+
+        SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.BOSS_TELEPORT, 1f);
     }
 
     public NodeState Execute()
@@ -59,5 +61,6 @@ public class Teleport : IAction
         randomPos.x = Random.Range(blackboard.GetData<Boss>("owner").bossRange[0].transform.position.x, blackboard.GetData<Boss>("owner").bossRange[1].transform.position.x);
 
         blackboard.GetData<Boss>("owner").transform.position = randomPos;
+
     }
 }
