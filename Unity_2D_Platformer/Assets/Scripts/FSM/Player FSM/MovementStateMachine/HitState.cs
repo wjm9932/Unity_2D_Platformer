@@ -73,16 +73,19 @@ public class HitState : IState
 
     private void ApplyKnockbackForce(Vector2 force)
     {
+        Vector2 finalForce = Vector2.zero;
+
         if (Mathf.Abs(sm.owner.rb.velocity.y) > 0f)
         {
-            force.y -= sm.owner.rb.velocity.y;
+            finalForce.y -= sm.owner.rb.velocity.y;
         }
 
         if (Mathf.Abs(sm.owner.rb.velocity.x) > 0f)
         {
-            force.x += Mathf.Abs(sm.owner.rb.velocity.x);
+            finalForce.x -= sm.owner.rb.velocity.x;
         }
         force.x *= sm.owner.hitDir;
-        sm.owner.rb.AddForce(force, ForceMode2D.Impulse);
+        finalForce += force;
+        sm.owner.rb.AddForce(finalForce, ForceMode2D.Impulse);
     }
 }

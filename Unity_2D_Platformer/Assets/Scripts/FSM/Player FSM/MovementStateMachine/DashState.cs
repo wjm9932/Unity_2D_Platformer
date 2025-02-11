@@ -80,6 +80,7 @@ public class DashState : IState
     public void Exit()
     {
         sm.owner.animHandler.animator.SetBool("IsDash", false);
+        sm.owner.dashGraceBufferTime = 0.2f;
     }
 
     public virtual void OnAnimationEnterEvent()

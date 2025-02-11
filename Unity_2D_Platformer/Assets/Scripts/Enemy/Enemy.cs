@@ -165,16 +165,16 @@ public abstract class Enemy : LivingEntity
         }
     }
 
-    private void DropItem(float chances)
+    public void DropItem(float chances)
     {
         if(dropItem != null)
         {
             if (Random.Range(0f, 1f) <= chances)
             {
                 var randItemIndex = Random.Range(0, dropItem.Count);
-                if (ObjectPoolManager.Instance.GetPoolableObject(dropItem[randItemIndex], transform.position, Quaternion.identity) == null)
+                if (ObjectPoolManager.Instance.GetPoolableObject(dropItem[randItemIndex], transform.position, dropItem[randItemIndex].transform.rotation) == null)
                 {
-                    Instantiate(dropItem[randItemIndex], transform.position, Quaternion.identity);
+                    Instantiate(dropItem[randItemIndex], transform.position, dropItem[randItemIndex].transform.rotation);
                 }
             }
         }

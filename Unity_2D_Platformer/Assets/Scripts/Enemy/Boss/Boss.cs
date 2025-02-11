@@ -17,6 +17,8 @@ public class Boss : Enemy, ITargetHandler
     [SerializeField] private GameObject dropBulletPrefab;
     [SerializeField] private GameObject[] dropItemPrefabs;
 
+    [SerializeField] GameObject key;
+
     public bool isGraceTime { get; set; }
 
     private FallingObjectHandler bulletDropHandler;
@@ -81,6 +83,7 @@ public class Boss : Enemy, ITargetHandler
     public override void Die()
     {
         base.Die();
+        Instantiate(key, transform.position, key.transform.rotation);
     }
 
     public override bool TakeDamage(float dmg, GameObject damager, bool isHardAttack = false)
@@ -134,7 +137,7 @@ public class Boss : Enemy, ITargetHandler
                     .AddCondition(() => RandomExecute(0.5f))
                     .AddAttackSelector()
                         .AddAttackSequence()
-                            .AddCondition(() => RandomExecute(0.7f))
+                            .AddCondition(() => RandomExecute(0.55f))
                             .AddAction(new SetUpForShooting(btBuilder.blackboard), btBuilder.actionManager)
                             .AddAction(new Shoot(btBuilder.blackboard), btBuilder.actionManager)
                         .EndComposite()

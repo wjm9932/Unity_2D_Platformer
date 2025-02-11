@@ -1622,7 +1622,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 288308620}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.61406, y: -12, z: -10}
+  m_LocalPosition: {x: 18.74697, y: -12, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1889,11 +1889,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: _hp
-      value: 200
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
+      propertyPath: key
+      value: 
+      objectReference: {fileID: 2925971911520082712, guid: 63fe8460baaae1a4d8faccd5b890ca1a, type: 3}
+    - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: maxHp
-      value: 200
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: healthBar
@@ -1901,7 +1905,7 @@ PrefabInstance:
       objectReference: {fileID: 1289389848}
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: dropChances
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: attackSoundEffect
@@ -1913,12 +1917,16 @@ PrefabInstance:
       objectReference: {fileID: 1521252751}
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: dropItem.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: dropItem.Array.data[0]
       value: 
-      objectReference: {fileID: 2925971911520082712, guid: 63fe8460baaae1a4d8faccd5b890ca1a, type: 3}
+      objectReference: {fileID: 935369320324283961, guid: b8c5bd318701da041a4f850742a45e41, type: 3}
+    - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
+      propertyPath: dropItem.Array.data[1]
+      value: 
+      objectReference: {fileID: 7451784485998942658, guid: cce255d4b2f6ccc41ac119b9e5bbc1bc, type: 3}
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: dropItemPrefabs.Array.size
       value: 5
@@ -28093,7 +28101,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 9b1538d410ccb564b935470640be604d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0

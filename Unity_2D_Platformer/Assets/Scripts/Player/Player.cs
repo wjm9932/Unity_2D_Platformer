@@ -97,6 +97,7 @@ public class Player : LivingEntity
     [HideInInspector] public float lastOnWallTime;
     [HideInInspector] public float lastPressDashTime;
     [HideInInspector] public float lastPressAttackTime;
+    [HideInInspector] public float dashGraceBufferTime;
     #endregion
 
     public Rigidbody2D rb { get; private set; }
@@ -158,6 +159,7 @@ public class Player : LivingEntity
         lastPressJumpTime -= Time.deltaTime;
         lastPressDashTime -= Time.deltaTime;
         lastPressAttackTime -= Time.deltaTime;
+        dashGraceBufferTime -= Time.deltaTime;
         #endregion
 
         if (input.isAttack == true)
@@ -196,6 +198,7 @@ public class Player : LivingEntity
                     {
                         enemy.GetComponent<Boss>().isHardAttack = true;
                     }
+                    enemy.DropItem(1f);
                     movementStateMachine.jsm.ChangeState(movementStateMachine.jsm.jumpAttackState);
                 }
             }
@@ -286,7 +289,7 @@ public class Player : LivingEntity
             return false;
         }
 
-        if(movementStateMachine.currentState == movementStateMachine.dashState)
+        if(movementStateMachine.currentState == movementStateMachine.dashState || dashGraceBufferTime > 0f)
         {
             if (canDashEvade == false)
             {

@@ -12,9 +12,11 @@ public class Projectile : MonoBehaviour, IPoolableObject
     private float targetDistance;
     private Rigidbody2D rb;
     private Vector2 startPosition;
+    private bool isHardAttack;
 
     private void Awake()
     {
+        isHardAttack = false;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -31,11 +33,12 @@ public class Projectile : MonoBehaviour, IPoolableObject
         this.pool = pool;
     }
 
-    public void SetTargetDistanceAndVelocity(Vector2 startPosition, float distance, float velocity)
+    public void SetTargetDistanceAndVelocity(Vector2 startPosition, float distance, float velocity, bool isHardAttack = false)
     {
         this.startPosition = startPosition;
         targetDistance = distance;
         rb.velocity = velocity * transform.right;
+        this.isHardAttack = isHardAttack;
     }
 
     public void Release()
@@ -54,7 +57,7 @@ public class Projectile : MonoBehaviour, IPoolableObject
     {
         if (collision.GetComponent<Player>() != null)
         {
-            if(collision.GetComponent<Player>().TakeDamage(this.gameObject) == true)
+            if(collision.GetComponent<Player>().TakeDamage(this.gameObject, isHardAttack) == true)
             {
                 pool.Release(gameObject);
             }

@@ -65,6 +65,12 @@ public class ShieldSkeleton : Enemy
                 target = damager.GetComponent<Player>();
             }
 
+            float blockChances = this.blockChances;
+
+            if(Mathf.Sign(hitDir) == Mathf.Sign(transform.right.x))
+            {
+                blockChances /= 2f;
+            }
 
             if (Random.Range(0f, 1f) <= blockChances)
             {

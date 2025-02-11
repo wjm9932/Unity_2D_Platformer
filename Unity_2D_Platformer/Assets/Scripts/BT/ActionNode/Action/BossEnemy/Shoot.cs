@@ -75,8 +75,8 @@ public class Shoot : IAction
                 bullet.GetComponent<SpriteRenderer>().flipY = true;
             }
 
-            bullet.GetComponent<Projectile>().SetTargetDistanceAndVelocity(ownerPosition, 100f, 25f);
-            SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.BOSS_SHOOT, 0.3f);
+            bullet.GetComponent<Projectile>().SetTargetDistanceAndVelocity(ownerPosition, 100f, 25f, true);
+            SoundManager.Instance.PlaySoundEffect(SoundManager.InGameSoundEffectType.BOSS_SHOOT, 0.15f);
 
             yield return new WaitForSeconds(0.5f);
         }
