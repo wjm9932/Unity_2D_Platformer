@@ -16,15 +16,28 @@ public class Bomb : MonoBehaviour, IInteractable, IPoolableObject
     private float timeElapsed;
     private bool isTriggered;
 
+    private Color originColor;
+    private Sprite originSprite;
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        originColor = spriteRenderer.color;
+        originSprite = spriteRenderer.sprite;
     }
+
+
+    private void OnEnable()
+    {
+        animator.enabled = false;
+        timeElapsed = 0f;
+        isTriggered = false;
+        spriteRenderer.color = originColor;
+        spriteRenderer.sprite = originSprite;
+    }
+
     private void Start()
     {
-        isTriggered = false;
-        timeElapsed = 0f;
     }
 
     void Update()

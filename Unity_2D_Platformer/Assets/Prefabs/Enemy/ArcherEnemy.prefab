@@ -317,7 +317,7 @@ MonoBehaviour:
   dropChances: 0.5
   isHardAttack: 0
   rangeWeapon: {fileID: 41213779625861006, guid: aa619b825e4b19e4a8b61cb40c782a33, type: 3}
-  attackCoolTime: 1.2
+  attackCoolTime: 1.5
 --- !u!82 &7365760388855601643
 AudioSource:
   m_ObjectHideFlags: 0
@@ -349,14 +349,23 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.6546377
-      value: 0.2149353
-      inSlope: -0.1554669
-      outSlope: -0.1554669
+      time: 0.14713037
+      value: 0.26219177
+      inSlope: -0.093329735
+      outSlope: -0.093329735
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.42603782
+      outWeight: 0.1570153
+    - serializedVersion: 3
+      time: 0.6848749
+      value: 0.23178655
+      inSlope: -0.22729492
+      outSlope: -0.22729492
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16860977
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 0

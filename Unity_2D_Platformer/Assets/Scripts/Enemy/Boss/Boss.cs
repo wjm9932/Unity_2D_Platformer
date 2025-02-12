@@ -57,7 +57,7 @@ public class Boss : Enemy, ITargetHandler
             bulletDropHandler.TrySpawnProjectile(dropBulletPrefab, new Vector2(Random.Range(bossRange[0].transform.position.x, bossRange[1].transform.position.x), target.transform.position.y + 10f));
 
             var randItem = Random.Range(0, dropItemPrefabs.Length);
-            itemDropHandler.TrySpawnProjectile(dropItemPrefabs[randItem], new Vector2(Random.Range(bossRange[0].transform.position.x, bossRange[1].transform.position.x), target.transform.position.y + 10f));
+            itemDropHandler.TrySpawnProjectile(dropItemPrefabs[randItem], new Vector2(Random.Range(bossRange[0].transform.position.x, bossRange[1].transform.position.x), target.transform.position.y + 20f));
         }
 
         root.Evaluate();
@@ -134,10 +134,10 @@ public class Boss : Enemy, ITargetHandler
                     .AddCondition(() => canBeDamaged == false && (isHardAttack == true || btBuilder.blackboard.GetData<bool>("IsCasting") == true))
                     .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
                     .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false), btBuilder.actionManager)
-                    .AddCondition(() => RandomExecute(0.5f))
+                    .AddCondition(() => RandomExecute(0.65f))
                     .AddAttackSelector()
                         .AddAttackSequence()
-                            .AddCondition(() => RandomExecute(0.55f))
+                            .AddCondition(() => RandomExecute(0.6f))
                             .AddAction(new SetUpForShooting(btBuilder.blackboard), btBuilder.actionManager)
                             .AddAction(new Shoot(btBuilder.blackboard), btBuilder.actionManager)
                         .EndComposite()

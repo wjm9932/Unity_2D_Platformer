@@ -275,7 +275,7 @@ Transform:
   - {fileID: 1295209002}
   - {fileID: 1232867113}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &251557210
 GameObject:
@@ -1622,7 +1622,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 288308620}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.74697, y: -12, z: -10}
+  m_LocalPosition: {x: 12.666667, y: -12, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1887,6 +1887,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 2728898524108704117, guid: d44f71437bb138d458fc98a98c861132, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: _hp
       value: 150
@@ -1929,7 +1933,7 @@ PrefabInstance:
       objectReference: {fileID: 7451784485998942658, guid: cce255d4b2f6ccc41ac119b9e5bbc1bc, type: 3}
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: dropItemPrefabs.Array.size
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: dropItemPrefabs.Array.data[0]
@@ -1942,11 +1946,11 @@ PrefabInstance:
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: dropItemPrefabs.Array.data[2]
       value: 
-      objectReference: {fileID: 7451784485998942658, guid: 7ed319d3b8aa81348ae80fbcc52f8245, type: 3}
+      objectReference: {fileID: 7451784485998942658, guid: b543a9690de67ce4cb5bc2e64c8e1b1f, type: 3}
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: dropItemPrefabs.Array.data[3]
       value: 
-      objectReference: {fileID: 7451784485998942658, guid: b543a9690de67ce4cb5bc2e64c8e1b1f, type: 3}
+      objectReference: {fileID: 7451784485998942658, guid: 7ed319d3b8aa81348ae80fbcc52f8245, type: 3}
     - target: {fileID: 4071021380344921171, guid: d44f71437bb138d458fc98a98c861132, type: 3}
       propertyPath: dropItemPrefabs.Array.data[4]
       value: 
@@ -2689,7 +2693,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3581633233502670674, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3581633233502670674, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2737,11 +2741,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3581633234267938815, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 36.1
+      value: 37.21
       objectReference: {fileID: 0}
     - target: {fileID: 3581633235077264486, guid: fbe7387553154aa4db54ca685826d392, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -41.2
+      value: -42.97
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbe7387553154aa4db54ca685826d392, type: 3}
