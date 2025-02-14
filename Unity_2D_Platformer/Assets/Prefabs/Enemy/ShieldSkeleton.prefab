@@ -316,7 +316,7 @@ MonoBehaviour:
   - {fileID: 7451784485998942658, guid: cce255d4b2f6ccc41ac119b9e5bbc1bc, type: 3}
   dropChances: 0.5
   isHardAttack: 0
-  blockChances: 0.5
+  blockChances: 0.4
 --- !u!82 &8826632565156531917
 AudioSource:
   m_ObjectHideFlags: 0

@@ -65,7 +65,7 @@ public class Track : IAction
     {
         var owner = blackboard.GetData<Enemy>("owner");
 
-        RaycastHit2D hit = Physics2D.Raycast(owner.transform.position, owner.transform.right, 10f, owner.targetLayer);
+        RaycastHit2D hit = Physics2D.Raycast(owner.transform.position, owner.transform.right, 20f, owner.targetLayer);
 
         return hit.collider != null;
     }
