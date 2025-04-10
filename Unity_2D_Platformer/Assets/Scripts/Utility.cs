@@ -107,7 +107,6 @@ public static class Utility
     {
         float obstacleDistance = distance;
 
-
         float velocity = 0f;
         float totalDistance = 0f;
         float requiredImpulse = 0f;

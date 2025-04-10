@@ -7,7 +7,7 @@ using UnityEngine.TextCore.Text;
 
 public class GameDataSaveLoadManager : MonoBehaviour
 {
-    public static GameDataSaveLoadManager Instance;
+    public static GameDataSaveLoadManager Instance { get; private set; }
     private string dataPath;
     private const string saveFileName = "saveData.json";
     private void Awake()

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoadManager : MonoBehaviour
 {
-    public static SceneLoadManager Instance;
+    public static SceneLoadManager Instance { get; private set; }
 
     [SerializeField] private Image background;
     [SerializeField] private Slider loadingBar;

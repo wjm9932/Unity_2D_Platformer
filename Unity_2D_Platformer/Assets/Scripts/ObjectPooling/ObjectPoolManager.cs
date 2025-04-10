@@ -7,7 +7,7 @@ using UnityEngine.Pool;
 
 public class ObjectPoolManager : MonoBehaviour
 {
-    public static ObjectPoolManager Instance;
+    public static ObjectPoolManager Instance { get; private set; }
 
     [System.Serializable]
     private struct objInfos
