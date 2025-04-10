@@ -73,14 +73,9 @@ public abstract class AttackState : IState
             {
                 var enemy = target.transform.GetComponent<Enemy>();
 
-                if (enemy.TakeDamage(sm.owner.dmg, sm.owner.gameObject) == true)
+                if (enemy.TakeDamage(sm.owner.dmg, sm.owner.gameObject, isHardAttack) == true)
                 {
                     isAttackSucced = true;
-
-                    if(enemy.GetComponent<Boss>() != null)
-                    {
-                        enemy.GetComponent<Boss>().isHardAttack = isHardAttack;
-                    }
                 }
             }
             else if (target.transform.GetComponent<IInteractable>() != null)

@@ -85,16 +85,23 @@ public class ObjectPoolManager : MonoBehaviour
     {
         if (objectPools.ContainsKey(targetObject) == false)
         {
-            //IObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => CreateObject(targetObject), OnGetObject, OnReleaseObject, OnDestroyObject, true, 10);
-            //objectPools.Add(targetObject, pool);
+            if(targetObject.GetComponent<IPoolableObject>() != null)
+            {
+                IObjectPool<GameObject> pool = new ObjectPool<GameObject>(() => CreateObject(targetObject), OnGetObject, OnReleaseObject, OnDestroyObject, true, 10);
+                objectPools.Add(targetObject, pool);
 
-            //for (int j = 0; j < 10; j++)
-            //{
-            //    GameObject poolObj = CreateObject(targetObject);
-            //    poolObj.GetComponent<IPoolableObject>().Release();
-            //}
-            Debug.LogWarning("There is no " + targetObject.name + " in object pool");
-            return null;
+                for (int j = 0; j < 10; j++)
+                {
+                    GameObject poolObj = CreateObject(targetObject);
+                    poolObj.GetComponent<IPoolableObject>().Release();
+                }
+            }
+            else
+            {
+                Debug.LogWarning("There is no " + targetObject.name + " in object pool");
+                return null;
+            }
+
         }
 
         GameObject returnObj = objectPools[targetObject].Get();
