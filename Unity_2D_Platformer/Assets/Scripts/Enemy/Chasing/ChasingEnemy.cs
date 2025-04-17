@@ -8,14 +8,11 @@ public class ChasingEnemy : MonoBehaviour
     [SerializeField] public GameObject bulletPrefab;
     [SerializeField] public GameObject lightningAttackReadyPrefab;
     [SerializeField] public GameObject lightningAttackPrefab;
-
-    private BehaviorTreeBuilder btBuilder;
-    private CompositeNode root;
+    private BehaviorTree bt;
     public Chasing chasing { get; private set; }
 
     private void Awake()
     {
-        btBuilder = GetComponent<BehaviorTreeBuilder>();
         chasing = GetComponent<Chasing>();
     }
 
@@ -26,36 +23,34 @@ public class ChasingEnemy : MonoBehaviour
 
     void Update()
     {
-        root.Evaluate();
+        bt.root.Evaluate();
     }
 
     private void BuildBT()
     {
-        btBuilder.blackboard.SetData<ChasingEnemy>("owner", this);
+        Blackboard blackboard = new Blackboard();
+        blackboard.SetData<ChasingEnemy>("owner", this);
 
-        root = btBuilder
+        bt = new BehaviorTreeBuilder(blackboard)
             .AddSelector()
                 .AddAttackSequence()
                     .AddCondition(() => chasing.player != null && chasing.player.isDead == false)
                     .AddAttackSequence()
-                        .AddAction(new Wait(5f), btBuilder.actionManager)
+                        .AddAction(new Wait(5f))
                         .AddRandomAttackSelector()
                             .AddAttackSequence()
-                                .AddAction(new ReadyToAttack(btBuilder.blackboard, 1.4f), btBuilder.actionManager)
-                                .AddAction(new Wait(1f), btBuilder.actionManager)
-                                .AddAction(new LightningAttack(btBuilder.blackboard), btBuilder.actionManager)
+                                .AddAction(new ReadyToAttack(blackboard, 1.4f))
+                                .AddAction(new Wait(1f))
+                                .AddAction(new LightningAttack(blackboard))
                             .EndComposite()
                             .AddAttackSequence()
-                                .AddAction(new ReadyToAttack(btBuilder.blackboard, 3f), btBuilder.actionManager)
-                                .AddAction(new FireBullet(btBuilder.blackboard), btBuilder.actionManager)
+                                .AddAction(new ReadyToAttack(blackboard, 3f))
+                                .AddAction(new FireBullet(blackboard))
                             .EndComposite()
                         .EndComposite()
                     .EndComposite()
                 .EndComposite()
-
             .EndComposite()
             .Build();
     }
-
-
 }

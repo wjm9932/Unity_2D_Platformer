@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ArcherEnemy : Enemy
 {
-    private BehaviorTreeBuilder btBuilder;
-    private CompositeNode root;
+    private BehaviorTree bt;
+
 
     [Header("Archer Enemy Component")]
     [SerializeField] private GameObject rangeWeapon;
@@ -13,7 +13,6 @@ public class ArcherEnemy : Enemy
     protected override void Awake()
     {
         base.Awake();
-        btBuilder = GetComponent<BehaviorTreeBuilder>();
     }
 
     protected override void Start()
@@ -25,62 +24,64 @@ public class ArcherEnemy : Enemy
 
     void Update()
     {
-        btBuilder.blackboard.SetData<float>("attackCoolTime", btBuilder.blackboard.GetData<float>("attackCoolTime") + Time.deltaTime);
-        root.Evaluate();
+        bt.blackboard.SetData<float>("attackCoolTime", bt.blackboard.GetData<float>("attackCoolTime") + Time.deltaTime);
+        bt.root.Evaluate();
     }
     private void FixedUpdate()
     {
-        btBuilder.actionManager.ExecuteCurrentActionInFixedUpdate();
+        bt.actionManager.ExecuteCurrentActionInFixedUpdate();
     }
 
     public override void OnAnimationEnterEvent()
     {
-        btBuilder.actionManager.OnAnimationEnterEvent();
+        bt.actionManager.OnAnimationEnterEvent();
     }
     public override void OnAnimationTransitionEvent()
     {
-        btBuilder.actionManager.OnAnimationTransitionEvent();
+        bt.actionManager.OnAnimationTransitionEvent();
     }
     public override void OnAnimationExitEvent()
     {
-        btBuilder.actionManager.OnAnimationExitEvent();
+        bt.actionManager.OnAnimationExitEvent();
     }
 
 
     private void BuildBT()
     {
-        btBuilder.blackboard.SetData<Enemy>("owner", this);
-        btBuilder.blackboard.SetData<float>("attackCoolTime", attackCoolTime);
-        btBuilder.blackboard.SetData<GameObject>("arrow", rangeWeapon);
+        Blackboard blackboard = new Blackboard();
 
-        root = btBuilder
+        blackboard.SetData<Enemy>("owner", this);
+        blackboard.SetData<float>("attackCoolTime", attackCoolTime);
+        blackboard.SetData<GameObject>("arrow", rangeWeapon);
+
+        bt = new BehaviorTreeBuilder(blackboard)
             .AddSelector()
                 .AddSequence()
                     .AddCondition(() => isDead == true)
-                    .AddAction(new Die(btBuilder.blackboard), btBuilder.actionManager)
+                    .AddAction(new Die(blackboard))
                 .EndComposite()
                 .AddAttackSequence()
                     .AddCondition(() => canBeDamaged == false)
-                    .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
-                    .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false), btBuilder.actionManager)
+                    .AddAction(new Hit(blackboard))
+                    .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false))
                 .EndComposite()
                 .AddSequence()
                     .AddCondition(()=> target != null)
                     .AddSelector()
                         .AddAttackSequence()
-                            .AddCondition(() => btBuilder.blackboard.GetData<float>("attackCoolTime") >= attackCoolTime)
-                            .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
-                            .AddAction(new RangeAttack(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddCondition(() => blackboard.GetData<float>("attackCoolTime") >= attackCoolTime)
+                            .AddAction(new Track(blackboard))
+                            .AddAction(new RangeAttack(blackboard))
                         .EndComposite()
                         .AddSequence()
-                            .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
-                            .AddAction(new WaitUntilCoolTime(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddAction(new Track(blackboard))
+                            .AddAction(new WaitUntilCoolTime(blackboard))
                         .EndComposite()
                     .EndComposite()
                 .EndComposite()
                 .AddAttackSequence()
-                    .AddAction(new Patrol(btBuilder.blackboard), btBuilder.actionManager)
-                    .AddAction(new Idle(btBuilder.blackboard), btBuilder.actionManager)
+                    .AddAction(new Patrol(blackboard))
+                    .AddAction(new Idle(blackboard))
                 .EndComposite()
             .EndComposite()
             .Build();

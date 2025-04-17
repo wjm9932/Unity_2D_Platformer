@@ -3,19 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BehaviorTreeBuilder : MonoBehaviour
+public class BehaviorTreeBuilder
 {
-    public Blackboard blackboard { get; private set; }
-    public ActionManager actionManager { get; private set; }
-
     private Stack<CompositeNode> nodeStack = new Stack<CompositeNode>();
     private CompositeNode currentNode;
     private int compositionNodeIndex = -1;
 
-    private void Awake()
+    Blackboard blackboard;
+    ActionManager actionManager;
+
+    public BehaviorTreeBuilder(Blackboard blackboard)
     {
-        blackboard = new Blackboard();
-        actionManager = new ActionManager();
+        this.actionManager = new ActionManager();
+        this.blackboard = blackboard;
     }
 
     public BehaviorTreeBuilder AddSelector()
@@ -64,7 +64,7 @@ public class BehaviorTreeBuilder : MonoBehaviour
         return this;
     }
 
-    public BehaviorTreeBuilder AddAction(IAction action, ActionManager actionManager)
+    public BehaviorTreeBuilder AddAction(IAction action)
     {
         currentNode.AddChild(new ActionNode(action, actionManager, compositionNodeIndex));
         return this;
@@ -81,7 +81,7 @@ public class BehaviorTreeBuilder : MonoBehaviour
         return this;
     }
 
-    public CompositeNode Build()
+    public BehaviorTree Build()
     {
 
         if(nodeStack.Count > 0)
@@ -91,10 +91,9 @@ public class BehaviorTreeBuilder : MonoBehaviour
         }
 
         var root = currentNode;
-
         InjectResetActionDependencies(root.Reset, currentNode);
 
-        return currentNode;
+        return new BehaviorTree(root, blackboard, actionManager);
     }
 
     private void InjectResetActionDependencies(Action<int> resetAction, CompositeNode node)

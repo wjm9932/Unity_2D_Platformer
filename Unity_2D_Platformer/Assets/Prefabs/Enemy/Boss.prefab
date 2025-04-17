@@ -193,7 +193,6 @@ GameObject:
   - component: {fileID: 2728898524108704116}
   - component: {fileID: 2728898524108704118}
   - component: {fileID: 2728898524108704113}
-  - component: {fileID: 2140981173}
   - component: {fileID: 4071021380344921171}
   m_Layer: 7
   m_Name: Boss
@@ -267,18 +266,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2, y: 3}
   m_EdgeRadius: 0
---- !u!114 &2140981173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2728898524108704117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c578ec1d87473474fb63deac864316ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4071021380344921171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,6 +307,7 @@ MonoBehaviour:
   dropItemPrefabs:
   - {fileID: 7451784485998942658, guid: 7ed319d3b8aa81348ae80fbcc52f8245, type: 3}
   - {fileID: 7451784485998942658, guid: b543a9690de67ce4cb5bc2e64c8e1b1f, type: 3}
+  key: {fileID: 0}
 --- !u!1 &2728898524217196234
 GameObject:
   m_ObjectHideFlags: 0

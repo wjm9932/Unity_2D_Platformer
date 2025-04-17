@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class MeleeSkeleton : Enemy
 {
-    private BehaviorTreeBuilder btBuilder;
-    private CompositeNode root;
+    BehaviorTree bt;
 
     protected override void Awake()
     {
         base.Awake();
-        btBuilder = GetComponent<BehaviorTreeBuilder>();
     }
 
     protected override void Start()
@@ -22,51 +20,53 @@ public class MeleeSkeleton : Enemy
 
     void Update()
     {
-        root.Evaluate();
+        bt.root.Evaluate();
     }
     private void FixedUpdate()
     {
-        btBuilder.actionManager.ExecuteCurrentActionInFixedUpdate();
+        bt.actionManager.ExecuteCurrentActionInFixedUpdate();
     }
 
     public override void OnAnimationEnterEvent()
     {
-        btBuilder.actionManager.OnAnimationEnterEvent();
+        bt.actionManager.OnAnimationEnterEvent();
     }
     public override void OnAnimationTransitionEvent()
     {
-        btBuilder.actionManager.OnAnimationTransitionEvent();
+        bt.actionManager.OnAnimationTransitionEvent();
     }
     public override void OnAnimationExitEvent()
     {
-        btBuilder.actionManager.OnAnimationExitEvent();
+        bt.actionManager.OnAnimationExitEvent();
     }
     private void BuildBT()
     {
-        btBuilder.blackboard.SetData<Enemy>("owner", this);
+        Blackboard blackboard = new Blackboard();
+        blackboard.SetData<Enemy>("owner", this);
 
-        root = btBuilder
+        bt = new BehaviorTreeBuilder(blackboard)
             .AddSelector()
                 .AddSequence()
                     .AddCondition(() => isDead == true)
-                    .AddAction(new Die(btBuilder.blackboard), btBuilder.actionManager)
+                    .AddAction(new Die(blackboard))
                 .EndComposite()
                 .AddAttackSequence()
                     .AddCondition(() => canBeDamaged == false)
-                    .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
-                    .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false), btBuilder.actionManager)
+                    .AddAction(new Hit(blackboard))
+                    .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false))
                 .EndComposite()
                 .AddAttackSequence()
                     .AddCondition(() => target != null)
-                    .AddAction(new Track(btBuilder.blackboard), btBuilder.actionManager)
-                    .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
+                    .AddAction(new Track(blackboard))
+                    .AddAction(new SwordAttack(blackboard))
                 .EndComposite()
                 .AddAttackSequence()
-                    .AddAction(new Patrol(btBuilder.blackboard), btBuilder.actionManager)
-                    .AddAction(new Idle(btBuilder.blackboard), btBuilder.actionManager)
+                    .AddAction(new Patrol(blackboard))
+                    .AddAction(new Idle(blackboard))
                 .EndComposite()
             .EndComposite()
             .Build();
+
     }
 
     #region EDITOR METHODS

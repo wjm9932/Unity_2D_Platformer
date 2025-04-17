@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 2ebdf02f09f8f4c29b2fd63c72cd0dec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -116,7 +116,6 @@ GameObject:
   - component: {fileID: 5877724042238700922}
   - component: {fileID: 5877724042238700935}
   - component: {fileID: 5877724042238700920}
-  - component: {fileID: 5877724042238700934}
   - component: {fileID: 5877724042238700933}
   m_Layer: 8
   m_Name: ChasingEnemy
@@ -164,23 +163,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5877724042238700924}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3db8f4f1e94813e4497bcc6e86d0d87c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5877724042238700934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5877724042238700924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c578ec1d87473474fb63deac864316ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  mapCollider: {fileID: 0}
 --- !u!114 &5877724042238700933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 330c7d9c34b01584cb4556a09259ad2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackReadyPrefab: {fileID: 1219884946047150491, guid: 012f8f227973ff148a375d030bfe9821, type: 3}
   bulletPrefab: {fileID: 7951800211735438291, guid: a4f54e7f03083344eb8c788ee86e9ee8, type: 3}
+  lightningAttackReadyPrefab: {fileID: 116169641229071473, guid: b8aa510416f93894597f13b3e542f3bf, type: 3}
   lightningAttackPrefab: {fileID: 116169641229071473, guid: a741aacd0cdf1044c827fcd5f4438830, type: 3}
-  lightningAttackReadyPrefab: {fileID: 1219884946047150491, guid: 012f8f227973ff148a375d030bfe9821, type: 3}

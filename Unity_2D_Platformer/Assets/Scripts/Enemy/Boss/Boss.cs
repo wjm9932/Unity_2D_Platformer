@@ -24,8 +24,8 @@ public class Boss : Enemy, ITargetHandler
     private FallingObjectHandler bulletDropHandler;
     private FallingObjectHandler itemDropHandler;
 
-    private BehaviorTreeBuilder btBuilder;
-    private CompositeNode root;
+    private BehaviorTree bt;
+
     public float yPos { get; private set; }
 
     public Transform[] bossRange { get; private set; }
@@ -36,7 +36,6 @@ public class Boss : Enemy, ITargetHandler
         bulletDropHandler = new FallingObjectHandler(0.1f, 0.5f, 10f);
         itemDropHandler = new FallingObjectHandler(5f, 6f);
 
-        btBuilder = GetComponent<BehaviorTreeBuilder>();
         enemySpawner = enemySpawnerObject.GetComponent<EnemySpawner>();
     }
 
@@ -60,24 +59,24 @@ public class Boss : Enemy, ITargetHandler
             itemDropHandler.TrySpawnProjectile(dropItemPrefabs[randItem], new Vector2(Random.Range(bossRange[0].transform.position.x, bossRange[1].transform.position.x), target.transform.position.y + 20f));
         }
 
-        root.Evaluate();
+        bt.root.Evaluate();
     }
     private void FixedUpdate()
     {
-        btBuilder.actionManager.ExecuteCurrentActionInFixedUpdate();
+        bt.actionManager.ExecuteCurrentActionInFixedUpdate();
     }
 
     public override void OnAnimationEnterEvent()
     {
-        btBuilder.actionManager.OnAnimationEnterEvent();
+        bt.actionManager.OnAnimationEnterEvent();
     }
     public override void OnAnimationTransitionEvent()
     {
-        btBuilder.actionManager.OnAnimationTransitionEvent();
+        bt.actionManager.OnAnimationTransitionEvent();
     }
     public override void OnAnimationExitEvent()
     {
-        btBuilder.actionManager.OnAnimationExitEvent();
+        bt.actionManager.OnAnimationExitEvent();
     }
 
     public override void Die()
@@ -116,34 +115,36 @@ public class Boss : Enemy, ITargetHandler
 
     private void BuildBT()
     {
-        btBuilder.blackboard.SetData<Enemy>("owner", this);
-        btBuilder.blackboard.SetData<Boss>("owner", this);
-        btBuilder.blackboard.SetData<bool>("IsCasting", false);
-        btBuilder.blackboard.SetData<EnemySpawner>("enemySpawner", enemySpawner);
+        Blackboard blackboard = new Blackboard();
 
-        root = btBuilder
+        blackboard.SetData<Enemy>("owner", this);
+        blackboard.SetData<Boss>("owner", this);
+        blackboard.SetData<bool>("IsCasting", false);
+        blackboard.SetData<EnemySpawner>("enemySpawner", enemySpawner);
+
+        bt = new BehaviorTreeBuilder(blackboard)
             .AddSelector()
         #region Die Sequence
                 .AddSequence()
                     .AddCondition(() => isDead == true)
-                    .AddAction(new Die(btBuilder.blackboard), btBuilder.actionManager)
+                    .AddAction(new Die(blackboard))
                 .EndComposite()
         #endregion
         #region Hit Sequence
                 .AddAttackSequence()
-                    .AddCondition(() => canBeDamaged == false && (isHardAttack == true || btBuilder.blackboard.GetData<bool>("IsCasting") == true))
-                    .AddAction(new Hit(btBuilder.blackboard), btBuilder.actionManager)
-                    .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false), btBuilder.actionManager)
+                    .AddCondition(() => canBeDamaged == false && (isHardAttack == true || blackboard.GetData<bool>("IsCasting") == true))
+                    .AddAction(new Hit(blackboard))
+                    .AddAction(new Wait(movementType.groggyTime, () => canBeDamaged == false))
                     .AddCondition(() => RandomExecute(0.65f))
                     .AddAttackSelector()
                         .AddAttackSequence()
                             .AddCondition(() => RandomExecute(0.6f))
-                            .AddAction(new SetUpForShooting(btBuilder.blackboard), btBuilder.actionManager)
-                            .AddAction(new Shoot(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddAction(new SetUpForShooting(blackboard))
+                            .AddAction(new Shoot(blackboard))
                         .EndComposite()
                         .AddAttackSequence()
-                            .AddAction(new Teleport(btBuilder.blackboard), btBuilder.actionManager)
-                            .AddAction(new SpawnEnemy(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddAction(new Teleport(blackboard))
+                            .AddAction(new SpawnEnemy(blackboard))
                         .EndComposite()
                     .EndComposite()
                 .EndComposite()
@@ -155,7 +156,7 @@ public class Boss : Enemy, ITargetHandler
         #region Boss Track Sequence
                         .AddSequence()
                             .AddCondition(() => !IsInRange(20f))
-                            .AddAction(new BossTrack(btBuilder.blackboard), btBuilder.actionManager)
+                            .AddAction(new BossTrack(blackboard))
                         .EndComposite()
         #endregion
         #region Boss Range Attack Pattern Sequence
@@ -163,18 +164,18 @@ public class Boss : Enemy, ITargetHandler
                             .AddCondition(() => !IsInRange(10f))
                             .AddRandomAttackSelector()
                                 .AddAttackSequence()
-                                    .AddAction(new Dash(btBuilder.blackboard), btBuilder.actionManager)
+                                    .AddAction(new Dash(blackboard))
                                     .AddCondition(() => RandomExecute(0.8f))
-                                    .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
+                                    .AddAction(new SwordAttack(blackboard))
                                 .EndComposite()
-                                .AddAction(new CastSpell(btBuilder.blackboard), btBuilder.actionManager)
+                                .AddAction(new CastSpell(blackboard))
                             .EndComposite()
                             .AddSelector()
                                 .AddSequence()
                                     .AddCondition(() => !IsInRange(10f))
-                                    .AddAction(new ResetNode(), btBuilder.actionManager)
+                                    .AddAction(new ResetNode())
                                 .EndComposite()
-                                 .AddAction(new BossTrack(btBuilder.blackboard), btBuilder.actionManager)
+                                 .AddAction(new BossTrack(blackboard))
                             .EndComposite()
                         .EndComposite()
         #endregion
@@ -182,14 +183,14 @@ public class Boss : Enemy, ITargetHandler
                         .AddSequence()
                             .AddRandomAttackSelector()
                                 .AddAttackSequence()
-                                    .AddAction(new BossTrack(btBuilder.blackboard), btBuilder.actionManager)
-                                    .AddAction(new SwordAttack(btBuilder.blackboard), btBuilder.actionManager)
+                                    .AddAction(new BossTrack(blackboard))
+                                    .AddAction(new SwordAttack(blackboard))
                                 .EndComposite()
                                 .AddAttackSequence()
-                                    .AddAction(new Teleport(btBuilder.blackboard), btBuilder.actionManager)
-                                    .AddAction(new CastSpell(btBuilder.blackboard), btBuilder.actionManager)
-                                    .AddAction(new CastSpell(btBuilder.blackboard), btBuilder.actionManager)
-                                    .AddAction(new CastSpell(btBuilder.blackboard), btBuilder.actionManager)
+                                    .AddAction(new Teleport(blackboard))
+                                    .AddAction(new CastSpell(blackboard))
+                                    .AddAction(new CastSpell(blackboard))
+                                    .AddAction(new CastSpell(blackboard))
                                 .EndComposite()
                             .EndComposite()
                         .EndComposite()
@@ -198,8 +199,8 @@ public class Boss : Enemy, ITargetHandler
                 .EndComposite()
         #endregion
                 .AddAttackSequence()
-                    .AddAction(new Patrol(btBuilder.blackboard), btBuilder.actionManager)
-                    .AddAction(new Idle(btBuilder.blackboard), btBuilder.actionManager)
+                    .AddAction(new Patrol(blackboard))
+                    .AddAction(new Idle(blackboard))
                 .EndComposite()
             .EndComposite()
             .Build();
